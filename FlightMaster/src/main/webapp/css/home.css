@@ -13,8 +13,10 @@ body{
 }
 #topNavBar{
     background-color: black;
-    
 }
+/*nav.active{
+    background-color: darkgray;
+}*/
 #regButton{
    
 }
