@@ -5,14 +5,16 @@
  */
 package com.thesoftwareguild.flightmaster.queryProcessor;
 
+import java.util.List;
+
 /**
  *
- * @author apprentice
+ * @author yan
  */
 public interface FlightQueryResult {
-    // Price includes the currency type in prefix or suffix
-    public String getPrice();
-    public String getId();
-    // Duration in minutes
-    public Integer getDuration();
+    
+    public void setRawResults(Object object);
+    
+    public List<Flight> getProcessedResults();
+    
 }

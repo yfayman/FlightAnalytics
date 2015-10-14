@@ -13,5 +13,5 @@ import java.util.List;
  * @author apprentice
  */
 public interface FlightQuery {
-    public List<FlightQueryResult> execute() throws IOException;
+    public FlightQueryResult execute() throws IOException;
 }

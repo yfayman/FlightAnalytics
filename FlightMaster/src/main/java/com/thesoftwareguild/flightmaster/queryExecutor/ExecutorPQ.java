@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class ExecutorPQ {
     
     final private ExecutorService queryExecutor = Executors.newSingleThreadExecutor();
-    final private PriorityQueue<FlightQueryExecutable> pq = new PriorityQueue(10,FlightQueryExecutable.flightQuerySoonest );
+    final private PriorityQueue<Request> pq = new PriorityQueue(10,Request.flightQuerySoonest );
     
     private static ExecutorPQ instance = new ExecutorPQ();
     
@@ -31,9 +31,9 @@ public class ExecutorPQ {
                 try {
                     if(pq.peek()!= null && pq.peek().getNextExecutionTime() < System.currentTimeMillis()){
                         try {
-                            FlightQueryExecutable fqe = pq.poll();
+                            Request fqe = pq.poll();
                             fqe.execute();
-                            pq.add(new FlightQueryExecutable(fqe.getQuery(),fqe.getAnalysisRequest()));
+                            pq.add(new Request(fqe.getQuery(),fqe.getAnalysisRequest()));
                         } catch (IOException ex) {
                             Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -55,7 +55,7 @@ public class ExecutorPQ {
     private ExecutorPQ(){  
     }
     
-    public void addToPQ(FlightQueryExecutable fqe){
+    public void addToPQ(Request fqe){
         pq.add(fqe);
     }
     

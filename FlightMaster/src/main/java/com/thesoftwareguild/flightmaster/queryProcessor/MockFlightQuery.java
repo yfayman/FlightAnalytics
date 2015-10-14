@@ -16,9 +16,9 @@ import java.util.List;
 public class MockFlightQuery implements FlightQuery{
 
     @Override
-    public List<FlightQueryResult> execute() throws IOException {
+    public QPXFlightQueryResult execute() throws IOException {
         System.out.println("executed");
-        return new ArrayList<>();
+        return new QPXFlightQueryResult();
     }
     
 }

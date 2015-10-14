@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author apprentice
  */
-public class AnalysisRequest {
+public class MultiQueryRequestor implements Requestor{
     //Analysis is inheritely price/person
     
     private int requestId;
@@ -20,7 +20,8 @@ public class AnalysisRequest {
     private String destination;
     private Date depDate;
     private Date retDate;
-    private int interval; // interval of queries in hours
+    private long interval; // interval of queries in ms
+    private int numberQueries;
 
     public int getRequestId() {
         return requestId;
@@ -70,14 +71,26 @@ public class AnalysisRequest {
         this.retDate = retDate;
     }
 
-    public int getInterval() {
+    @Override
+    public long getInterval() {
         return interval;
     }
 
     public void setInterval(int interval) {
         this.interval = interval;
     }
-    
+
+    @Override
+    public boolean hasRequest() {
+        return numberQueries > 0;
+    }
+
+    @Override
+    public void requestMade() {
+        numberQueries--;
+    }
+
+   
     
     
 }

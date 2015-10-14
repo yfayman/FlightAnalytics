@@ -63,8 +63,9 @@ public class QPXFlightQuery implements FlightQuery {
      * @throws IOException
      */
     @Override
-    public List<FlightQueryResult> execute() throws IOException {
-        List<FlightQueryResult> resultList = new ArrayList<>();
+    public FlightQueryResult execute() throws IOException {
+         //FlightQueryResult> resultList = new ArrayList<>();
+         FlightQueryResult fqr = new QPXFlightQueryResult();
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
             QPXExpress qpXExpress = new QPXExpress.Builder(httpTransport, JSON_FACTORY, null).setApplicationName(APPLICATION_NAME)
@@ -105,35 +106,35 @@ public class QPXFlightQuery implements FlightQuery {
             parameters.setRequest(request);
 
             TripsSearchResponse list = qpXExpress.trips().search(parameters).execute(); // executes the search
-
-            List<TripOption> tripResults = list.getTrips().getTripOption();
-
-            for (int i = 0; i < tripResults.size(); i++) {
-                TripOption tripResult = tripResults.get(i);
-                QPXQueryResult q = new QPXQueryResult();
-                q.setId(tripResult.getId());
-                Integer totalDuration = 0;
-                
-                q.setPrice(tripResult.getSaleTotal());
-                for (int j = 0; j < tripResult.getSlice().size(); j++) {
-                    List<SegmentInfo> segment = tripResult.getSlice().get(j).getSegment();
-                    totalDuration += tripResult.getSlice().get(j).getDuration();
-                    for (SegmentInfo segment1 : segment) {
-                        Flight flight = new Flight();
-                        flight.setBookingCode(segment1.getBookingCode());
-                        flight.setFlightCarrier(segment1.getFlight().getCarrier());
-                        flight.setFlightNum(segment1.getFlight().getNumber());
-                        q.addFlight(flight);
-                    }
-                }
-                q.setDuration(totalDuration);
-                resultList.add(q);
-            }
+            fqr.setRawResults(list);
+//            List<TripOption> tripResults = list.getTrips().getTripOption();
+//
+//            for (int i = 0; i < tripResults.size(); i++) {
+//                TripOption tripResult = tripResults.get(i);
+//                
+//                q.setId(tripResult.getId());
+//                Integer totalDuration = 0;
+//                
+//                q.setPrice(tripResult.getSaleTotal());
+//                for (int j = 0; j < tripResult.getSlice().size(); j++) {
+//                    List<SegmentInfo> segment = tripResult.getSlice().get(j).getSegment();
+//                    totalDuration += tripResult.getSlice().get(j).getDuration();
+//                    for (SegmentInfo segment1 : segment) {
+//                        Flight flight = new Flight();
+//                        flight.setBookingCode(segment1.getBookingCode());
+//                        flight.setFlightCarrier(segment1.getFlight().getCarrier());
+//                        flight.setFlightNum(segment1.getFlight().getNumber());
+//                        q.addFlight(flight);
+//                    }
+//                }
+//                q.setDuration(totalDuration);
+//                resultList.add(q);
+//            }
 
         } catch (GeneralSecurityException ex) {
             Logger.getLogger(QPXFlightQuery.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return resultList;
+        return fqr;
     }
 
     public int getAdultPassengers() {

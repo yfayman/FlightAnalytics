@@ -5,7 +5,8 @@
  */
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
-import com.thesoftwareguild.flightmaster.models.AnalysisRequest;
+import com.thesoftwareguild.flightmaster.models.MultiQueryRequestor;
+import com.thesoftwareguild.flightmaster.models.Requestor;
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightQuery;
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightQueryResult;
 import java.io.IOException;
@@ -16,13 +17,13 @@ import java.util.List;
  *
  * @author apprentice
  */
-public  class FlightQueryExecutable {
+public  class Request {
 
     private FlightQuery query;
-    private AnalysisRequest analysisRequest;
+    private Requestor analysisRequest;
     private long nextExecutionTime;
     
-    public FlightQueryExecutable(FlightQuery query, AnalysisRequest analysisRequest) {
+    public Request(FlightQuery query, Requestor analysisRequest) {
         this.query = query;
         this.analysisRequest = analysisRequest;
         this.nextExecutionTime = System.currentTimeMillis() + (analysisRequest.getInterval() * 3600000);
@@ -35,9 +36,9 @@ public  class FlightQueryExecutable {
      * @return
      * @throws IOException 
      */
-    public List<FlightQueryResult> execute() throws IOException{
+    public FlightQueryResult execute() throws IOException{
         if(nextExecutionTime < System.currentTimeMillis()){
-            List<FlightQueryResult> execute = query.execute();
+            FlightQueryResult execute = query.execute();
         return execute;
         }
         else
@@ -48,10 +49,10 @@ public  class FlightQueryExecutable {
         return nextExecutionTime;
     }
     
-    public static Comparator<FlightQueryExecutable> flightQuerySoonest = new Comparator<FlightQueryExecutable>(){
+    public static Comparator<Request> flightQuerySoonest = new Comparator<Request>(){
 
         @Override
-        public int compare(FlightQueryExecutable o1, FlightQueryExecutable o2) {
+        public int compare(Request o1, Request o2) {
             return Long.compare(o1.nextExecutionTime, o2.nextExecutionTime);
         }
         
@@ -61,7 +62,7 @@ public  class FlightQueryExecutable {
         return query;
     }
 
-    public AnalysisRequest getAnalysisRequest() {
+    public Requestor getAnalysisRequest() {
         return analysisRequest;
     }
     
