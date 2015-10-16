@@ -13,6 +13,8 @@ public class Flight {
     private String bookingCode;
     private String flightNum;
     private String flightCarrier;
+    private double price;
+    private int duration;
 
     public String getBookingCode() {
         return bookingCode;

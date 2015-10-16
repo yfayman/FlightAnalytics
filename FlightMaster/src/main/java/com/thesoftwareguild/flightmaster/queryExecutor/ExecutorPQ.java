@@ -5,6 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
+import com.thesoftwareguild.flightmaster.queryProcessor.FlightQueryResult;
 import java.io.IOException;
 import java.util.PriorityQueue;
 import java.util.concurrent.ExecutorService;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
  */
 public class ExecutorPQ {
     
+    final private static long ONE_MINUTE = 60000; // a minute in ms
     final private ExecutorService queryExecutor = Executors.newSingleThreadExecutor();
     final private PriorityQueue<Request> pq = new PriorityQueue(10,Request.flightQuerySoonest );
     
@@ -31,15 +33,18 @@ public class ExecutorPQ {
                 try {
                     if(pq.peek()!= null && pq.peek().getNextExecutionTime() < System.currentTimeMillis()){
                         try {
-                            Request fqe = pq.poll();
-                            fqe.execute();
-                            pq.add(new Request(fqe.getQuery(),fqe.getAnalysisRequest()));
+                            Request request = pq.poll();
+                            FlightQueryResult result = request.execute();
+                            
+                            // add code here to deal with storing the result in the database
+                            
+                            pq.add(new Request(request.getQuery(),request.getRequestor()));
                         } catch (IOException ex) {
                             Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                     
-                    this.wait(1000*60);
+                    this.wait(ONE_MINUTE);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -55,8 +60,8 @@ public class ExecutorPQ {
     private ExecutorPQ(){  
     }
     
-    public void addToPQ(Request fqe){
-        pq.add(fqe);
+    public void addToPQ(Request request){
+        pq.add(request);
     }
     
     private void run(){

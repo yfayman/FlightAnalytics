@@ -5,13 +5,11 @@
  */
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
-import com.thesoftwareguild.flightmaster.models.MultiQueryRequestor;
 import com.thesoftwareguild.flightmaster.models.Requestor;
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightQuery;
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightQueryResult;
 import java.io.IOException;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  *
@@ -20,13 +18,13 @@ import java.util.List;
 public  class Request {
 
     private FlightQuery query;
-    private Requestor analysisRequest;
+    private Requestor requestor;
     private long nextExecutionTime;
     
-    public Request(FlightQuery query, Requestor analysisRequest) {
+    public Request(FlightQuery query, Requestor requestor) {
         this.query = query;
-        this.analysisRequest = analysisRequest;
-        this.nextExecutionTime = System.currentTimeMillis() + (analysisRequest.getInterval() * 3600000);
+        this.requestor = requestor;
+        this.nextExecutionTime = System.currentTimeMillis() + (requestor.getInterval() * 3600000);
     }
 
     
@@ -39,6 +37,7 @@ public  class Request {
     public FlightQueryResult execute() throws IOException{
         if(nextExecutionTime < System.currentTimeMillis()){
             FlightQueryResult execute = query.execute();
+            requestor.requestMade();
         return execute;
         }
         else
@@ -62,8 +61,8 @@ public  class Request {
         return query;
     }
 
-    public Requestor getAnalysisRequest() {
-        return analysisRequest;
+    public Requestor getRequestor() {
+        return requestor;
     }
     
     
