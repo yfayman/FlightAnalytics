@@ -5,40 +5,58 @@
  */
 package com.thesoftwareguild.flightmaster.queryProcessor;
 
+import java.util.List;
+
 /**
  *
  * @author apprentice
  */
 public class Flight {
-    private String bookingCode;
-    private String flightNum;
-    private String flightCarrier;
-    private double price;
+    private String fightId;
+    private List<FlightLeg> flightlegs;
+    private String price; // price var may include currency type
     private int duration;
 
-    public String getBookingCode() {
-        return bookingCode;
+
+
+    public String getPrice() {
+        return price;
     }
 
-    public void setBookingCode(String bookingCode) {
-        this.bookingCode = bookingCode;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public String getFlightNum() {
-        return flightNum;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setFlightNum(String flightNum) {
-        this.flightNum = flightNum;
-    }
-
-    public String getFlightCarrier() {
-        return flightCarrier;
-    }
-
-    public void setFlightCarrier(String flightCarrier) {
-        this.flightCarrier = flightCarrier;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
     
+    public void addFlightLeg(String bookingCode, String flightNum, String flightCarrier){
+        flightlegs.add(new FlightLeg(bookingCode, flightNum, flightCarrier));
+    }
+    
+    public String getBookingCodeAtIndex(int i){
+        return flightlegs.get(i).getBookingCode();
+    }
+    
+    public String getFlightNumAtIndex(int i){
+        return flightlegs.get(i).getFlightNum();
+    }
+    public String getFlightCarrierAtIndex(int i){
+        return flightlegs.get(i).getCarrier();
+    }
+
+    public String getFightId() {
+        return fightId;
+    }
+
+    public void setFightId(String fightId) {
+        this.fightId = fightId;
+    }
+
     
 }

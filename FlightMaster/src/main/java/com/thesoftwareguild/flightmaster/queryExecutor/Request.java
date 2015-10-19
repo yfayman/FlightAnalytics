@@ -6,10 +6,11 @@
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
 import com.thesoftwareguild.flightmaster.models.Requestor;
+import com.thesoftwareguild.flightmaster.queryProcessor.Flight;
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightQuery;
-import com.thesoftwareguild.flightmaster.queryProcessor.FlightQueryResult;
 import java.io.IOException;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  *
@@ -34,9 +35,9 @@ public  class Request {
      * @return
      * @throws IOException 
      */
-    public FlightQueryResult execute() throws IOException{
+    public List<Flight> execute() throws IOException{
         if(nextExecutionTime < System.currentTimeMillis()){
-            FlightQueryResult execute = query.execute();
+            List<Flight> execute = query.execute();
             requestor.requestMade();
         return execute;
         }

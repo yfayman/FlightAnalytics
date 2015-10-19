@@ -5,8 +5,9 @@
  */
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
-import com.thesoftwareguild.flightmaster.queryProcessor.FlightQueryResult;
+import com.thesoftwareguild.flightmaster.queryProcessor.Flight;
 import java.io.IOException;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,7 +35,7 @@ public class ExecutorPQ {
                     if(pq.peek()!= null && pq.peek().getNextExecutionTime() < System.currentTimeMillis()){
                         try {
                             Request request = pq.poll();
-                            FlightQueryResult result = request.execute();
+                            List<Flight> result = request.execute();
                             
                             // add code here to deal with storing the result in the database
                             
@@ -64,7 +65,7 @@ public class ExecutorPQ {
         pq.add(request);
     }
     
-    private void run(){
+    public void run(){
         queryExecutor.execute(pqThread);
     }
     
