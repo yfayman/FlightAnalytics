@@ -137,74 +137,92 @@ public class QPXFlightQuery implements FlightQuery {
         return fqr;
     }
 
+    @Override
     public int getAdultPassengers() {
         return adultPassengers;
     }
 
+    @Override
     public void setAdultPassengers(int adultPassengers) {
         this.adultPassengers = adultPassengers;
     }
 
+    @Override
     public int getChildPassengers() {
         return childPassengers;
     }
 
+    @Override
     public void setChildPassengers(int childPassengers) {
         this.childPassengers = childPassengers;
     }
 
+    @Override
     public int getSeniorPassengers() {
         return seniorPassengers;
     }
 
+    @Override
     public void setSeniorPassengers(int seniorPassengers) {
         this.seniorPassengers = seniorPassengers;
     }
 
+    @Override
     public int getInfantInSeatCount() {
         return infantInSeatCount;
     }
 
+    @Override
     public void setInfantInSeatCount(int infantInSeatCount) {
         this.infantInSeatCount = infantInSeatCount;
     }
 
+    @Override
     public int getMaxStops() {
         return maxStops;
     }
 
+    @Override
     public void setMaxStops(int maxStops) {
         this.maxStops = maxStops;
     }
 
+    @Override
     public String getOrigin() {
         return origin;
     }
 
+    @Override
     public void setOrigin(String origin) {
         this.origin = origin;
     }
 
+    @Override
     public String getDestination() {
         return destination;
     }
 
+    @Override
     public void setDestination(String destination) {
         this.destination = destination;
     }
 
+    @Override
     public Date getDepartDate() {
         return departDate;
     }
 
+    @Override
     public void setDepartDate(Date departDate) {
         this.departDate = departDate;
     }
 
+    @Override
     public Date getReturnDate() {
         return returnDate;
     }
 
+    @Override
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
