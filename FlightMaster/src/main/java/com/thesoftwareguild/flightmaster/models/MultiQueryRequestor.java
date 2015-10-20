@@ -5,72 +5,20 @@
  */
 package com.thesoftwareguild.flightmaster.models;
 
+import com.thesoftwareguild.flightmaster.queryProcessor.FlightQuery;
 import java.util.Date;
 
 /**
  *
  * @author apprentice
  */
-public class MultiQueryRequestor implements Requestor{
+public class MultiQueryRequestor extends Requestor{
     //Analysis is inheritely price/person
     
-    private int requestId;
-    private String requestor;
-    private String origin;
-    private String destination;
-    private Date depDate;
-    private Date retDate;
     private long interval; // interval of queries in ms
     private int numberQueries;
 
-    public int getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(int requestId) {
-        this.requestId = requestId;
-    }
-
-    public String getRequestor() {
-        return requestor;
-    }
-
-    public void setRequestor(String requestor) {
-        this.requestor = requestor;
-    }
-
-    public String getOrigin() {
-        return origin;
-    }
-
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
-    public String getDestination() {
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-    public Date getDepDate() {
-        return depDate;
-    }
-
-    public void setDepDate(Date depDate) {
-        this.depDate = depDate;
-    }
-
-    public Date getRetDate() {
-        return retDate;
-    }
-
-    public void setRetDate(Date retDate) {
-        this.retDate = retDate;
-    }
-
+   
     @Override
     public long getInterval() {
         return interval;
@@ -88,6 +36,11 @@ public class MultiQueryRequestor implements Requestor{
     @Override
     public void requestMade() {
         numberQueries--;
+    }
+
+    @Override
+    public void populateQueryParams(FlightQuery query) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
    

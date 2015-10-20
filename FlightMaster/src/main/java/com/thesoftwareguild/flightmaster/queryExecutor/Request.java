@@ -66,7 +66,9 @@ public  class Request {
         return requestor;
     }
     
-    
+    private void populateQuery(){
+        
+    }
     
     
 
