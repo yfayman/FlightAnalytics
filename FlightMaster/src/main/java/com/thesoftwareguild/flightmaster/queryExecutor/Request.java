@@ -67,7 +67,7 @@ public  class Request {
     }
     
     private void populateQuery(){
-        
+        requestor.populateQueryParams(query);
     }
     
     

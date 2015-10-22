@@ -40,7 +40,15 @@ public class MultiQueryRequestor extends Requestor{
 
     @Override
     public void populateQueryParams(FlightQuery query) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        query.setAdultPassengers(this.adultPassengers);
+        query.setChildPassengers(this.childPassengers);
+        query.setDepartDate(this.depDate);
+        query.setDestination(this.destination);
+        query.setInfantInSeatCount(this.infantPassengers);
+        query.setMaxStops(this.maxStops);
+        query.setOrigin(this.origin);
+        query.setReturnDate(this.retDate);
+        query.setSeniorPassengers(this.seniorPassengers);
     }
 
    

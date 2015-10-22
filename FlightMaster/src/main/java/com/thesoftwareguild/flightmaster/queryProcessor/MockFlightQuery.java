@@ -6,6 +6,9 @@
 package com.thesoftwareguild.flightmaster.queryProcessor;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,102 +17,128 @@ import java.util.List;
  *
  * @author apprentice
  */
-public class MockFlightQuery implements FlightQuery{
+public class MockFlightQuery implements FlightQuery {
+
+    private int adults;
+    private int children;
+    private int seniors;
+    private int infants;
+    private int maxStops;
+    private String origin;
+    private String dest;
+    private Date depart;
+    private Date returnDate;
+    private SecureRandom random = new SecureRandom();
+
+    public String nextSessionId() {
+        return new BigInteger(130, random).toString(32);
+    }
 
     @Override
     public List<Flight> execute() throws IOException {
-        System.out.println("executed");
-        return new ArrayList<Flight>();
+        DecimalFormat df = new DecimalFormat("#####.##");
+        List<Flight> retList = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            Flight flight1 = new Flight();
+            flight1.setPrice(df.format(Math.random() * 100 + 1));
+            flight1.setFightId(new Integer(i+1).toString());
+            flight1.setDuration((int) (60 + Math.random() * 400));
+            flight1.addFlightLeg(this.nextSessionId(), new Integer((int) (Math.random() * 999)).toString(), "AA");
+            retList.add(flight1);
+        }
+
+        return retList;
     }
 
     @Override
     public int getAdultPassengers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return adults;
     }
 
     @Override
     public void setAdultPassengers(int adultPassengers) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.adults = adults;
     }
 
     @Override
     public int getChildPassengers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return children;
     }
 
     @Override
     public void setChildPassengers(int childPassengers) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.children = childPassengers;
     }
 
     @Override
     public int getSeniorPassengers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return seniors;
     }
 
     @Override
     public void setSeniorPassengers(int seniorPassengers) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.seniors = seniorPassengers;
     }
 
     @Override
     public int getInfantInSeatCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return infants;
     }
 
     @Override
     public void setInfantInSeatCount(int infantInSeatCount) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.infants = infantInSeatCount;
     }
 
     @Override
     public int getMaxStops() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return maxStops;
     }
 
     @Override
     public void setMaxStops(int maxStops) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.maxStops = maxStops;
     }
 
     @Override
     public String getOrigin() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return origin;
     }
 
     @Override
     public void setOrigin(String origin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.origin = origin;
     }
 
     @Override
     public String getDestination() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return dest;
     }
 
     @Override
     public void setDestination(String destination) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.dest = dest;
     }
 
     @Override
     public Date getDepartDate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return depart;
     }
 
     @Override
     public void setDepartDate(Date departDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.depart = depart;
     }
 
     @Override
     public Date getReturnDate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return returnDate;
     }
 
     @Override
     public void setReturnDate(Date returnDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.returnDate = returnDate;
     }
-    
+
 }
