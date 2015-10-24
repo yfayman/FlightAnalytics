@@ -18,24 +18,28 @@ import com.google.api.services.qpxExpress.model.TripOption;
 import com.google.api.services.qpxExpress.model.TripOptionsRequest;
 import com.google.api.services.qpxExpress.model.TripsSearchRequest;
 import com.google.api.services.qpxExpress.model.TripsSearchResponse;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Uses QPXFlightQuery to make flight requests.API KEY and Application Name can be hardcoded
+ * into the class initialization. I'm reading them in from a file to hide the key
  * @author apprentice
  */
 public class QPXFlightQuery implements FlightQuery {
 
     private final int MAX_FLIGHTS_RETURNED = 10;
-    private final String APPLICATION_NAME = "FlightMaster";
-    private final String API_KEY = "AIzaSyCBGr_EjQy3weyXzv23hg05cff6T4B7nD4";
+    private  String APPLICATION_NAME;
+    private  String API_KEY;
     private HttpTransport httpTransport;
     private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -52,6 +56,22 @@ public class QPXFlightQuery implements FlightQuery {
     private Date departDate;
     private Date returnDate;
 
+    /**
+     * This is to hide the apikey from source control
+     */
+    public QPXFlightQuery() {
+        try {
+            Scanner sc = new Scanner(new FileReader("apikey.txt"));
+            this.APPLICATION_NAME = sc.nextLine();
+            this.API_KEY = sc.nextLine();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(QPXFlightQuery.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    
+    
+    
     /**
      *
      * @return
