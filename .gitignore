@@ -29,3 +29,6 @@ buildNumber.properties
 # Project Planning #
 FlightMaster.xml
 *.pdf
+
+# API KEY #
+apikey.txt

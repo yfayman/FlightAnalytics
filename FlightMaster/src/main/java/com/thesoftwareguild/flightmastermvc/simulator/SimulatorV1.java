@@ -12,7 +12,8 @@ import com.thesoftwareguild.flightmaster.queryProcessor.MockFlightQuery;
 import java.util.Date;
 
 /**
- *
+ *  This class runs the simulation using the MockFlightQuery. This should be
+ * run independent of servlet container.
  * @author yan
  */
 public class SimulatorV1 {

@@ -9,7 +9,8 @@ import com.thesoftwareguild.flightmaster.queryProcessor.FlightQuery;
 import java.util.Date;
 
 /**
- *
+ * Abstract class that must be implemented by all requestors. Has fields for all
+ * the basic information required for a flight query.
  * @author yan
  */
 public abstract class Requestor {
@@ -121,6 +122,11 @@ public abstract class Requestor {
     
     abstract public long getInterval();
     
+    /**
+     * populates a query object with information from the requestor. The query
+     * object must be populated before it's execute method can return a result
+     * @param query 
+     */
     abstract public void populateQueryParams(FlightQuery query);
     
 }

@@ -15,7 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Generates a singleton priority queue that is ordered by unix time.
+ * User of this class can add request objects. The queue calls the execute method on the
+ * request, which calls the execute method on the query object.
  * @author apprentice
  */
 public class ExecutorPQ {
@@ -65,6 +67,10 @@ public class ExecutorPQ {
         pq.add(request);
     }
     
+    /**
+     * This method starts the single thread PQ.
+     * It should be called when the program is initialized.
+     */
     public void run(){
         queryExecutor.execute(pqThread);
     }

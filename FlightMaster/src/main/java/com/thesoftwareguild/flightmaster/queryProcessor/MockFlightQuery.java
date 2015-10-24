@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- *
+/** 
+ * A mock FlightQuery for testing(Because QPX is expensive). This generates
+ * random data which will be stored to a test database
  * @author apprentice
  */
 public class MockFlightQuery implements FlightQuery {
