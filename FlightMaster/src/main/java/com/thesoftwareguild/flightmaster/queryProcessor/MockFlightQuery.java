@@ -39,7 +39,7 @@ public class MockFlightQuery implements FlightQuery {
     public List<Flight> execute() throws IOException {
         DecimalFormat df = new DecimalFormat("#####.##");
         List<Flight> retList = new ArrayList<>();
-
+        System.out.println("Flight Query Executed: " + origin + " to " + dest);
         for (int i = 0; i < 10; i++) {
             Flight flight1 = new Flight();
             flight1.setPrice(df.format(Math.random() * 100 + 1));

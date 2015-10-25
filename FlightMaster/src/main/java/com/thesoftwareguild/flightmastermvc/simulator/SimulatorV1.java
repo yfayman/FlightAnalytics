@@ -23,14 +23,14 @@ import java.util.logging.Logger;
 public class SimulatorV1 {
 
     ExecutorPQ pq;
-    MockFlightQuery mockFlightQuery;
-    MultiQueryRequestor multiQueryRequestor;
+    MockFlightQuery mockFlightQuery, mockFlightQuery2, mockFlightQuery3;
+    MultiQueryRequestor multiQueryRequestor, multiQueryRequestor2, multiQueryRequestor3;
 
     public SimulatorV1() {
         pq = ExecutorPQ.getInstance();
 
         mockFlightQuery = new MockFlightQuery();
-        multiQueryRequestor = new MultiQueryRequestor(10, MultiQueryRequestor.MINUTE);
+        multiQueryRequestor = new MultiQueryRequestor(3, MultiQueryRequestor.MINUTE);
         multiQueryRequestor.setAdultPassengers(1);
         multiQueryRequestor.setMaxStops(1);
         multiQueryRequestor.setDepDate(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 7))); // departure date is one week from today
@@ -40,6 +40,32 @@ public class SimulatorV1 {
         multiQueryRequestor.populateQueryParams(mockFlightQuery);
         Request request1 = new Request(mockFlightQuery, multiQueryRequestor);
         pq.addToPQ(request1);
+        
+        
+        mockFlightQuery2 = new MockFlightQuery();
+        multiQueryRequestor2 = new MultiQueryRequestor(10, MultiQueryRequestor.MINUTE*2);
+        multiQueryRequestor2.setAdultPassengers(1);
+        multiQueryRequestor2.setMaxStops(1);
+        multiQueryRequestor2.setDepDate(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 8))); // departure date 8 days from today
+        multiQueryRequestor2.setRetDate(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 15))); // return is 2 weeks +1 day from today
+        multiQueryRequestor2.setOrigin("ORD");
+        multiQueryRequestor2.setDestination("NYC");
+        multiQueryRequestor2.populateQueryParams(mockFlightQuery2);
+        Request request2 = new Request(mockFlightQuery2, multiQueryRequestor2);
+        pq.addToPQ(request2);
+        
+        
+        mockFlightQuery3 = new MockFlightQuery();
+        multiQueryRequestor3 = new MultiQueryRequestor(10, MultiQueryRequestor.MINUTE*3);
+        multiQueryRequestor3.setAdultPassengers(1);
+        multiQueryRequestor3.setMaxStops(1);
+        multiQueryRequestor3.setDepDate(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 6))); // departure date is one week from today
+        multiQueryRequestor3.setRetDate(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 14))); // return is 2 weeks from today
+        multiQueryRequestor3.setOrigin("LAX");
+        multiQueryRequestor3.setDestination("NYC");
+        multiQueryRequestor3.populateQueryParams(mockFlightQuery3);
+        Request request3 = new Request(mockFlightQuery3, multiQueryRequestor3);
+        pq.addToPQ(request3);
 
     }
 
@@ -47,14 +73,7 @@ public class SimulatorV1 {
         SimulatorV1 sim = new SimulatorV1();
         sim.pq.run();
         
-        while(true){
-            System.out.println("On the main thread(or whatever this is");
-            try {
-                Thread.sleep(1000*10);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(SimulatorV1.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        
 
     }
 }

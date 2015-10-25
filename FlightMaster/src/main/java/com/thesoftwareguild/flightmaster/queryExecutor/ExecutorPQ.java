@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class ExecutorPQ {
 
-    final private static long ONE_MINUTE = 60000; // a minute in ms
+    final private static long FIVE_SECONDS = 5000; // five seconds in ms
     final private ExecutorService queryExecutor = Executors.newSingleThreadExecutor();
     final private PriorityQueue<Request> pq = new PriorityQueue(10, Request.flightQuerySoonest);
 
@@ -47,15 +47,17 @@ public class ExecutorPQ {
                             List<Flight> result = request.execute();
                             if(request.hasRequest())
                                 pq.add(request);
+                            else 
+                                System.out.println("Requests depleted");
                             // add code here to deal with storing the result in the database
                            
                         } catch (IOException ex) {
                             Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                    System.out.println("Going to sleep");
-                    Thread.sleep(ONE_MINUTE);
-                    System.out.println("Waking up");
+                    
+                    Thread.sleep(FIVE_SECONDS);
+                    
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
                 }
