@@ -15,64 +15,80 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Generates a singleton priority queue that is ordered by unix time.
- * User of this class can add request objects. The queue calls the execute method on the
+ * Generates a singleton priority queue that is ordered by unix time. User of
+ * this class can add request objects. The queue calls the execute method on the
  * request, which calls the execute method on the query object.
+ *
  * @author apprentice
  */
 public class ExecutorPQ {
-    
+
     final private static long ONE_MINUTE = 60000; // a minute in ms
     final private ExecutorService queryExecutor = Executors.newSingleThreadExecutor();
-    final private PriorityQueue<Request> pq = new PriorityQueue(10,Request.flightQuerySoonest );
-    
-    private static ExecutorPQ instance = new ExecutorPQ();
-    
-    private final Runnable pqThread = new Runnable(){
+    final private PriorityQueue<Request> pq = new PriorityQueue(10, Request.flightQuerySoonest);
 
+    private static ExecutorPQ instance = new ExecutorPQ();
+
+    private final Runnable pqThread = new Runnable() {
+
+        /*
+            Makes a request and then checks to see if there are more requests to make.
+            If there are, the request object will be added back to the priority queue. The execute 
+            method changes the executionTime variable in the request is changed to point to the
+            time of the next request if one exists
+        */
         @Override
         public void run() {
-            while(true){
+            while (true) {
                 try {
-                    if(pq.peek()!= null && pq.peek().getNextExecutionTime() < System.currentTimeMillis()){
+                    if (pq.peek() != null && pq.peek().getExecutionTime() < System.currentTimeMillis()) {
                         try {
                             Request request = pq.poll();
                             List<Flight> result = request.execute();
-                            
+                            if(request.hasRequest())
+                                pq.add(request);
                             // add code here to deal with storing the result in the database
-                            
-                            pq.add(new Request(request.getQuery(),request.getRequestor()));
+                           
                         } catch (IOException ex) {
                             Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                    
-                    this.wait(ONE_MINUTE);
+                    System.out.println("Going to sleep");
+                    Thread.sleep(ONE_MINUTE);
+                    System.out.println("Waking up");
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
-        
+
     };
-    
-    public static ExecutorPQ getInstance(){
+
+    public static ExecutorPQ getInstance() {
         return instance;
     }
-    
-    private ExecutorPQ(){  
+
+    private ExecutorPQ() {
     }
-    
-    public void addToPQ(Request request){
-        pq.add(request);
-    }
-    
+
     /**
-     * This method starts the single thread PQ.
-     * It should be called when the program is initialized.
+     * Adds a request to the PQ. If the request requires multiple queries,
+     * multiple items will be added to the queue
+     *
+     * @param request
      */
-    public void run(){
+    public void addToPQ(Request request) {
+     
+            pq.add(request);
+      
+    }
+
+    /**
+     * This method starts the single thread PQ. It should be called when the
+     * program is initialized.
+     */
+    public void run() {
         queryExecutor.execute(pqThread);
     }
-    
+
 }

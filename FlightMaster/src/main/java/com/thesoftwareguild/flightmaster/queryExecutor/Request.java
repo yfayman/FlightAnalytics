@@ -20,12 +20,13 @@ public  class Request {
 
     private FlightQuery query;
     private Requestor requestor;
-    private long nextExecutionTime;
+    private long executionTime;
     
     public Request(FlightQuery query, Requestor requestor) {
         this.query = query;
         this.requestor = requestor;
-        this.nextExecutionTime = System.currentTimeMillis() + (requestor.getInterval() * 3600000);
+        this.executionTime = System.currentTimeMillis();
+       // this.executionTime = System.currentTimeMillis() + (requestor.getInterval() * 3600000);
     }
 
     
@@ -36,35 +37,33 @@ public  class Request {
      * @throws IOException 
      */
     public List<Flight> execute() throws IOException{
-        if(nextExecutionTime < System.currentTimeMillis()){
+        if(executionTime < System.currentTimeMillis()){
             List<Flight> execute = query.execute();
             requestor.requestMade();
+            executionTime = System.currentTimeMillis() + requestor.getInterval();
         return execute;
         }
         else
             return null;
     }
 
-    public long getNextExecutionTime() {
-        return nextExecutionTime;
+    public long getExecutionTime() {
+        return executionTime;
     }
     
     public static Comparator<Request> flightQuerySoonest = new Comparator<Request>(){
 
         @Override
         public int compare(Request o1, Request o2) {
-            return Long.compare(o1.nextExecutionTime, o2.nextExecutionTime);
+            return Long.compare(o1.executionTime, o2.executionTime);
         }
         
     };
-
-    public FlightQuery getQuery() {
-        return query;
+    
+    public boolean hasRequest(){
+        return requestor.hasRequest();
     }
 
-    public Requestor getRequestor() {
-        return requestor;
-    }
     
     private void populateQuery(){
         requestor.populateQueryParams(query);

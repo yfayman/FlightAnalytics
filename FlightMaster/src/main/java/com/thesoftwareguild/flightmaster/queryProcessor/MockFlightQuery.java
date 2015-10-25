@@ -119,7 +119,7 @@ public class MockFlightQuery implements FlightQuery {
 
     @Override
     public void setDestination(String destination) {
-        this.dest = dest;
+        this.dest = destination;
     }
 
     @Override
@@ -129,7 +129,7 @@ public class MockFlightQuery implements FlightQuery {
 
     @Override
     public void setDepartDate(Date departDate) {
-        this.depart = depart;
+        this.depart = departDate;
     }
 
     @Override

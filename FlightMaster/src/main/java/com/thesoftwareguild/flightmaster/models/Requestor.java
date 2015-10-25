@@ -17,7 +17,6 @@ public abstract class Requestor {
     
     protected int requestId;
     protected int maxStops;
-    protected String requestor;
     protected String origin;
     protected String destination;
     protected Date depDate;
@@ -35,13 +34,6 @@ public abstract class Requestor {
         this.requestId = requestId;
     }
 
-    public String getRequestor() {
-        return requestor;
-    }
-
-    public void setRequestor(String requestor) {
-        this.requestor = requestor;
-    }
 
     public String getOrigin() {
         return origin;
@@ -105,6 +97,14 @@ public abstract class Requestor {
 
     public void setInfantPassengers(int infantPassengers) {
         this.infantPassengers = infantPassengers;
+    }
+
+    public int getMaxStops() {
+        return maxStops;
+    }
+
+    public void setMaxStops(int maxStops) {
+        this.maxStops = maxStops;
     }
 
     

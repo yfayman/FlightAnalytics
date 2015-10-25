@@ -5,6 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.queryProcessor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,9 @@ public class Flight {
     private String price; // price var may include currency type
     private int duration;
 
-
+    public Flight(){
+        this.flightlegs = new ArrayList<>();
+    }
 
     public String getPrice() {
         return price;

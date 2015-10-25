@@ -16,18 +16,28 @@ import java.util.Date;
 public class MultiQueryRequestor extends Requestor{
     //Analysis is inheritely price/person
     
+    public static final long SECOND = 1000;
+    public static final long MINUTE = SECOND* 60;
+    public static final long HOUR = MINUTE * 60;
+    public static final long DAY = HOUR * 24;
+    public static final long WEEK = DAY * 7;
+    
     private long interval; // interval of queries in ms
     private int numberQueries;
 
+    public MultiQueryRequestor(int numberQueries, long interval){
+        this.numberQueries = numberQueries;
+        this.interval = interval;
+    }
    
     @Override
     public long getInterval() {
         return interval;
     }
 
-    public void setInterval(int interval) {
-        this.interval = interval;
-    }
+//    public void setInterval(long interval) {
+//        this.interval = interval;
+//    }
 
     @Override
     public boolean hasRequest() {
