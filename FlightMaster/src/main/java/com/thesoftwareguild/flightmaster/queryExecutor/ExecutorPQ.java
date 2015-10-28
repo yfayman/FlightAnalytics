@@ -5,7 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
-import com.thesoftwareguild.flightmaster.queryProcessor.Flight;
+import com.thesoftwareguild.flightmaster.models.Flight;
 import java.io.IOException;
 import java.util.List;
 import java.util.PriorityQueue;

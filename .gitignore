@@ -31,5 +31,5 @@ FlightMaster.xml
 *.pdf
 
 # API KEY #
-apikey.txt
+apikey.txt*
 QPXTest/

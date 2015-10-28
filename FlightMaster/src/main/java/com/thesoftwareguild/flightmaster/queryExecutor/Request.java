@@ -6,7 +6,7 @@
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
 import com.thesoftwareguild.flightmaster.models.Requestor;
-import com.thesoftwareguild.flightmaster.queryProcessor.Flight;
+import com.thesoftwareguild.flightmaster.models.Flight;
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightQuery;
 import java.io.IOException;
 import java.util.Comparator;
@@ -41,6 +41,8 @@ public  class Request {
             List<Flight> execute = query.execute();
             requestor.requestMade();
             executionTime = System.currentTimeMillis() + requestor.getInterval();
+            // Pass information to Dao to store it in persistence layer
+            
         return execute;
         }
         else

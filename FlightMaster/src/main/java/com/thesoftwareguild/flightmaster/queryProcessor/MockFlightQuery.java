@@ -5,6 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.queryProcessor;
 
+import com.thesoftwareguild.flightmaster.models.Flight;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;

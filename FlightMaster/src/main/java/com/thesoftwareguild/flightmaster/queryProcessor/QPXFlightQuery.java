@@ -5,6 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.queryProcessor;
 
+import com.thesoftwareguild.flightmaster.models.Flight;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -250,7 +251,8 @@ public class QPXFlightQuery implements FlightQuery {
         q.setDepartDate(dep);
         q.setMaxStops(1);
         try {
-            q.execute();
+            List<Flight> execute = q.execute();
+            System.out.println("test");
         } catch (IOException ex) {
             Logger.getLogger(QPXFlightQuery.class.getName()).log(Level.SEVERE, null, ex);
         }

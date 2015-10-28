@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.thesoftwareguild.flightmaster.queryProcessor;
+package com.thesoftwareguild.flightmaster.models;
 
+import com.thesoftwareguild.flightmaster.queryProcessor.FlightLeg;
 import java.util.ArrayList;
 import java.util.List;
 
