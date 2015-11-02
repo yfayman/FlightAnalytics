@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author apprentice
+ * @author Yan
  */
 public interface FlightQuery {
     public List<Flight> execute() throws IOException;

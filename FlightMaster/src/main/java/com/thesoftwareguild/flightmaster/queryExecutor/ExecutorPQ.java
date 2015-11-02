@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * this class can add request objects. The queue calls the execute method on the
  * request, which calls the execute method on the query object.
  *
- * @author apprentice
+ * @author Yan
  */
 public class ExecutorPQ {
 
@@ -27,6 +27,11 @@ public class ExecutorPQ {
     final private ExecutorService queryExecutor = Executors.newSingleThreadExecutor();
     final private PriorityQueue<Request> pq = new PriorityQueue(10, Request.flightQuerySoonest);
 
+    /*
+        Eager singleton implementation of the priority queue. I used this approach
+        to remove risk of executing queries twice
+    */
+     
     private static ExecutorPQ instance = new ExecutorPQ();
 
     private final Runnable pqThread = new Runnable() {

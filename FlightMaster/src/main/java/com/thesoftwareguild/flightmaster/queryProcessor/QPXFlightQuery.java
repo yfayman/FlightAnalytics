@@ -33,8 +33,9 @@ import java.util.logging.Logger;
 
 /**
  * Uses QPXFlightQuery to make flight requests.API KEY and Application Name can be hardcoded
- * into the class initialization. I'm reading them in from a file to hide the key
- * @author apprentice
+ * into the class initialization. I'm reading them in from a file to hide the key as this
+ * project is on GitHub
+ * @author Yan
  */
 public class QPXFlightQuery implements FlightQuery {
 

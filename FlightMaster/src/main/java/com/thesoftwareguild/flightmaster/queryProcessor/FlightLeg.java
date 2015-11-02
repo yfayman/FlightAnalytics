@@ -6,8 +6,8 @@
 package com.thesoftwareguild.flightmaster.queryProcessor;
 
 /**
- *
- * @author apprentice
+ * Information for a leg of a trip.
+ * @author Yan
  */
 public class FlightLeg {
     private String bookingCode;

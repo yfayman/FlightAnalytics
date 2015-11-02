@@ -5,13 +5,17 @@
  */
 package com.thesoftwareguild.flightmaster.daos;
 
+import com.thesoftwareguild.flightmaster.models.Flight;
+import java.util.List;
+
 /**
- *
+ * Saves flight Data
  * @author Yan
  */
-public interface RequestDao {
+public interface FlightDao {
     
     
-    
+    public void add(List<Flight> flights, int requestorId);
+    public List<Flight> get(int requestorId);
     
 }

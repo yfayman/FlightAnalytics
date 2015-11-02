@@ -6,12 +6,11 @@
 package com.thesoftwareguild.flightmaster.models;
 
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightQuery;
-import java.util.Date;
 
 /**
  * This subclass of requestor is for handling multiple queries at a certain interval.
  * If the interval is 6 hours, the query should be happening about 4 times a day.
- * @author apprentice
+ * @author Yan
  */
 public class MultiQueryRequestor extends Requestor{
     //Analysis is inheritely price/person

@@ -8,8 +8,8 @@ package com.thesoftwareguild.flightmaster.models;
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightQuery;
 
 /**
- *
- * @author yan
+ * Implementation for a single query request
+ * @author Yan
  */
 public class SingleQueryRequestor extends Requestor {
     

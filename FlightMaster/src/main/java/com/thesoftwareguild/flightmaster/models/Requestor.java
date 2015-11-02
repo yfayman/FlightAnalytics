@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Abstract class that must be implemented by all requestors. Has fields for all
  * the basic information required for a flight query.
- * @author yan
+ * @author Yan
  */
 public abstract class Requestor {
     

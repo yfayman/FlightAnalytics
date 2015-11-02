@@ -13,8 +13,10 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- *
- * @author apprentice
+ * Combines the who(requestor) and the how(query) to execute a request. Execution
+ * time is set to when the requestor is created. After execute is called, the next
+ * execution time is set to current time + the interval as specified by the requestor
+ * @author Yan Fayman
  */
 public  class Request {
 
@@ -53,6 +55,7 @@ public  class Request {
         return executionTime;
     }
     
+    // order the Requests by their execution time(lowest to highest)
     public static Comparator<Request> flightQuerySoonest = new Comparator<Request>(){
 
         @Override

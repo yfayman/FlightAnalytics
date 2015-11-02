@@ -10,11 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author apprentice
+ * This is the data model which reflects what will be written in flights table
+ * @author Yan
  */
 public class Flight {
+    
     private String fightId;
+    private String origin;
+    private String destination;
     private List<FlightLeg> flightlegs;
     private String price; // price var may include currency type
     private int duration;
@@ -62,5 +65,30 @@ public class Flight {
         this.fightId = fightId;
     }
 
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public List<FlightLeg> getFlightlegs() {
+        return flightlegs;
+    }
+
+    public void setFlightlegs(List<FlightLeg> flightlegs) {
+        this.flightlegs = flightlegs;
+    }
+
+    
     
 }
