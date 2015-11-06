@@ -12,10 +12,9 @@ import java.util.List;
  * Saves flight Data
  * @author Yan
  */
-public interface FlightDao {
+public interface UserDao {
     
     
-    public void add(List<Flight> flights, int requestorId);
-    public List<Flight> get(int requestorId);
+    
     
 }

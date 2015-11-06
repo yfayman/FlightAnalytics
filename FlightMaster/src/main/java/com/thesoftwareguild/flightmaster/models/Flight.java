@@ -19,18 +19,18 @@ public class Flight {
     private String origin;
     private String destination;
     private List<FlightLeg> flightlegs;
-    private String price; // price var may include currency type
+    private double price; 
     private int duration;
 
     public Flight(){
         this.flightlegs = new ArrayList<>();
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

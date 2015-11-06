@@ -1,0 +1,27 @@
+create database flights;
+use flights;
+CREATE TABLE `authority` (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `authority` varchar(20) NOT NULL,
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `enabled` tinyint(1) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `user_authority` (
+  `username` varchar(20) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  KEY `username` (`username`),
+  KEY `fk_authorities_1_idx` (`role_id`),
+  KEY `fk_authorities_2_idx` (`username`,`role_id`),
+  CONSTRAINT `fk_authority_1` FOREIGN KEY (`role_id`) REFERENCES `authority` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_username_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+

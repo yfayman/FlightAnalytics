@@ -128,10 +128,13 @@ public class QPXFlightQuery implements FlightQuery {
 
             for (int i = 0; i < tripResults.size(); i++) {
                 Flight flight = new Flight();
+                flight.setOrigin(origin);
+                flight.setDestination(destination);
+                
                 TripOption tripResult = tripResults.get(i);
                 flight.setFightId(tripResult.getId());   
                 Integer totalDuration = 0;
-                flight.setPrice(tripResult.getSaleTotal());
+                flight.setPrice(Double.parseDouble(tripResult.getSaleTotal().replaceAll("[a-zA-Z]", "")));
                 for (int j = 0; j < tripResult.getSlice().size(); j++) {
                     List<SegmentInfo> segment = tripResult.getSlice().get(j).getSegment();
                     totalDuration += tripResult.getSlice().get(j).getDuration();
