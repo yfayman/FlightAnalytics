@@ -9,12 +9,12 @@ import com.thesoftwareguild.flightmaster.models.Flight;
 import java.util.List;
 
 /**
- * Saves flight Data
+ * Writes flight data to a database using JDBC Template. 
+ * This data is connected to the requestor through a bridge table
  * @author Yan
  */
-public interface UserDao {
-    
-    
-    
+public class UserDaoJdbcImpl implements UserDao{
+
+  
     
 }
