@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.thesoftwareguild.flightmaster.daos;
+package com.thesoftwareguild.flightmaster.services;
 
 import com.thesoftwareguild.flightmaster.models.User;
 
@@ -11,10 +11,7 @@ import com.thesoftwareguild.flightmaster.models.User;
  *
  * @author yan
  */
-public interface UserDao {
-    
+public interface UserService {
     User findById(int id);
-     
-    User findByUsername(String username);
-    
+    User findByUsername(String sso);
 }
