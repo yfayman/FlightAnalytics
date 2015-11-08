@@ -39,3 +39,8 @@ div#login,#signup *{
 #regLink1{
     margin-top: 2%;
 }
+
+.error{
+    color:red;
+    font-size: small;
+}

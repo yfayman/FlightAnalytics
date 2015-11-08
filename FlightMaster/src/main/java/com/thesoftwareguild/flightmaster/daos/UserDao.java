@@ -6,6 +6,7 @@
 package com.thesoftwareguild.flightmaster.daos;
 
 import com.thesoftwareguild.flightmaster.models.Flight;
+import com.thesoftwareguild.flightmaster.models.User;
 import java.util.List;
 
 /**
@@ -14,7 +15,13 @@ import java.util.List;
  */
 public interface UserDao {
     
-    
-    
-    
+     public User getByUsername(String username);
+     public User getById(Integer id);
+     public List<User> list();
+     public User addUser(User newUser);
+     public void deleteUser(String username);
+     public void updateUser(User user);
+     
+     
+     
 }
