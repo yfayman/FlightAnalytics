@@ -11,7 +11,7 @@ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
         <property name="permissionEvaluator" ref="myPermissionEvaluator"/>
     </bean>-->
     <beans:bean id="expressionHandler"
-                class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler" />
+                class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
     
     <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
     
@@ -24,7 +24,7 @@ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
     <http auto-config="true" use-expressions="false">
         <form-login login-processing-url="/j_spring_security_check"
-                    login-page="/login"
+                    login-page="/" username-parameter="username" password-parameter="password"
                     authentication-failure-url="/login?login_error=1" />
         <logout logout-success-url="/" />
         
@@ -37,9 +37,8 @@ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
             <password-encoder ref="encoder" />
             <jdbc-user-service id="userService" 
                                data-source-ref="datasource"
-                               users-by-username-query="SELECT username, password, enabled FROM users WHERE username = ?"
-                               authorities-by-username-query="SELECT DISTINCT(users.username), authority.authority FROM users INNER JOIN user_authority ON users.username = user_authority.username INNER JOIN authority ON user_authority.role_id = authority.role_id       
-                                                WHERE users.username = ?"     />
+                               users-by-username-query="SELECT USERNAME, PASSWORD, ENABLED FROM users WHERE USERNAME = ?"
+                               authorities-by-username-query="SELECT USERNAME, AUTHORITY FROM authorities WHERE USERNAME = ?"     />
         </authentication-provider>
     </authentication-manager>
         

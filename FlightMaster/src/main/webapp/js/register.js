@@ -13,6 +13,7 @@ $(document).ready(function(){
    
    $(document).on('click', '#registerUser', function(e){
 
+       e.preventDefault();
        var password = $('#reg-password').val();
        var confpassword = $('#reg-confirmpassword').val();
        if(password!== confpassword){

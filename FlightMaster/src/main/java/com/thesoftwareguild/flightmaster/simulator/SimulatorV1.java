@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.thesoftwareguild.flightmastermvc.simulator;
+package com.thesoftwareguild.flightmaster.simulator;
 
 import com.thesoftwareguild.flightmaster.models.MultiQueryRequestor;
 import com.thesoftwareguild.flightmaster.models.Requestor;

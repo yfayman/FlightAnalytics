@@ -20,7 +20,7 @@ public class IndexController {
     
     @RequestMapping(value="/login", method = RequestMethod.GET)
     public String afterLogIn(){
-        return "redirect:/";
+        return "index";
     }
     
 }

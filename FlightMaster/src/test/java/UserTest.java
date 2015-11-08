@@ -36,8 +36,6 @@ public class UserTest {
         jdbcTemplate = ctx.getBean("jdbcTemplate", JdbcTemplate.class);
         userDao = ctx.getBean("userDao", UserDao.class);
         
-        jdbcTemplate.execute("DELETE FROM authorities WHERE id > 0");
-        jdbcTemplate.execute("DELETE FROM users WHERE id > 0");
         
         
         testUser1 = new User();
@@ -53,9 +51,12 @@ public class UserTest {
     
     @After
     public void tearDown() {
+        jdbcTemplate.execute("DELETE FROM authorities WHERE id > 0");
+        jdbcTemplate.execute("DELETE FROM users WHERE id > 0");
+        
     }
 
-    @Test
+    //@Test
     public void addTest1(){
         User res = userDao.addUser(testUser1);
         

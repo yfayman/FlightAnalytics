@@ -18,6 +18,9 @@
     </head>
     <body>
         <c:import url="nav.jsp"></c:import>
+        <c:if test="${param.login_error == 1}">
+            <h1>Incorrect Login</h1>
+        </c:if>
         <div class="container">
             
 

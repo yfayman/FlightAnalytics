@@ -44,6 +44,8 @@ public class UserController {
         user.setPassword(encoder.encode(user.getPassword()));
         user.addAuthority("ROLE_USER");
         userDao.addUser(user);
+        
+        user.setPassword("placeholder"); // Not sending password back to client
         return user;
     }
     

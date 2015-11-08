@@ -32,10 +32,10 @@
             <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
                 <form class="navbar-form navbar-right" action="j_spring_security_check" method="POST">
                     <div class="form-group">
-                        <input type="text" name="j_username" placeholder="Username" class="form-control" >
+                        <input type="text" name="username" placeholder="Username" class="form-control" >
                     </div>
                     <div class="form-group">
-                        <input type="password" name="j_password" placeholder="Password" class="form-control">
+                        <input type="password" name="password" placeholder="Password" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-success">Sign in</button>
                     <button data-toggle="modal" data-target="#myModal" type="button" class="btn btn-success">Register</button>
@@ -55,7 +55,7 @@
                 <h4 class="modal-title" id="myModalLabel" style="text-align: center">Register</h4>
             </div>
             <div class="modal-body">
-                <form:form class="form-horizontal"  action="${pageContext.request.contextPath}/user/add" method="POST" role="form">
+                <form:form class="form-horizontal"  action="${pageContext.request.contextPath}/user/register" method="POST" role="form">
 
                     <div class="form-group">
                         <label for="reg-first-name" class="col-md-4 control-label">First Name:</label>
