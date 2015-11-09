@@ -25,8 +25,9 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="about">About</a></li>
+                <li><a href="${pageContext.request.contextPath}/about">About</a></li>
+                <li><a href="${pageContext.request.contextPath}/makerequest">Make Request</a></li>
+                <li><a href="${pageContext.request.contextPath}/pendingrequests">View Pending Requests</a></li>
 
             </ul>
             <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
@@ -40,6 +41,13 @@
                     <button type="submit" class="btn btn-success">Sign in</button>
                     <button data-toggle="modal" data-target="#myModal" type="button" class="btn btn-success">Register</button>
                 </form>
+            </sec:authorize>
+            
+            <sec:authorize access="hasRole('ROLE_USER')">
+                <div class="navbar-right">
+                    <p style="color:white">Hello <sec:authentication property="principal.username" /></p>
+                
+                </div>
             </sec:authorize>
 
         </div>

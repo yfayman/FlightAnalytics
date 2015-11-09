@@ -14,30 +14,16 @@ body{
 #topNavBar{
     background-color: black;
 }
-/*nav.active{
-    background-color: darkgray;
-}*/
-#regButton{
-   
-}
-#login,#signup{
-    background-color: black;
-    margin-top: 15%;
-    margin-right: 5%;
-    border-radius: 5%;
-    padding-bottom: 5%;
-}
-.formtext{
-    text-align: center;
-    margin-bottom: 5%; 
-}
 
-div#login,#signup *{
-    color:white;
+#request-input-form{
+    background-color: #BDBDBD;
+    padding: 5%;
+    border-radius: 5%;
     
 }
-#regLink1{
-    margin-top: 2%;
+#request-input-form-container{
+    margin-top: 15%;
+    
 }
 
 .error{
