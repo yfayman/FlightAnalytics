@@ -6,7 +6,9 @@
 package com.thesoftwareguild.flightmaster.models;
 
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightLeg;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,6 +20,7 @@ public class Flight {
     private String fightId;
     private String origin;
     private String destination;
+    Date queryDate;
     private List<FlightLeg> flightlegs;
     private double price; 
     private int duration;
@@ -87,6 +90,14 @@ public class Flight {
 
     public void setFlightlegs(List<FlightLeg> flightlegs) {
         this.flightlegs = flightlegs;
+    }
+
+    public Date getQueryDate() {
+        return queryDate;
+    }
+
+    public void setQueryDate(Date queryDate) {
+        this.queryDate = queryDate;
     }
 
     

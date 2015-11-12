@@ -130,6 +130,7 @@ public class QPXFlightQuery implements FlightQuery {
                 Flight flight = new Flight();
                 flight.setOrigin(origin);
                 flight.setDestination(destination);
+                flight.setQueryDate(new Date());
                 
                 TripOption tripResult = tripResults.get(i);
                 flight.setFightId(tripResult.getId());   

@@ -8,7 +8,23 @@
 $(document).ready(function(){
     
     $(document).on('click','#submit-requeset', function(e){
-        $.post({
+        $.ajax({
+            url:'reqeust/submit',
+            method: 'POST',
+            dataType: 'json',
+            data: JSON.stringify({
+                
+            }),
+            headers: {
+                'Content-Type' : 'application/json',
+                'Accept' : 'application/json'
+            },
+            success : function(data,status){
+                
+            },
+            error :function(data,status){
+                
+            }
             
         });
     });

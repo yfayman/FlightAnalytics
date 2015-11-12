@@ -42,11 +42,13 @@
                     <button data-toggle="modal" data-target="#myModal" type="button" class="btn btn-success">Register</button>
                 </form>
             </sec:authorize>
-            
+
             <sec:authorize access="hasRole('ROLE_USER')">
-                <div class="navbar-right">
-                    <p style="color:white">Hello <sec:authentication property="principal.username" /></p>
-                
+                <div class="navbar-form navbar-right">
+
+                    
+                    <div class="form-group"> <a href="${pageContext.request.contextPath}/j_spring_security_logout"><button type="button" class="btn btn-danger">Logout</button></a></div>
+
                 </div>
             </sec:authorize>
 
