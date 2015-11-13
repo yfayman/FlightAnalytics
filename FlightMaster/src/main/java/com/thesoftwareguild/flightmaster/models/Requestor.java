@@ -16,6 +16,7 @@ import java.util.Date;
 public abstract class Requestor {
     
     protected int requestId;
+    protected int userId;
     protected int maxStops;
     protected String origin;
     protected String destination;
@@ -107,6 +108,15 @@ public abstract class Requestor {
         this.maxStops = maxStops;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    
     
     
 

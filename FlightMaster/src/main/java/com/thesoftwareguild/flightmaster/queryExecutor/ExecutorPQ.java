@@ -13,6 +13,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Generates a singleton priority queue that is ordered by unix time. User of
@@ -21,62 +23,81 @@ import java.util.logging.Logger;
  *
  * @author Yan
  */
+@Component
 public class ExecutorPQ {
 
-    final private static long FIVE_SECONDS = 5000; // five seconds in ms
+    
     final private ExecutorService queryExecutor = Executors.newSingleThreadExecutor();
-    final private PriorityQueue<Request> pq = new PriorityQueue(10, Request.flightQuerySoonest);
+    
+    @Autowired
+    private PriorityQueue<Request> pq;// = new PriorityQueue(10, Request.flightQuerySoonest);
+    
+    @Autowired
+    private Runnable pqThread;
 
+    public PriorityQueue<Request> getPq() {
+        return pq;
+    }
+
+    public void setPq(PriorityQueue<Request> pq) {
+        this.pq = pq;
+    }
+
+    public Runnable getPqThread() {
+        return pqThread;
+    }
+
+    public void setPqThread(Runnable pqThread) {
+        this.pqThread = pqThread;
+    }
+    
+    
+    
     /*
         Eager singleton implementation of the priority queue. I used this approach
         to remove risk of executing queries twice
     */
      
-    private static ExecutorPQ instance = new ExecutorPQ();
+    //private static ExecutorPQ instance = new ExecutorPQ();
 
-    private final Runnable pqThread = new Runnable() {
+//    private final Runnable pqThread = new Runnable() {
+//
+//        /*
+//            Makes a request and then checks to see if there are more requests to make.
+//            If there are, the request object will be added back to the priority queue. The execute 
+//            method changes the executionTime variable in the request is changed to point to the
+//            time of the next request if one exists
+//        */
+//        @Override
+//        public void run() {
+//            while (true) {
+//                try {
+//                    if (pq.peek() != null && pq.peek().getExecutionTime() < System.currentTimeMillis()) {
+//                        try {
+//                            Request request = pq.poll();
+//                            List<Flight> result = request.execute();
+//                            if(request.hasRequest())
+//                                pq.add(request);
+//                            else 
+//                                System.out.println("Requests depleted");
+//                            // add code here to deal with storing the result in the database
+//                           
+//                        } catch (IOException ex) {
+//                            Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
+//                    
+//                    Thread.sleep(FIVE_SECONDS);
+//                    
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        }
 
-        /*
-            Makes a request and then checks to see if there are more requests to make.
-            If there are, the request object will be added back to the priority queue. The execute 
-            method changes the executionTime variable in the request is changed to point to the
-            time of the next request if one exists
-        */
-        @Override
-        public void run() {
-            while (true) {
-                try {
-                    if (pq.peek() != null && pq.peek().getExecutionTime() < System.currentTimeMillis()) {
-                        try {
-                            Request request = pq.poll();
-                            List<Flight> result = request.execute();
-                            if(request.hasRequest())
-                                pq.add(request);
-                            else 
-                                System.out.println("Requests depleted");
-                            // add code here to deal with storing the result in the database
-                           
-                        } catch (IOException ex) {
-                            Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                    
-                    Thread.sleep(FIVE_SECONDS);
-                    
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+ //   };
 
-    };
-
-    public static ExecutorPQ getInstance() {
-        return instance;
-    }
-
-    private ExecutorPQ() {
-    }
+    
 
     /**
      * Adds a request to the PQ. If the request requires multiple queries,
@@ -97,5 +118,7 @@ public class ExecutorPQ {
     public void run() {
         queryExecutor.execute(pqThread);
     }
+    
+    
 
 }

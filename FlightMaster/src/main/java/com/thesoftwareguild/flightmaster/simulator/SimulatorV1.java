@@ -13,6 +13,9 @@ import com.thesoftwareguild.flightmaster.queryProcessor.MockFlightQuery;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.support.XmlWebApplicationContext;
 
 /**
  * This class runs the simulation using the MockFlightQuery. This should be run
@@ -27,7 +30,8 @@ public class SimulatorV1 {
     MultiQueryRequestor multiQueryRequestor, multiQueryRequestor2, multiQueryRequestor3;
 
     public SimulatorV1() {
-        pq = ExecutorPQ.getInstance();
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-persistence.xml");
+        pq = ctx.getBean(ExecutorPQ.class);
 
         mockFlightQuery = new MockFlightQuery();
         multiQueryRequestor = new MultiQueryRequestor(3, MultiQueryRequestor.MINUTE);
