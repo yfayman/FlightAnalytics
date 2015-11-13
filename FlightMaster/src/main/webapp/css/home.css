@@ -7,8 +7,17 @@ and open the template in the editor.
     Created on : Oct 9, 2015, 11:09:55 AM
     Author     : apprentice
 */
+.dark-primary-color   { background: #0288D1; }
+.default-primary-color { background: #03A9F4; }
+.light-primary-color   { background: #B3E5FC; }
+.text-primary-color { color: #FFFFFF; }
+.accent-color          { background: #795548; }
+.primary-text-color  a li p{ color: #212121; }
+.secondary-text-color a li p { color: #727272; }
+.divider-color         { border-color: #B6B6B6; }
+
 body{
-    background-image: url("../img/Simple-Clouds.svg");
+    //background-image: url("../img/Simple-Clouds.svg");
     margin: 5%;
 }
 #topNavBar{
@@ -18,12 +27,11 @@ body{
 #request-input-form{
     background-color: #BDBDBD;
     padding: 5%;
-    border-radius: 5%;
-    
+
 }
 #request-input-form-container{
     margin-top: 15%;
-    
+
 }
 
 .error{
