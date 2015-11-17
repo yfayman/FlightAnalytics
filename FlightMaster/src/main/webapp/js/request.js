@@ -7,12 +7,25 @@
 
 $(document).ready(function(){
     
-    $(document).on('click','#submit-requeset', function(e){
+    $(document).on('click','#submit-request', function(e){
+        
+        console.log("submit request triggered");
+        
         $.ajax({
-            url:'reqeust/submit',
+            url:'request/add',
             method: 'POST',
             dataType: 'json',
             data: JSON.stringify({
+                origin:$('#departingLoc').val(),
+                depDate: dateToUnixTime($('#departingDate').val()),
+                destination: $('#arrivingLoc').val(),
+                retDate : dateToUnixTime($('#arrivingDate').val()),
+                maxStops : $('#max-stops').val(),
+                adultPassengers: $('#adult-passengers').val(),
+                childPassengers: $('#child-passengers').val(),
+                numberQueries: $('#numberQueries').val(),
+                interval :$('#interval').val()
+                
                 
             }),
             headers: {
@@ -30,3 +43,14 @@ $(document).ready(function(){
     });
     
 });
+
+function dateToUnixTime(dateInput) {
+    if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+        return dateInput;
+    } else {
+        var dateNum = [];
+        dateNum = dateInput.split(/[-/]/);
+        var f = new Date(dateNum[2], dateNum[0] - 1, dateNum[1]);
+        return f.getTime();
+    }
+}

@@ -27,9 +27,10 @@
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav" >
                     <li><a href="${pageContext.request.contextPath}/about"  style="color:#212121">About</a></li>
-                    <li><a href="${pageContext.request.contextPath}/makerequest"  style="color:#212121">Make Request</a></li>
-                    <li><a href="${pageContext.request.contextPath}/pendingrequests"  style="color:#212121">View Pending Requests</a></li>
-
+                        <sec:authorize access="hasRole('ROLE_USER')">
+                        <li><a href="${pageContext.request.contextPath}/request"  style="color:#212121">Make Request</a></li>
+                        <li><a href="${pageContext.request.contextPath}/pendingrequests"  style="color:#212121">View Pending Requests</a></li>
+                        </sec:authorize>
                 </ul>
                 <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
                     <form class="navbar-form navbar-right" action="j_spring_security_check" method="POST">

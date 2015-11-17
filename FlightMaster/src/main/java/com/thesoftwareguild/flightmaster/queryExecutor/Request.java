@@ -5,7 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
-import com.thesoftwareguild.flightmaster.models.Requestor;
+import com.thesoftwareguild.flightmaster.models.RequestData;
 import com.thesoftwareguild.flightmaster.models.Flight;
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightQuery;
 import java.io.IOException;
@@ -21,12 +21,12 @@ import java.util.List;
 public  class Request {
 
     private FlightQuery query;
-    private Requestor requestor;
+    private RequestData requestData;
     private long executionTime;
     
-    public Request(FlightQuery query, Requestor requestor) {
+    public Request(FlightQuery query, RequestData requestor) {
         this.query = query;
-        this.requestor = requestor;
+        this.requestData = requestor;
         this.executionTime = System.currentTimeMillis();
        // this.executionTime = System.currentTimeMillis() + (requestor.getInterval() * 3600000);
     }
@@ -41,8 +41,8 @@ public  class Request {
     public List<Flight> execute() throws IOException{
         if(executionTime < System.currentTimeMillis()){
             List<Flight> execute = query.execute();
-            requestor.requestMade();
-            executionTime = System.currentTimeMillis() + requestor.getInterval();
+            requestData.requestMade();
+            executionTime = System.currentTimeMillis() + requestData.getInterval();
             // Pass information to Dao to store it in persistence layer
             
         return execute;
@@ -66,12 +66,12 @@ public  class Request {
     };
     
     public boolean hasRequest(){
-        return requestor.hasRequest();
+        return requestData.hasRequest();
     }
 
     
     private void populateQuery(){
-        requestor.populateQueryParams(query);
+        requestData.populateQueryParams(query);
     }
     
     

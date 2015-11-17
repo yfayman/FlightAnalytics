@@ -13,7 +13,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 /**
  *
@@ -56,10 +58,21 @@ public class UserTest {
         
     }
 
-    //@Test
+    @Test
     public void addTest1(){
         User res = userDao.addUser(testUser1);
         
         Assert.assertNotEquals(0, res.getUserId());
+    }
+    
+    @Test(expected = DataIntegrityViolationException.class)
+    public void addTest2(){
+        
+        User testUser2 = new User();
+        userDao.addUser(testUser2);
+        
+        // should never reach this point 
+        Assert.assertTrue(false);
+        
     }
 }

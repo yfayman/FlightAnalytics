@@ -5,13 +5,22 @@
  */
 package com.thesoftwareguild.flightmaster.daos;
 
+import com.thesoftwareguild.flightmaster.models.RequestData;
+import java.util.List;
+
 /**
  *
  * @author Yan
  */
 public interface RequestDao {
     
+    public RequestData add(RequestData requestData);
     
+    public void delete(int id);
+    
+    public RequestData getById(int id);
+    
+    public List<RequestData> getByUserId(int id);
     
     
 }
