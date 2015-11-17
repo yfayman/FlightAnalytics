@@ -5,7 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.daos;
 
-import com.thesoftwareguild.flightmaster.models.RequestData;
+import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import java.util.List;
 
 /**
@@ -14,13 +14,13 @@ import java.util.List;
  */
 public interface RequestDao {
     
-    public RequestData add(RequestData requestData);
+    public RequestParameters add(RequestParameters requestData);
     
     public void delete(int id);
     
-    public RequestData getById(int id);
+    public RequestParameters getRequestById(int id);
     
-    public List<RequestData> getByUserId(int id);
+    public List<RequestParameters> getRequestByUserId(int id);
     
     
 }

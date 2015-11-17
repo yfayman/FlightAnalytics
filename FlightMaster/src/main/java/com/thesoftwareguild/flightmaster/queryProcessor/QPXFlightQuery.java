@@ -46,6 +46,7 @@ public class QPXFlightQuery implements FlightQuery {
     private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
+    private int requestId;
     private int adultPassengers = 0;
     private int childPassengers = 0;
     private int seniorPassengers = 0;
@@ -246,6 +247,17 @@ public class QPXFlightQuery implements FlightQuery {
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
+
+    @Override
+    public int getRequestId() {
+        return requestId;
+    }
+
+    @Override
+    public void setRequestId(int requestId) {
+        this.requestId = requestId;
+    }
+    
 
     public static void main(String[] args) {
         QPXFlightQuery q = new QPXFlightQuery();

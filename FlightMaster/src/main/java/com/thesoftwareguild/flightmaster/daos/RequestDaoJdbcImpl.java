@@ -5,7 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.daos;
 
-import com.thesoftwareguild.flightmaster.models.RequestData;
+import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -24,7 +24,7 @@ public class RequestDaoJdbcImpl implements RequestDao {
     }
 
     @Override
-    public RequestData add(RequestData requestData) {
+    public RequestParameters add(RequestParameters requestData) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -34,14 +34,16 @@ public class RequestDaoJdbcImpl implements RequestDao {
     }
 
     @Override
-    public RequestData getById(int id) {
+    public RequestParameters getRequestById(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<RequestData> getByUserId(int id) {
+    public List<RequestParameters> getRequestByUserId(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+
     
     
 }

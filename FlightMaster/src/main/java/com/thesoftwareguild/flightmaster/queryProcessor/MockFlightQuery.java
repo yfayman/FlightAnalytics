@@ -21,6 +21,7 @@ import java.util.List;
  */
 public class MockFlightQuery implements FlightQuery {
 
+    private int requestId;
     private int adults;
     private int children;
     private int seniors;
@@ -141,6 +142,16 @@ public class MockFlightQuery implements FlightQuery {
     @Override
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
+    }
+
+    @Override
+    public void setRequestId(int requestId) {
+        this.requestId = requestId;
+    }
+
+    @Override
+    public int getRequestId() {
+        return requestId;
     }
 
 }

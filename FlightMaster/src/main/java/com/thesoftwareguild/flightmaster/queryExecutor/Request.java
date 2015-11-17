@@ -5,7 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
-import com.thesoftwareguild.flightmaster.models.RequestData;
+import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import com.thesoftwareguild.flightmaster.models.Flight;
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightQuery;
 import java.io.IOException;
@@ -21,10 +21,10 @@ import java.util.List;
 public  class Request {
 
     private FlightQuery query;
-    private RequestData requestData;
+    private RequestParameters requestData;
     private long executionTime;
     
-    public Request(FlightQuery query, RequestData requestor) {
+    public Request(FlightQuery query, RequestParameters requestor) {
         this.query = query;
         this.requestData = requestor;
         this.executionTime = System.currentTimeMillis();

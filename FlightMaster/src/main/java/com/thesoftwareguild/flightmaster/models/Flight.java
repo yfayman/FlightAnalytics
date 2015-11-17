@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class Flight {
     
+    private int requestId;
     private String fightId;
     private String origin;
     private String destination;
@@ -100,6 +101,15 @@ public class Flight {
         this.queryDate = queryDate;
     }
 
+    public int getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(int requestId) {
+        this.requestId = requestId;
+    }
+
+    
     
     
 }

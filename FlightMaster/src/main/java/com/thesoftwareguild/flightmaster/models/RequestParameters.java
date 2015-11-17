@@ -13,9 +13,9 @@ import java.util.Date;
  * the basic information required for a flight query.
  * @author Yan
  */
-public class RequestData {
+public class RequestParameters {
    
-    
+    // Time in database is in minutes
     public static final long SECOND = 1000;
     public static final long MINUTE = SECOND* 60;
     public static final long HOUR = MINUTE * 60;
@@ -135,13 +135,6 @@ public class RequestData {
     }
 
     
-    
-    
-
-   
-
-
-    
     // There are requests to be made
    
     public boolean hasRequest() {
@@ -164,7 +157,7 @@ public class RequestData {
     }
     
     /**
-     * populates a query object with information from the requestor. The query
+     * populates a query object with information from this object. The query
      * object must be populated before it's execute method can return a result
      * @param query 
      */
@@ -178,6 +171,7 @@ public class RequestData {
         query.setOrigin(this.origin);
         query.setReturnDate(this.retDate);
         query.setSeniorPassengers(this.seniorPassengers);
+        query.setRequestId(this.requestId);
     }
     
 }

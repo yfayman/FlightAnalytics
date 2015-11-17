@@ -7,7 +7,7 @@ package com.thesoftwareguild.flightmaster.controllers;
 
 import com.thesoftwareguild.flightmaster.daos.RequestDao;
 import com.thesoftwareguild.flightmaster.daos.UserDao;
-import com.thesoftwareguild.flightmaster.models.RequestData;
+import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import com.thesoftwareguild.flightmaster.models.User;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +34,25 @@ public class RequestController {
         this.userDao = userDao;
     }
     
+    /*
+        Returns the request page when user clicks on the "Make a Request link"
+    */
     @RequestMapping(value = "")
     public String requestIndex(){
         return "request";
     }
     
-    
+    /*
+        Adds request to database
+    */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void addRequest(@Valid @RequestBody RequestData req){
+    public void addRequest(@Valid @RequestBody RequestParameters req){
         
-        System.out.println("test");
+        User user = getLoggedInUser();
+        if(user != null){
+            req.setUserId(user.getUserId());
+            requestDao.add(req);
+        }
         
     }
     
