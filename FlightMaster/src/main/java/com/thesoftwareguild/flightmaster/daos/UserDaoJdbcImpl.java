@@ -24,6 +24,10 @@ public class UserDaoJdbcImpl implements UserDao{
     
     private static final String SQL_ADD_AUTHORITY = "INSERT INTO authorities (username, authority) VALUES (?,?)";
 
+    private static final String SQL_GET_USER_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
+    
+    private static final String SQL_SELECT_AUTHORITIES = "SELECT authority FROM authorities WHERE username = ?";
+    
     private JdbcTemplate jdbcTemplate;
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {

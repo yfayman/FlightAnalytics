@@ -5,6 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.daos;
 
+import com.thesoftwareguild.flightmaster.models.Flight;
 import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,6 +19,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class RequestDaoJdbcImpl implements RequestDao {
     
     JdbcTemplate jdbcTemplate;
+    
+    private static final String SQL_GET_LAST_ID = "SELECT LAST_INSERT_ID()";
+    private static final String SQL_ADD_REQUEST = "INSERT INTO requests (user_id, origin, destination, depart_date, return_date, adult_passengers, child_passengers, senior_passengers, max_stops, interval , queries_left) "
+            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -25,7 +30,20 @@ public class RequestDaoJdbcImpl implements RequestDao {
 
     @Override
     public RequestParameters add(RequestParameters requestData) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbcTemplate.update(SQL_ADD_REQUEST, requestData.getUserId(),
+                requestData.getOrigin(),
+                requestData.getDestination(),
+                requestData.getDepDate(),
+                requestData.getRetDate(),
+                requestData.getAdultPassengers(),
+                requestData.getChildPassengers(),
+                requestData.getSeniorPassengers(),
+                requestData.getMaxStops(),
+                requestData.getInterval(),
+                requestData.getNumberQueries());
+        requestData.setRequestId(jdbcTemplate.queryForObject(SQL_GET_LAST_ID, Integer.class));
+        
+        return requestData;
     }
 
     @Override
@@ -34,12 +52,17 @@ public class RequestDaoJdbcImpl implements RequestDao {
     }
 
     @Override
-    public RequestParameters getRequestById(int id) {
+    public List<RequestParameters> getRequestByUserId(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<RequestParameters> getRequestByUserId(int id) {
+    public RequestParameters getRequestByRequestId(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Flight> getDataByRequestId(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

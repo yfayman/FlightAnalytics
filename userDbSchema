@@ -1,27 +1,61 @@
 create database flights;
 use flights;
-CREATE TABLE `authority` (
-  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `authorities` (
+  `username` varchar(20) NOT NULL,
   `authority` varchar(20) NOT NULL,
-  PRIMARY KEY (`role_id`)
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
+  KEY `username` (`username`),
+  CONSTRAINT `fk_username` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL,
-  `enabled` tinyint(1) NOT NULL,
-  PRIMARY KEY (`user_id`),
+  `password` varchar(60) NOT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `first_name` varchar(20) NOT NULL,
+  `last_name` varchar(20) NOT NULL,
+  `email` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
   KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-CREATE TABLE `user_authority` (
-  `username` varchar(20) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  KEY `username` (`username`),
-  KEY `fk_authorities_1_idx` (`role_id`),
-  KEY `fk_authorities_2_idx` (`username`,`role_id`),
-  CONSTRAINT `fk_authority_1` FOREIGN KEY (`role_id`) REFERENCES `authority` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_username_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
+CREATE TABLE `requests` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `origin` varchar(40) NOT NULL,
+  `destination` varchar(40) NOT NULL,
+  `depart_date` date NOT NULL,
+  `return_date` date NOT NULL,
+  `adult_passengers` tinyint(4) NOT NULL DEFAULT '0',
+  `child_passengers` tinyint(4) NOT NULL DEFAULT '0',
+  `senior_passengers` tinyint(4) NOT NULL DEFAULT '0',
+  `max_stops` tinyint(4) NOT NULL DEFAULT '0',
+  `interval` mediumint(9) NOT NULL DEFAULT '60',
+  `queries_left` mediumint(9) NOT NULL,
+  PRIMARY KEY (`id`,`adult_passengers`),
+  KEY `fk_user_id_idx` (`user_id`),
+  CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `requestdata` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `request_id` int(11) NOT NULL,
+  `datetime_of_query` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `flightdata` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `requestdata_id` int(11) NOT NULL,
+  `price` decimal(6,2) NOT NULL,
+  `carrier` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_requestdata_id_idx` (`requestdata_id`),
+  CONSTRAINT `fk_requestdata_id` FOREIGN KEY (`requestdata_id`) REFERENCES `requestdata` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 

@@ -21,12 +21,12 @@ import java.util.List;
 public  class Request {
 
     private FlightQuery query;
-    private RequestParameters requestData;
+    private RequestParameters requestParameters;
     private long executionTime;
     
     public Request(FlightQuery query, RequestParameters requestor) {
         this.query = query;
-        this.requestData = requestor;
+        this.requestParameters = requestor;
         this.executionTime = System.currentTimeMillis();
        // this.executionTime = System.currentTimeMillis() + (requestor.getInterval() * 3600000);
     }
@@ -41,8 +41,8 @@ public  class Request {
     public List<Flight> execute() throws IOException{
         if(executionTime < System.currentTimeMillis()){
             List<Flight> execute = query.execute();
-            requestData.requestMade();
-            executionTime = System.currentTimeMillis() + requestData.getInterval();
+            requestParameters.requestMade();
+            executionTime = System.currentTimeMillis() + requestParameters.getInterval();
             // Pass information to Dao to store it in persistence layer
             
         return execute;
@@ -66,12 +66,12 @@ public  class Request {
     };
     
     public boolean hasRequest(){
-        return requestData.hasRequest();
+        return requestParameters.hasRequest();
     }
 
     
     private void populateQuery(){
-        requestData.populateQueryParams(query);
+        requestParameters.populateQueryParams(query);
     }
     
     

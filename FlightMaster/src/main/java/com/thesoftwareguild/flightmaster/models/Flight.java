@@ -21,7 +21,8 @@ public class Flight {
     private String fightId;
     private String origin;
     private String destination;
-    Date queryDate;
+    private String carrier;
+    private Date queryDate;
     private List<FlightLeg> flightlegs;
     private double price; 
     private int duration;
@@ -107,6 +108,14 @@ public class Flight {
 
     public void setRequestId(int requestId) {
         this.requestId = requestId;
+    }
+
+    public String getCarrier() {
+        return carrier;
+    }
+
+    public void setCarrier(String carrier) {
+        this.carrier = carrier;
     }
 
     

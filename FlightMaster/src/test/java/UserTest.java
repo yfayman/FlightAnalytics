@@ -23,21 +23,16 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
  */
 public class UserTest {
     
-    private ApplicationContext ctx;
-    private JdbcTemplate jdbcTemplate;
-    private UserDao userDao;
+    private ApplicationContext ctx = new ClassPathXmlApplicationContext("test-applicationContext.xml");
+    private JdbcTemplate jdbcTemplate = ctx.getBean("jdbcTemplate", JdbcTemplate.class);
+    private UserDao userDao = ctx.getBean("userDao", UserDao.class);
     private User testUser1;
     
     public UserTest() {
     }
     
     @Before
-    public void setUp() {
-        
-        ctx = new ClassPathXmlApplicationContext("test-applicationContext.xml");
-        jdbcTemplate = ctx.getBean("jdbcTemplate", JdbcTemplate.class);
-        userDao = ctx.getBean("userDao", UserDao.class);
-        
+    public void setUp() {   
         
         
         testUser1 = new User();
@@ -74,5 +69,17 @@ public class UserTest {
         // should never reach this point 
         Assert.assertTrue(false);
         
+    }
+    
+    @Test
+    public void getTest1(){
+        User user = userDao.getByUsername("bdole");
+        
+        Assert.assertNull(user.getUserId());
+        Assert.assertEquals("Bob", user.getFirstName());
+        Assert.assertEquals("Dole", user.getLastName());
+        Assert.assertEquals("bob@dole.com", user.getEmail());
+        Assert.assertEquals("president", user.getPassword());
+        Assert.assertEquals(1, user.getRoles().size());
     }
 }

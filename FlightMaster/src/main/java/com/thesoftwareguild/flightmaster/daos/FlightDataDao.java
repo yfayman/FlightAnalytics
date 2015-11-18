@@ -5,10 +5,13 @@
  */
 package com.thesoftwareguild.flightmaster.daos;
 
+import com.thesoftwareguild.flightmaster.models.Flight;
+import java.util.List;
+
 /**
- *
+ * Adds to the flightdata table.
  * @author yan
  */
 public interface FlightDataDao {
-    
+    public void addFlightDataToRequestById(int requestId, List<Flight> flights);
 }

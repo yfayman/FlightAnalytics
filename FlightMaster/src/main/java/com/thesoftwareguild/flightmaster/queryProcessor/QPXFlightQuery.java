@@ -144,6 +144,7 @@ public class QPXFlightQuery implements FlightQuery {
                         flight.addFlightLeg(segment1.getBookingCode(), 
                                 segment1.getFlight().getNumber(), 
                                 segment1.getFlight().getCarrier());   
+                        flight.setCarrier(segment1.getFlight().getCarrier());
                     }
                 }
                
