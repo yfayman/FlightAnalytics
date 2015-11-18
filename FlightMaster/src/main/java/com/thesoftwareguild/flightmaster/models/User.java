@@ -42,6 +42,8 @@ public class User {
     
     private List<String> authorities = new ArrayList<>();
 
+    private boolean enabled;
+    
     public int getUserId() {
         return userId;
     }
@@ -105,6 +107,23 @@ public class User {
     public void deleteAuthority(String authority){
         authorities.remove(authority);
     }
+
+    public List<String> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<String> authorities) {
+        this.authorities = authorities;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+    
     
     
     

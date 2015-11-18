@@ -5,29 +5,38 @@
  */
 package com.thesoftwareguild.flightmaster.daos;
 
-import com.thesoftwareguild.flightmaster.models.Flight;
 import com.thesoftwareguild.flightmaster.models.User;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Writes flight data to a database using JDBC Template. 
- * This data is connected to the requestor through a bridge table
+ * Writes flight data to a database using JDBC Template. This data is connected
+ * to the requestor through a bridge table
+ *
  * @author Yan
  */
-public class UserDaoJdbcImpl implements UserDao{
-    
+public class UserDaoJdbcImpl implements UserDao {
+
     private static final String SQL_GET_LAST_ID = "SELECT LAST_INSERT_ID()";
     private static final String SQL_ADD_USER = "INSERT INTO users (username, password, first_name, last_name, email ) VALUES(?, ?, ?, ?, ?)";
-    
-    private static final String SQL_ADD_AUTHORITY = "INSERT INTO authorities (username, authority) VALUES (?,?)";
-
+    private static final String SQL_UPDATE_USER = "UPDATE users SET  password = ?, first_name = ?, last_name = ?, email = ? WHERE username = ?";
+    private static final String SQL_DELETE_USER_BY_USERNAME = "DELETE FROM users WHERE username = ?"; 
     private static final String SQL_GET_USER_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
-    
+    private static final String SQL_GET_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
+
+    private static final String SQL_ADD_AUTHORITY = "INSERT INTO authorities (username, authority) VALUES (?,?)";
+    private static final String SQL_DELETE_AUTHORITIES_BY_USERNAME = "DELETE FROM authorities WHERE username = ?";
+
     private static final String SQL_SELECT_AUTHORITIES = "SELECT authority FROM authorities WHERE username = ?";
-    
+
+    private static final String SQL_GET_ALL_USERS = "SELECT * FROM users";
+
     private JdbcTemplate jdbcTemplate;
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -37,19 +46,19 @@ public class UserDaoJdbcImpl implements UserDao{
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public User getByUsername(String username) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return jdbcTemplate.queryForObject(SQL_GET_USER_BY_USERNAME, new UserMapper(), username);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public User getById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return jdbcTemplate.queryForObject(SQL_GET_USER_BY_ID, new UserMapper(), id);
     }
-    
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public List<User> list() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return jdbcTemplate.query(SQL_GET_ALL_USERS, new UserMapper());
     }
 
     @Override
@@ -64,26 +73,66 @@ public class UserDaoJdbcImpl implements UserDao{
                 newUser.getEmail());
         Integer id = jdbcTemplate.queryForObject(SQL_GET_LAST_ID, Integer.class);
         newUser.setUserId(id);
-        // add Authorities
-        for(String authority : newUser.getRoles())
-            jdbcTemplate.update(SQL_ADD_AUTHORITY, newUser.getUsername(), authority);
+        addAuthoritiesToUser(newUser);
         return newUser;
+    }
+
+    private void addAuthoritiesToUser(User newUser) throws DataAccessException {
+        
+        for (String authority : newUser.getRoles()) {
+            jdbcTemplate.update(SQL_ADD_AUTHORITY, newUser.getUsername(), authority);
+        }
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteUser(String username) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //Remove all authorities
+        jdbcTemplate.update(SQL_DELETE_AUTHORITIES_BY_USERNAME, username);
+        //Remove user
+        jdbcTemplate.update(SQL_DELETE_USER_BY_USERNAME, username);
+        
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //Remove all authorities
+        jdbcTemplate.update(SQL_DELETE_AUTHORITIES_BY_USERNAME, user.getUsername());
+        //Update user
+        jdbcTemplate.update(SQL_UPDATE_USER,
+                user.getPassword(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getUsername());
+                
+        // Add authorities
+        addAuthoritiesToUser(user);
+                       
     }
 
+    private final class UserMapper implements RowMapper<User> {
 
-    
-    
-    
+        @Override
+        public User mapRow(ResultSet rs, int i) throws SQLException {
+
+            User user = new User();
+            user.setUsername(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
+            user.setEnabled(rs.getInt("enabled") == 1 ? true : false);
+            user.setFirstName(rs.getString("first_name"));
+            user.setLastName(rs.getString("last_name"));
+            user.setEmail(rs.getString("email"));
+
+            List<String> authorities = jdbcTemplate.queryForList(SQL_SELECT_AUTHORITIES, String.class, user.getUsername());
+
+            user.setRoles(authorities);
+
+            return user;
+
+        }
+
+    }
+
 }

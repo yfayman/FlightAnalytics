@@ -6,6 +6,7 @@
 
 import com.thesoftwareguild.flightmaster.daos.UserDao;
 import com.thesoftwareguild.flightmaster.models.User;
+import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import static org.junit.Assert.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
@@ -38,10 +40,11 @@ public class UserTest {
         testUser1 = new User();
         testUser1.setFirstName("Bob");
         testUser1.setLastName("Dole");
-        testUser1.setUsername("bdole");
+        testUser1.setUsername("bdole2");
         testUser1.setEmail("bob@dole.com");
         testUser1.setPassword("president");
         testUser1.addAuthority("USER");
+       
         
         
     }
@@ -72,14 +75,87 @@ public class UserTest {
     }
     
     @Test
-    public void getTest1(){
-        User user = userDao.getByUsername("bdole");
+    public void getByUserName1(){
+        userDao.addUser(testUser1);
+        User user = userDao.getByUsername("bdole2");
         
-        Assert.assertNull(user.getUserId());
+        Assert.assertNotNull(user.getUserId());
         Assert.assertEquals("Bob", user.getFirstName());
         Assert.assertEquals("Dole", user.getLastName());
         Assert.assertEquals("bob@dole.com", user.getEmail());
         Assert.assertEquals("president", user.getPassword());
         Assert.assertEquals(1, user.getRoles().size());
+    }
+    
+    @Test
+    public void getByUserId1(){
+        User ret = userDao.addUser(testUser1);
+        
+        User user = userDao.getById(ret.getUserId());
+        
+        Assert.assertEquals(ret.getEmail(), user.getEmail());
+        Assert.assertEquals(ret.getFirstName(), user.getFirstName());
+        Assert.assertEquals(ret.getLastName(), user.getLastName());
+        Assert.assertEquals(ret.getUsername(), user.getUsername());
+        Assert.assertEquals(ret.getRoles().size(), user.getRoles().size());
+        Assert.assertNotEquals(0, user.getRoles().size());
+    }
+    @Test
+    public void getAllUsers(){
+        userDao.addUser(testUser1);
+        
+        User testUser2 = new User();
+        testUser2.setFirstName("George");
+        testUser2.setLastName("Bush");
+        testUser2.setUsername("gwb257");
+        testUser2.setEmail("gwb@whitehouse.gov");
+        testUser2.setPassword("president");
+        testUser2.addAuthority("USER");
+        userDao.addUser(testUser2);
+        
+         User testUser3 = new User();
+        testUser3.setFirstName("Al");
+        testUser3.setLastName("Gore");
+        testUser3.setUsername("greenman");
+        testUser3.setEmail("al@gore.com");
+        testUser3.setPassword("president");
+        testUser3.addAuthority("USER");
+        userDao.addUser(testUser3);
+        
+        List<User> ret = userDao.list();
+        
+        Assert.assertEquals(3, ret.size());
+    }
+    
+    @Test(expected = EmptyResultDataAccessException.class)
+    public void deleteUser1(){
+        userDao.addUser(testUser1);
+        userDao.deleteUser(testUser1.getUsername());
+        
+        // should throw exception
+        userDao.getByUsername(testUser1.getUsername());
+        
+    }
+    
+    @Test
+    public void updateTest1(){
+        userDao.addUser(testUser1);
+        
+   
+        testUser1.setFirstName("Bobby");
+        testUser1.setLastName("Boucher");
+        testUser1.setEmail("bboucher@gmail.com");
+        testUser1.setPassword("waterboy");
+        
+        userDao.updateUser(testUser1);
+        
+        User res = userDao.getByUsername(testUser1.getUsername());
+        
+        Assert.assertEquals("Bobby", res.getFirstName());
+        Assert.assertEquals("Boucher", res.getLastName());
+        Assert.assertEquals("bboucher@gmail.com", res.getEmail());
+        Assert.assertEquals("waterboy", res.getPassword());
+        Assert.assertEquals(1, res.getAuthorities().size());
+        
     }
 }
