@@ -29,16 +29,19 @@
         <property name="dataSource" ref="datasource" />
     </bean>
     
-    <bean id="requestDao" class="com.thesoftwareguild.flightmaster.daos.RequestDaoJdbcImpl">
+    <bean id="requestDao" class="com.thesoftwareguild.flightmaster.daos.RequestDaoJdbcImpl" >
         <property name="jdbcTemplate" ref="jdbcTemplate" />
+    
     </bean>
     
     <bean id="flightDataDao" class="com.thesoftwareguild.flightmaster.daos.FlightDataDaoJdbcImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
+      
     </bean>
     
-    <bean id="userDao" class="com.thesoftwareguild.flightmaster.daos.UserDaoJdbcImpl">
+    <bean id="userDaoJdbc" class="com.thesoftwareguild.flightmaster.daos.UserDaoJdbcImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        
     </bean>
     
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" >

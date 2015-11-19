@@ -124,6 +124,7 @@ public class UserDaoJdbcImpl implements UserDao {
             user.setFirstName(rs.getString("first_name"));
             user.setLastName(rs.getString("last_name"));
             user.setEmail(rs.getString("email"));
+            user.setUserId(rs.getInt("id"));
 
             List<String> authorities = jdbcTemplate.queryForList(SQL_SELECT_AUTHORITIES, String.class, user.getUsername());
 
