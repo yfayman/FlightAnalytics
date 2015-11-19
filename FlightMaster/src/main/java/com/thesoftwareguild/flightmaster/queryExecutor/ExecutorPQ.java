@@ -5,14 +5,10 @@
  */
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
-import com.thesoftwareguild.flightmaster.models.Flight;
-import java.io.IOException;
-import java.util.List;
 import java.util.PriorityQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -115,6 +111,7 @@ public class ExecutorPQ {
      * This method starts the single thread PQ. It should be called when the
      * program is initialized.
      */
+    @PostConstruct
     public void run() {
         queryExecutor.execute(pqThread);
     }

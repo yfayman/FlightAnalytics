@@ -25,19 +25,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/user")
 public class UserController {
 
-    @Autowired
+  
     private PasswordEncoder encoder;
-    
-    @Autowired
     private UserDao userDao;
 
-//    public UserController(PasswordEncoder encoder, UserDao userDao) {
-//        this.encoder = encoder;
-//        this.userDao = userDao;
-//    }
-
-    public UserController() {
+    @Autowired
+    public UserController(@Qualifier("encoder")PasswordEncoder encoder,@Qualifier("userDaoJdbc") UserDao userDao) {
+        this.encoder = encoder;
+        this.userDao = userDao;
     }
+
+ 
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
@@ -51,12 +49,5 @@ public class UserController {
         return user;
     }
 
-    public void setEncoder(PasswordEncoder encoder) {
-        this.encoder = encoder;
-    }
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
 
 }

@@ -10,7 +10,6 @@ import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import javax.transaction.Transaction;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Propagation;
@@ -109,5 +108,6 @@ public class RequestDaoJdbcImpl implements RequestDao {
         }
 
     }
+   
 
 }

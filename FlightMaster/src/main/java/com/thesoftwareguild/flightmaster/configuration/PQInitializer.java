@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.thesoftwareguild.flightmaster.queryExecutor;
+package com.thesoftwareguild.flightmaster.configuration;
 
+import com.thesoftwareguild.flightmaster.queryExecutor.Request;
 import java.util.PriorityQueue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

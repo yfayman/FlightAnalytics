@@ -10,11 +10,8 @@ import com.thesoftwareguild.flightmaster.queryExecutor.ExecutorPQ;
 import com.thesoftwareguild.flightmaster.queryExecutor.Request;
 import com.thesoftwareguild.flightmaster.queryProcessor.MockFlightQuery;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.web.context.support.XmlWebApplicationContext;
 
 /**
  * This class runs the simulation using the MockFlightQuery. This should be run
@@ -80,7 +77,7 @@ public class SimulatorV1 {
 
     public static void main(String[] args) {
         SimulatorV1 sim = new SimulatorV1();
-        sim.pq.run();
+//        sim.pq.run();
 
     }
 }
