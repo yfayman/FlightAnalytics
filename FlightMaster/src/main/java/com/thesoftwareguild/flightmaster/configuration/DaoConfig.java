@@ -5,8 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.configuration;
 
-import com.thesoftwareguild.flightmaster.daos.FlightDataDaoHibernateImpl;
-import com.thesoftwareguild.flightmaster.daos.FlightDataDaoJdbcImpl;
+
 import com.thesoftwareguild.flightmaster.daos.RequestDaoHibernateImpl;
 import com.thesoftwareguild.flightmaster.daos.RequestDaoJdbcImpl;
 import com.thesoftwareguild.flightmaster.daos.UserDaoHibernateImpl;
@@ -69,12 +68,7 @@ public class DaoConfig {
         return dao;
     }
     
-    @Bean
-    public FlightDataDaoJdbcImpl flightDataDaoJdbc(){
-        FlightDataDaoJdbcImpl dao = new FlightDataDaoJdbcImpl();
-        dao.setJdbcTemplate(jdbcTemplate);
-        return dao;        
-    }
+
     
     @Bean
     public UserDaoJdbcImpl userDaoJdbc(){
@@ -97,11 +91,5 @@ public class DaoConfig {
         return dao;
     }
     
-    @Bean
-    public FlightDataDaoHibernateImpl flightDataDaoHibernate(){
-        FlightDataDaoHibernateImpl dao = new FlightDataDaoHibernateImpl();
-        dao.setSessionFactory(sessionFactory);
-        return dao;
-    }
      
 }

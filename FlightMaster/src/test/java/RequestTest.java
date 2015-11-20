@@ -6,9 +6,15 @@
 
 import com.thesoftwareguild.flightmaster.daos.RequestDao;
 import com.thesoftwareguild.flightmaster.daos.UserDao;
+import com.thesoftwareguild.flightmaster.models.Flight;
 import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import com.thesoftwareguild.flightmaster.models.User;
+import com.thesoftwareguild.flightmaster.queryProcessor.MockFlightQuery;
+import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,7 +34,7 @@ public class RequestTest {
     private JdbcTemplate jdbcTemplate  = ctx.getBean("jdbcTemplate", JdbcTemplate.class);
     private RequestDao requestDao = ctx.getBean("requestDao", RequestDao.class);
     private UserDao userDao = ctx.getBean("userDao", UserDao.class);
-    RequestParameters request;
+    RequestParameters request, request2;
 
     public RequestTest() {
     }
@@ -56,8 +62,19 @@ public class RequestTest {
         request.setOrigin("ORD");
         request.setRetDate(new Date(115,11,30));
         
+        request2 = new RequestParameters();
+        request2.setAdultPassengers(1);
+        request2.setDepDate(new Date(115,11,2));
+        request2.setDestination("LAX");
+        request2.setInterval(120);
+        request2.setMaxStops(1);
+        request2.setNumberQueries(20);
+        request2.setOrigin("ORD");
+        request2.setRetDate(new Date(115,11,5));
+        
         int id = userDao.getByUsername("bdole").getUserId();
         request.setUserId(id);
+        request2.setUserId(id);
     }
 
     @After
@@ -105,5 +122,48 @@ public class RequestTest {
         int id = requestDao.add(request).getRequestId();
         requestDao.delete(id);
         requestDao.getRequestByRequestId(id);
+    }
+    
+    @Test
+    public void addFlights(){
+        int id = requestDao.add(request).getRequestId();
+        try {
+            MockFlightQuery mfq = new MockFlightQuery();
+            List<Flight> flights = mfq.execute();
+            
+            requestDao.addFlights(id, flights);
+            
+            Assert.assertTrue(true);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(RequestTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    @Test
+    public void getFlightData(){
+        int id = requestDao.add(request).getRequestId();
+        try {
+            MockFlightQuery mfq = new MockFlightQuery();
+            List<Flight> flights = mfq.execute();
+            
+            requestDao.addFlights(id, flights);
+            List<Flight> result = requestDao.getDataByRequestId(id);
+            Assert.assertEquals(10, result.size());
+            
+        } catch (IOException ex) {
+            Logger.getLogger(RequestTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @Test
+    public void getRequestsByUserId(){
+        
+        RequestParameters req = requestDao.add(request);
+        requestDao.add(request2);
+        
+        List<RequestParameters> result = requestDao.getRequestsByUserId(req.getUserId());
+        
+        Assert.assertEquals(2, result.size());
+        
     }
 }

@@ -19,13 +19,13 @@ public interface RequestDao {
     
     public void addFlights(int requestId, List<Flight> flights);
     
-    public void delete(int id);
+    public void delete(int requestId);
     
-    public RequestParameters getRequestByRequestId(int id);
+    public RequestParameters getRequestByRequestId(int requestId);
     
-    public List<RequestParameters> getRequestsByUserId(int id);
+    public List<RequestParameters> getRequestsByUserId(int userId);
     
-    public List<Flight> getDataByRequestId(int id);
+    public List<Flight> getDataByRequestId(int requestId);
     
     
 }

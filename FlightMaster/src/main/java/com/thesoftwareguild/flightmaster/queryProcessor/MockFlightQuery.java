@@ -37,17 +37,21 @@ public class MockFlightQuery implements FlightQuery {
         return new BigInteger(130, random).toString(32);
     }
 
+    // returns a random list of 10 flights
     @Override
     public List<Flight> execute() throws IOException {
         DecimalFormat df = new DecimalFormat("#####.##");
         List<Flight> retList = new ArrayList<>();
-        System.out.println("Flight Query Executed: " + origin + " to " + dest);
+        Date timeOfQuery = new Date(System.currentTimeMillis());
+        //System.out.println("Flight Query Executed: " + origin + " to " + dest);
         for (int i = 0; i < 10; i++) {
             Flight flight1 = new Flight();
             flight1.setPrice(Math.random() * 100 + 1);
             flight1.setFightId(new Integer(i+1).toString());
             flight1.setDuration((int) (60 + Math.random() * 400));
             flight1.addFlightLeg(this.nextSessionId(), new Integer((int) (Math.random() * 999)).toString(), "AA");
+            flight1.setQueryTime(timeOfQuery);
+            flight1.setCarrier("AA");
             retList.add(flight1);
         }
 

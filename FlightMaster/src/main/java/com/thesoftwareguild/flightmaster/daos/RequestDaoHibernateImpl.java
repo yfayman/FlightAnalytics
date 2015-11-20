@@ -18,6 +18,8 @@ public class RequestDaoHibernateImpl implements RequestDao{
     
     private SessionFactory sessionFactory;
 
+
+
     @Override
     public RequestParameters add(RequestParameters requestData) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -29,27 +31,27 @@ public class RequestDaoHibernateImpl implements RequestDao{
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int requestId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public RequestParameters getRequestByRequestId(int id) {
+    public RequestParameters getRequestByRequestId(int requestId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<RequestParameters> getRequestsByUserId(int id) {
+    public List<RequestParameters> getRequestsByUserId(int userId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Flight> getDataByRequestId(int id) {
+    public List<Flight> getDataByRequestId(int requestId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+        
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-    
 }
