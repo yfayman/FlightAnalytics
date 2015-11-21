@@ -138,6 +138,15 @@ public class UserTest {
     }
     
     @Test
+    public void deleteUser2(){
+        userDao.addUser(testUser1);
+        userDao.deleteUser(testUser1.getUsername());
+        
+        Assert.assertEquals(0, jdbcTemplate.queryForList("SELECT id FROM authorities", Integer.class).size());
+        Assert.assertEquals(0, jdbcTemplate.queryForList("SELECT id FROM users", Integer.class).size());
+    }
+    
+    @Test
     public void updateTest1(){
         userDao.addUser(testUser1);
         

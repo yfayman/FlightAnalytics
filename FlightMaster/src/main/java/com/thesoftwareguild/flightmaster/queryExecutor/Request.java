@@ -5,15 +5,17 @@
  */
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
+import com.thesoftwareguild.flightmaster.daos.RequestDao;
 import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import com.thesoftwareguild.flightmaster.models.Flight;
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightQuery;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Combines the who(requestor) and the how(query) to execute a request. Execution
+ * Combines the who(requestParameters) and the how(query) to execute a request. Execution
  * time is set to when the requestor is created. After execute is called, the next
  * execution time is set to current time + the interval as specified by the requestor
  * @author Yan Fayman
@@ -23,6 +25,7 @@ public  class Request {
     private FlightQuery query;
     private RequestParameters requestParameters;
     private long executionTime;
+
     
     public Request(FlightQuery query, RequestParameters requestor) {
         this.query = query;
@@ -73,7 +76,13 @@ public  class Request {
     private void populateQuery(){
         requestParameters.populateQueryParams(query);
     }
-    
-    
 
+    public int getRequestId(){
+        return requestParameters.getRequestId();
+    }
+    public int getUserId(){
+        return requestParameters.getUserId();
+    }
+  
+    
 }

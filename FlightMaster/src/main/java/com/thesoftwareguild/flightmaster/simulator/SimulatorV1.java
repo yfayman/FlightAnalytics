@@ -12,6 +12,8 @@ import com.thesoftwareguild.flightmaster.queryProcessor.MockFlightQuery;
 import java.util.Date;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * This class runs the simulation using the MockFlightQuery. This should be run
@@ -76,6 +78,7 @@ public class SimulatorV1 {
     }
 
     public static void main(String[] args) {
+       
         SimulatorV1 sim = new SimulatorV1();
 //        sim.pq.run();
 

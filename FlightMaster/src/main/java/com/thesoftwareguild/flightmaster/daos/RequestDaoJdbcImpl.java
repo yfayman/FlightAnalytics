@@ -33,10 +33,13 @@ public class RequestDaoJdbcImpl implements RequestDao {
     private static final String SQL_ADD_REQUEST = "INSERT INTO requests (user_id, origin, destination, depart_date, return_date, adult_passengers, child_passengers, senior_passengers, max_stops, query_interval , queries_left) "
             + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_GET_REQUESTS_BY_USERID = "SELECT * FROM requests WHERE user_id = ?";
-    private static final String SQL_GET_REQUEST_BY_ID = "SELECT * FROM requests WHERE id = ?";
-    private static final String SQL_DELETE_REQUEST_BY_ID = "DELETE FROM requests WHERE id = ?";
+    private static final String SQL_GET_REQUEST_BY_REQUESTID = "SELECT * FROM requests WHERE id = ?";
+    private static final String SQL_DELETE_REQUEST_BY_REQUESTID = "DELETE FROM requests WHERE id = ?";
+    private static final String SQL_DELETE_REQUESTDATA_BY_REQUESTID = "DELETE FROM requestdata WHERE request_id = ?";
 
     private static final String SQL_ADD_REQUESTDATA_POINT = "INSERT INTO requestdata (request_id, datetime_of_query) VALUES(?, ?)";
+    private static final String SQL_GET_REQUESTDATA_POINTS_BY_REQUESTID = "SELECT id FROM requestdata WHERE request_id = ?";
+    private static final String SQL_DELETE_FLIGHT_DATA_BY_REQUESTDATAID = "DELETE FROM flightdata WHERE requestdata_id = ?";
     private static final String SQL_ADD_FLIGHT_DATA = "INSERT INTO flightdata (requestdata_id, price, carrier) VALUES(?, ?, ?)";
 
     private static final String SQL_GET_FLIGHTDATA_BY_REQUEST_ID =  "SELECT requests.id, requests.origin, requests.destination, requestdata.datetime_of_query, flightdata.price, flightdata.carrier FROM requests "
@@ -70,7 +73,15 @@ public class RequestDaoJdbcImpl implements RequestDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void delete(int requestId) {
-        jdbcTemplate.update(SQL_DELETE_REQUEST_BY_ID, requestId);
+        // remove flight data
+        // remove request data
+        List<Integer> requestDataIds = jdbcTemplate.queryForList(SQL_GET_REQUESTDATA_POINTS_BY_REQUESTID, Integer.class, requestId);
+        for (Integer requestDataId : requestDataIds) {
+            jdbcTemplate.update(SQL_DELETE_FLIGHT_DATA_BY_REQUESTDATAID, requestDataId);
+            
+        }
+        jdbcTemplate.update(SQL_DELETE_REQUESTDATA_BY_REQUESTID, requestId);
+        jdbcTemplate.update(SQL_DELETE_REQUEST_BY_REQUESTID, requestId);
     }
 
     @Override
@@ -82,7 +93,7 @@ public class RequestDaoJdbcImpl implements RequestDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public RequestParameters getRequestByRequestId(int requestId) {
-        return jdbcTemplate.queryForObject(SQL_GET_REQUEST_BY_ID, new RequestMapper(), requestId);
+        return jdbcTemplate.queryForObject(SQL_GET_REQUEST_BY_REQUESTID, new RequestMapper(), requestId);
     }
 
     @Override

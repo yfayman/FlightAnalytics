@@ -21,6 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -103,6 +104,15 @@ public class RequestTest {
 
     }
     
+    @Test(expected = DataIntegrityViolationException.class)
+    public void addTest2(){
+        RequestParameters rp = new RequestParameters();
+        requestDao.add(rp);
+        
+        //Should never get here
+        Assert.assertTrue(true);
+    }
+    
     @Test
     public void getTest1(){
         RequestParameters added = requestDao.add(request);
@@ -122,6 +132,28 @@ public class RequestTest {
         int id = requestDao.add(request).getRequestId();
         requestDao.delete(id);
         requestDao.getRequestByRequestId(id);
+    }
+    
+    @Test // Deleting a request that has associated data
+    public void deleteTest2(){
+         int id = requestDao.add(request).getRequestId();
+        try {
+            MockFlightQuery mfq = new MockFlightQuery();
+            List<Flight> flights = mfq.execute();
+            
+            requestDao.addFlights(id, flights);
+
+            
+            requestDao.delete(id);
+            
+             // All tables should be empty
+             Assert.assertEquals(0, jdbcTemplate.queryForList("SELECT id FROM requests", Integer.class).size());
+             Assert.assertEquals(0, jdbcTemplate.queryForList("SELECT id FROM requestdata", Integer.class).size());
+             Assert.assertEquals(0, jdbcTemplate.queryForList("SELECT id FROM flightdata", Integer.class).size());
+            
+        } catch (IOException ex) {
+            Logger.getLogger(RequestTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Test

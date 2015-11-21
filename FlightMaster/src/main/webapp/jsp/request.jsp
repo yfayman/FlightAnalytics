@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>FlightMaster Home Page</title>
+        <title>Flight Analytics Home Page</title>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
@@ -13,7 +13,7 @@
         <link href="${pageContext.request.contextPath}/css/home.css" rel="stylesheet">
 
         <!-- SWC Icon -->
-        <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/icon.png">
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/plane-icon.png">
 
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
@@ -26,12 +26,12 @@
             <div class="container " id="request-input-form-container">
                 <div class="col-md-offset-2">
 
-                    <div class ="col-md-8 " id="request-input-form" style="background-color:#03A9F4">
+                    <div class ="col-md-8 default-primary-color" id="request-input-form" style="background-color:#03A9F4">
                         <div class ="row ">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="departingLoc" >From</label>
-                                    <input type="text" class="form-control" id="departingLoc" name="origin" placeholder="Airport or City">
+                                    <input type="text" class="form-control airport" id="departingLoc" name="origin" placeholder="Airport or City">
                                 </div>
                                 <div class="form-group">
                                     <label for="departingDate">Departure Date</label>
@@ -41,7 +41,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="arrivingLoc">To</label>
-                                    <input type="text" class="form-control" id="arrivingLoc" placeholder="Airport or City">
+                                    <input type="text" class="form-control airport" id="arrivingLoc" placeholder="Airport or City">
                                 </div>
                                 <div class="form-group">
                                     <label for="arrivingDate">Return Date</label>
@@ -136,7 +136,17 @@
                 $(".datepicker").datepicker();
             });
         </script>
-
-    </body>
-</html>
+        <script>
+            $(function () {
+                $(".airport").autocomplete({
+                    source: function(request, response){
+                        $.getJSON('airportCodes', {}, function(data){
+                            response(data);
+                        });
+                    }
+                });
+            });
+        </script>
+        </body>
+        </html>
 

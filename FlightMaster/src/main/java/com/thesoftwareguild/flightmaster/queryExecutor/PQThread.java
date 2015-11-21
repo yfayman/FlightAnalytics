@@ -5,6 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
+import com.thesoftwareguild.flightmaster.daos.RequestDao;
 import com.thesoftwareguild.flightmaster.models.Flight;
 import java.io.IOException;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.PriorityQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,7 +22,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PQThread implements Runnable{
-    
+    @Qualifier("requestDaoJdbc")
+    @Autowired
+    private RequestDao requestDao;
     
     public PQThread(){
     }
@@ -37,12 +41,12 @@ public class PQThread implements Runnable{
                         try {
                             Request request = pq.poll();
                             List<Flight> result = request.execute();
+                            requestDao.addFlights(request.getRequestId(), result);
                             if(request.hasRequest())
                                 pq.add(request);
                             else 
                                 System.out.println("Requests depleted");
-                            // add code here to deal with storing the result in the database
-                           
+                                                         
                         } catch (IOException ex) {
                             Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -62,6 +66,10 @@ public class PQThread implements Runnable{
 
     public void setPq(PriorityQueue<Request> pq) {
         this.pq = pq;
+    }
+
+    public void setRequestDao(RequestDao requestDao) {
+        this.requestDao = requestDao;
     }
     
    

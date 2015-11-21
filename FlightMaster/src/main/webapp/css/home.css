@@ -29,7 +29,7 @@ body{
     padding: 5%;
 
 }
-#request-input-form-container{
+#request-input-form-container,#aboutContainer{
     margin-top: 15%;
 
 }
