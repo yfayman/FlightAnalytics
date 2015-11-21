@@ -5,6 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.daos;
 
+
 import com.thesoftwareguild.flightmaster.models.Flight;
 import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import java.util.List;
@@ -36,11 +37,6 @@ public class RequestDaoHibernateImpl implements RequestDao{
     }
 
     @Override
-    public RequestParameters getRequestByRequestId(int requestId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public List<RequestParameters> getRequestsByUserId(int userId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -51,7 +47,14 @@ public class RequestDaoHibernateImpl implements RequestDao{
     }
         
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
+  
+
+    @Override
+    public RequestParameters getRequestByRequestId(int requestId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+      public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 }

@@ -5,6 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.daos;
 
+
 import com.thesoftwareguild.flightmaster.models.Flight;
 import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import java.sql.PreparedStatement;
@@ -42,10 +43,10 @@ public class RequestDaoJdbcImpl implements RequestDao {
     private static final String SQL_DELETE_FLIGHT_DATA_BY_REQUESTDATAID = "DELETE FROM flightdata WHERE requestdata_id = ?";
     private static final String SQL_ADD_FLIGHT_DATA = "INSERT INTO flightdata (requestdata_id, price, carrier) VALUES(?, ?, ?)";
 
-    private static final String SQL_GET_FLIGHTDATA_BY_REQUEST_ID =  "SELECT requests.id, requests.origin, requests.destination, requestdata.datetime_of_query, flightdata.price, flightdata.carrier FROM requests "
+    private static final String SQL_GET_FLIGHTDATA_BY_REQUEST_ID = "SELECT requests.id, requests.origin, requests.destination, requestdata.datetime_of_query, flightdata.price, flightdata.carrier FROM requests "
             + "INNER JOIN requestdata ON requests.id = requestdata.request_id "
             + "INNER JOIN flightdata ON requestdata.id = flightdata.requestdata_id WHERE requests.id = ?";
-    
+
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -78,7 +79,7 @@ public class RequestDaoJdbcImpl implements RequestDao {
         List<Integer> requestDataIds = jdbcTemplate.queryForList(SQL_GET_REQUESTDATA_POINTS_BY_REQUESTID, Integer.class, requestId);
         for (Integer requestDataId : requestDataIds) {
             jdbcTemplate.update(SQL_DELETE_FLIGHT_DATA_BY_REQUESTDATAID, requestDataId);
-            
+
         }
         jdbcTemplate.update(SQL_DELETE_REQUESTDATA_BY_REQUESTID, requestId);
         jdbcTemplate.update(SQL_DELETE_REQUEST_BY_REQUESTID, requestId);
@@ -149,7 +150,7 @@ public class RequestDaoJdbcImpl implements RequestDao {
         }
 
     }
-    
+
     private final class FlightMapper implements RowMapper<Flight> {
 
         @Override
@@ -163,7 +164,7 @@ public class RequestDaoJdbcImpl implements RequestDao {
             flight.setRequestId(rs.getInt("id"));
             return flight;
         }
-        
+
     }
 
 }

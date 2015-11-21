@@ -56,7 +56,7 @@ public class RequestController {
         }
         
     }
-    
+      
     private User getLoggedInUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userDao.getByUsername(username);
