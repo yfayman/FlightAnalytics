@@ -6,11 +6,12 @@
 package com.thesoftwareguild.flightmaster.configuration;
 
 
+import com.thesoftwareguild.flightmaster.daos.AirportDataDaoHibernateImpl;
+import com.thesoftwareguild.flightmaster.daos.AirportDataDaoJdbcImpl;
 import com.thesoftwareguild.flightmaster.daos.RequestDaoHibernateImpl;
 import com.thesoftwareguild.flightmaster.daos.RequestDaoJdbcImpl;
 import com.thesoftwareguild.flightmaster.daos.UserDaoHibernateImpl;
 import com.thesoftwareguild.flightmaster.daos.UserDaoJdbcImpl;
-import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -56,7 +57,7 @@ public class DaoConfig {
     
     @Bean
     public JdbcTemplate jdbcTemplate(){
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.setDataSource(datasource);
         return jdbcTemplate;
     }
@@ -91,5 +92,18 @@ public class DaoConfig {
         return dao;
     }
     
+    @Bean
+    public AirportDataDaoJdbcImpl airportDataDaoJdbc(){
+        AirportDataDaoJdbcImpl dao = new AirportDataDaoJdbcImpl();
+        dao.setJdbcTemplate(jdbcTemplate);
+        return dao;
+    }
+    
+    @Bean
+    public AirportDataDaoHibernateImpl airportDataDaoHibernate(){
+        AirportDataDaoHibernateImpl dao = new AirportDataDaoHibernateImpl();
+        dao.setSessionFactory(sessionFactory);
+        return dao;
+    }
      
 }

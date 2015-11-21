@@ -5,8 +5,10 @@
  */
 package com.thesoftwareguild.flightmaster.controllers;
 
+import com.thesoftwareguild.flightmaster.daos.AirportDataDao;
 import com.thesoftwareguild.flightmaster.daos.RequestDao;
 import com.thesoftwareguild.flightmaster.daos.UserDao;
+import com.thesoftwareguild.flightmaster.models.AirportData;
 import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import com.thesoftwareguild.flightmaster.models.User;
 import javax.validation.Valid;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Handles all traffic that involves query requests
@@ -28,11 +31,15 @@ public class RequestController {
    
     private RequestDao requestDao;
     private UserDao userDao;
+    private AirportDataDao airportDataDao;
 
     @Autowired
-    public RequestController(@Qualifier("requestDaoJdbc")RequestDao requestDao, @Qualifier("userDaoJdbc")UserDao userDao) {
+    public RequestController(@Qualifier("requestDaoJdbc")RequestDao requestDao,
+            @Qualifier("userDaoJdbc")UserDao userDao,
+            @Qualifier("airportDataDaoJdbc")AirportDataDao airportDataDao) {
         this.requestDao = requestDao;
         this.userDao = userDao;
+        this.airportDataDao = airportDataDao;
     }
     
     /*
@@ -55,6 +62,13 @@ public class RequestController {
             requestDao.add(req);
         }
         
+    }
+    
+    // Sends all IATA codes to the client 
+    @RequestMapping(value = "/airportData", method = RequestMethod.GET)
+    @ResponseBody
+    public AirportData getAirportData(){
+        return airportDataDao.getAllAirports();
     }
       
     private User getLoggedInUser() {

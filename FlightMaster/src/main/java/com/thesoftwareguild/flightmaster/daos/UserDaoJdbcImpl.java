@@ -77,6 +77,7 @@ public class UserDaoJdbcImpl implements UserDao {
         return newUser;
     }
 
+    @Transactional(propagation = Propagation.NESTED)
     private void addAuthoritiesToUser(User newUser) throws DataAccessException {
         
         for (String authority : newUser.getRoles()) {

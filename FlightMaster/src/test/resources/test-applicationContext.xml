@@ -36,6 +36,10 @@
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     
+    <bean id="airportDataDao" class="com.thesoftwareguild.flightmaster.daos.AirportDataDaoJdbcImpl" >
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+    
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" >
         <property name="dataSource" ref="datasource" />
     </bean>

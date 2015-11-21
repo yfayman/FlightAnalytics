@@ -54,3 +54,26 @@ function dateToUnixTime(dateInput) {
         return f.getTime();
     }
 }
+
+var airports = [];
+// Populates airports with json from server
+(function(){
+    $.ajax({
+        url: "/FlightMaster/request/airportData",
+        method : "GET",
+        dataType: 'json',
+      //  async: false,
+        success : function(data){
+            for(var i = 0; i < data.iataCodes.length; i++){
+                airports.push(data.iataCodes[i]);
+            }
+           
+        },
+        error: function(data,status){
+            console.log("Fail");
+        },
+        headers: {
+            "Accepts" : "application/json"
+        }
+    });
+})();
