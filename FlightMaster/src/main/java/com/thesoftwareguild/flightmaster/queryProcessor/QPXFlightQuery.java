@@ -30,29 +30,31 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.stereotype.Component;
 
 /**
- * Uses QPXFlightQuery to make flight requests.API KEY and Application Name can be hardcoded
- * into the class initialization. I'm reading them in from a file to hide the key as this
- * project is on GitHub
+ * Uses QPXFlightQuery to make flight requests.API KEY and Application Name can
+ * be hardcoded into the class initialization. I'm reading them in from a file
+ * to hide the key as this project is on GitHub
+ *
  * @author Yan
  */
 public class QPXFlightQuery implements FlightQuery {
 
     private final int MAX_FLIGHTS_RETURNED = 10;
-    private  String APPLICATION_NAME;
-    private  String API_KEY;
+    private String APPLICATION_NAME;
+    private String API_KEY;
     private HttpTransport httpTransport;
     private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     private int requestId;
-    private int adultPassengers = 0;
-    private int childPassengers = 0;
-    private int seniorPassengers = 0;
-    private int infantInSeatCount = 0;
+    private int adultPassengers;
+    private int childPassengers;
+    private int seniorPassengers;
+    private int infantInSeatCount;
 
-    private int maxStops = 0;
+    private int maxStops;
 
     private String origin;
     private String destination;
@@ -67,23 +69,21 @@ public class QPXFlightQuery implements FlightQuery {
             Scanner sc = new Scanner(new FileReader("apikey.txt"));
             this.APPLICATION_NAME = sc.nextLine();
             this.API_KEY = sc.nextLine();
+            sc.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(QPXFlightQuery.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    
-    
-    
     /**
      *
-     * @return
-     * @throws IOException
+     * @return @throws IOException
      */
     @Override
     public List<Flight> execute() throws IOException {
-         //FlightQueryResult> resultList = new ArrayList<>();
-         List<Flight> retList = new ArrayList<>();
+
+        //FlightQueryResult> resultList = new ArrayList<>();
+        List<Flight> retList = new ArrayList<>();
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
             QPXExpress qpXExpress = new QPXExpress.Builder(httpTransport, JSON_FACTORY, null).setApplicationName(APPLICATION_NAME)
@@ -124,38 +124,53 @@ public class QPXFlightQuery implements FlightQuery {
             parameters.setRequest(request);
 
             TripsSearchResponse list = qpXExpress.trips().search(parameters).execute(); // executes the search
-           
+
             List<TripOption> tripResults = list.getTrips().getTripOption();
 
             for (int i = 0; i < tripResults.size(); i++) {
                 Flight flight = new Flight();
+
+                flight.setRequestId(requestId);
                 flight.setOrigin(origin);
                 flight.setDestination(destination);
                 flight.setQueryTime(new Date(System.currentTimeMillis()));
-                
+
                 TripOption tripResult = tripResults.get(i);
-                flight.setFightId(tripResult.getId());   
+                flight.setFightId(tripResult.getId());
                 Integer totalDuration = 0;
                 flight.setPrice(Double.parseDouble(tripResult.getSaleTotal().replaceAll("[a-zA-Z]", "")));
                 for (int j = 0; j < tripResult.getSlice().size(); j++) {
                     List<SegmentInfo> segment = tripResult.getSlice().get(j).getSegment();
                     totalDuration += tripResult.getSlice().get(j).getDuration();
                     for (SegmentInfo segment1 : segment) {
-                        flight.addFlightLeg(segment1.getBookingCode(), 
-                                segment1.getFlight().getNumber(), 
-                                segment1.getFlight().getCarrier());   
+                        flight.addFlightLeg(segment1.getBookingCode(),
+                                segment1.getFlight().getNumber(),
+                                segment1.getFlight().getCarrier());
                         flight.setCarrier(segment1.getFlight().getCarrier());
                     }
                 }
-               
+
                 flight.setDuration(totalDuration);
-             
+
                 retList.add(flight);
             }
 
         } catch (GeneralSecurityException ex) {
             Logger.getLogger(QPXFlightQuery.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        // Reset all parameters
+        requestId = 0;
+        adultPassengers = 0;
+        childPassengers = 0;
+        seniorPassengers = 0;
+        infantInSeatCount = 0;
+        maxStops = 0;
+        origin = null;
+        destination = null;
+        departDate = null;
+        returnDate = null;
+
         return retList;
     }
 
@@ -258,7 +273,6 @@ public class QPXFlightQuery implements FlightQuery {
     public void setRequestId(int requestId) {
         this.requestId = requestId;
     }
-    
 
     public static void main(String[] args) {
         QPXFlightQuery q = new QPXFlightQuery();

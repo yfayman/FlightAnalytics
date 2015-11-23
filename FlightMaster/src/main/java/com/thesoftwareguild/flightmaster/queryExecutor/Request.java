@@ -5,7 +5,6 @@
  */
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
-import com.thesoftwareguild.flightmaster.daos.RequestDao;
 import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import com.thesoftwareguild.flightmaster.models.Flight;
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightQuery;
@@ -13,6 +12,9 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Combines the who(requestParameters) and the how(query) to execute a request. Execution
@@ -20,18 +22,27 @@ import org.springframework.beans.factory.annotation.Autowired;
  * execution time is set to current time + the interval as specified by the requestor
  * @author Yan Fayman
  */
-public  class Request {
 
+@Scope(value = "prototype")
+@Component
+public class Request {
+
+    @Qualifier("qpxFlightQuery")
+    @Autowired
     private FlightQuery query;
     private RequestParameters requestParameters;
     private long executionTime;
 
     
-    public Request(FlightQuery query, RequestParameters requestor) {
-        this.query = query;
+    public Request (RequestParameters requestor) {
+//        this.query = query;
         this.requestParameters = requestor;
         this.executionTime = System.currentTimeMillis();
        // this.executionTime = System.currentTimeMillis() + (requestor.getInterval() * 3600000);
+    }
+    
+    public Request(){
+        this.executionTime = System.currentTimeMillis();
     }
 
     
@@ -43,6 +54,7 @@ public  class Request {
      */
     public List<Flight> execute() throws IOException{
         if(executionTime < System.currentTimeMillis()){
+            populateQuery();
             List<Flight> execute = query.execute();
             requestParameters.requestMade();
             executionTime = System.currentTimeMillis() + requestParameters.getInterval();
@@ -83,6 +95,24 @@ public  class Request {
     public int getUserId(){
         return requestParameters.getUserId();
     }
-  
+
+    public FlightQuery getQuery() {
+        return query;
+    }
+
+    public void setQuery(FlightQuery query) {
+        this.query = query;
+    }
+
+    public RequestParameters getRequestParameters() {
+        return requestParameters;
+    }
+
+    public void setRequestParameters(RequestParameters requestParameters) {
+        this.requestParameters = requestParameters;
+    }
+
+ 
+    
     
 }

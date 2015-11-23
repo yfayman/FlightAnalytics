@@ -44,6 +44,13 @@
         <property name="dataSource" ref="datasource" />
     </bean>
     
+    <bean id="mockFlightQuery" class="com.thesoftwareguild.flightmaster.queryProcessor.MockFlightQuery" />
+    <bean id="qpxFlightQuery" class="com.thesoftwareguild.flightmaster.queryProcessor.QPXFlightQuery" scope="prototype" />
+    <bean id="request" class="com.thesoftwareguild.flightmaster.queryExecutor.Request">
+        <property name="query"  ref="mockFlightQuery" />
+    </bean>
+
+    
     
     <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
     
@@ -67,6 +74,6 @@
     </bean>
     
     <context:annotation-config />
-    <context:component-scan base-package="com.thesoftwareguild.flightmaster" ></context:component-scan>
+<!--    <context:component-scan base-package="com.thesoftwareguild.flightmaster" ></context:component-scan>-->
     
 </beans>

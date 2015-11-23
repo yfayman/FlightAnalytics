@@ -44,7 +44,7 @@ public class SimulatorV1 {
         multiQueryRequestor.setOrigin("NYC");
         multiQueryRequestor.setDestination("ORD");
         multiQueryRequestor.populateQueryParams(mockFlightQuery);
-        Request request1 = new Request(mockFlightQuery, multiQueryRequestor);
+        Request request1 = new Request(multiQueryRequestor);
         pq.addToPQ(request1);
 
         mockFlightQuery2 = new MockFlightQuery();
@@ -58,7 +58,7 @@ public class SimulatorV1 {
         multiQueryRequestor2.setOrigin("ORD");
         multiQueryRequestor2.setDestination("NYC");
         multiQueryRequestor2.populateQueryParams(mockFlightQuery2);
-        Request request2 = new Request(mockFlightQuery2, multiQueryRequestor2);
+        Request request2 = new Request( multiQueryRequestor2);
         pq.addToPQ(request2);
 
         mockFlightQuery3 = new MockFlightQuery();
@@ -72,7 +72,7 @@ public class SimulatorV1 {
         multiQueryRequestor3.setOrigin("LAX");
         multiQueryRequestor3.setDestination("NYC");
         multiQueryRequestor3.populateQueryParams(mockFlightQuery3);
-        Request request3 = new Request(mockFlightQuery3, multiQueryRequestor3);
+        Request request3 = new Request( multiQueryRequestor3);
         pq.addToPQ(request3);
 
     }

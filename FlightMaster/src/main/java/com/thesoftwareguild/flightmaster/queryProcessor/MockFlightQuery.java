@@ -13,12 +13,15 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /** 
  * A mock FlightQuery for testing(Because QPX is expensive). This generates
  * random data which will be stored to a test database
  * @author Yan
  */
+
+
 public class MockFlightQuery implements FlightQuery {
 
     private int requestId;
@@ -46,6 +49,10 @@ public class MockFlightQuery implements FlightQuery {
         //System.out.println("Flight Query Executed: " + origin + " to " + dest);
         for (int i = 0; i < 10; i++) {
             Flight flight1 = new Flight();
+            flight1.setOrigin(origin);
+            flight1.setDestination(dest);
+            flight1.setRequestId(requestId);
+            
             flight1.setPrice(Math.random() * 100 + 1);
             flight1.setFightId(new Integer(i+1).toString());
             flight1.setDuration((int) (60 + Math.random() * 400));
@@ -54,7 +61,17 @@ public class MockFlightQuery implements FlightQuery {
             flight1.setCarrier("AA");
             retList.add(flight1);
         }
-
+// Reset all parameters
+        requestId = 0;
+        adults = 0;
+        children = 0;
+        seniors = 0;
+        infants = 0;
+        maxStops = 0;
+        origin = null;
+        dest = null;
+        depart = null;
+        returnDate = null;
         return retList;
     }
 

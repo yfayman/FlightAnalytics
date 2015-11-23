@@ -158,14 +158,16 @@ public class RequestTest {
     
     @Test
     public void addFlights(){
-        int id = requestDao.add(request).getRequestId();
+        RequestParameters newRequestParam = requestDao.add(request);
+        int id = newRequestParam.getRequestId();
         try {
             MockFlightQuery mfq = new MockFlightQuery();
             List<Flight> flights = mfq.execute();
             
             requestDao.addFlights(id, flights);
             
-            Assert.assertTrue(true);
+            // Test to see if queries left was decremented
+            Assert.assertEquals(19, requestDao.getRequestByRequestId(id).getNumberQueries());
             
         } catch (IOException ex) {
             Logger.getLogger(RequestTest.class.getName()).log(Level.SEVERE, null, ex);
