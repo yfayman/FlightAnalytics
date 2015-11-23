@@ -35,6 +35,10 @@ public class PQThread implements Runnable{
 
     @Override
     public void run() {
+        // Load all the Requests in Database
+        
+        
+        
         while (true) {
                 try {
                     if (pq.peek() != null && pq.peek().getExecutionTime() < System.currentTimeMillis()) {

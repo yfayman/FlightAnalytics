@@ -30,16 +30,17 @@ public class Request {
     @Qualifier("qpxFlightQuery")
     @Autowired
     private FlightQuery query;
+    
     private RequestParameters requestParameters;
     private long executionTime;
 
     
-    public Request (RequestParameters requestor) {
-//        this.query = query;
-        this.requestParameters = requestor;
-        this.executionTime = System.currentTimeMillis();
-       // this.executionTime = System.currentTimeMillis() + (requestor.getInterval() * 3600000);
-    }
+//    public Request (RequestParameters requestor) {
+////        this.query = query;
+//        this.requestParameters = requestor;
+//        this.executionTime = System.currentTimeMillis();
+//       // this.executionTime = System.currentTimeMillis() + (requestor.getInterval() * 3600000);
+//    }
     
     public Request(){
         this.executionTime = System.currentTimeMillis();
@@ -102,10 +103,6 @@ public class Request {
 
     public void setQuery(FlightQuery query) {
         this.query = query;
-    }
-
-    public RequestParameters getRequestParameters() {
-        return requestParameters;
     }
 
     public void setRequestParameters(RequestParameters requestParameters) {

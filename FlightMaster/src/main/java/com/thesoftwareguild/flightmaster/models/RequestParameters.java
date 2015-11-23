@@ -22,7 +22,7 @@ public class RequestParameters {
     public static final long DAY = HOUR * 24;
     public static final long WEEK = DAY * 7;
     
-    private long interval; // interval of queries in ms
+    private long interval; // interval of queries in milliseconds
     private int numberQueries;
     private int requestId;
     private int userId;
@@ -146,15 +146,16 @@ public class RequestParameters {
         numberQueries--;
     }
 
-    public void setInterval(long interval) {
-        this.interval = interval;
-    }
-    
-     
- 
     public long getInterval() {
         return interval;
     }
+
+    public void setInterval(long interval) {
+        this.interval = interval;
+    }
+
+
+
     
     /**
      * populates a query object with information from this object. The query

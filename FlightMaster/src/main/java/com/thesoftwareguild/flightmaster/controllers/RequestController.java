@@ -11,9 +11,14 @@ import com.thesoftwareguild.flightmaster.daos.UserDao;
 import com.thesoftwareguild.flightmaster.models.AirportData;
 import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import com.thesoftwareguild.flightmaster.models.User;
+import com.thesoftwareguild.flightmaster.queryExecutor.Request;
+import java.util.PriorityQueue;
 import javax.validation.Valid;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,17 +26,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 /**
  * Handles all traffic that involves query requests
  * @author yan
  */
 @RequestMapping(value = "/request")
 @Controller
-public class RequestController {
+public class RequestController implements ApplicationContextAware {
    
     private RequestDao requestDao;
     private UserDao userDao;
     private AirportDataDao airportDataDao;
+    
+    //@Autowired
+    private ApplicationContext context;
+    
 
     @Autowired
     public RequestController(@Qualifier("requestDaoJdbc")RequestDao requestDao,
@@ -59,7 +69,11 @@ public class RequestController {
         User user = getLoggedInUser();
         if(user != null){
             req.setUserId(user.getUserId());
-            requestDao.add(req);
+            RequestParameters requestWithId = requestDao.add(req);
+            Request request = context.getBean(Request.class);
+            request.setRequestParameters(requestWithId);
+            PriorityQueue<Request> pq = context.getBean("getPQ", PriorityQueue.class);
+            pq.add(request);
         }
         
     }
@@ -76,5 +90,10 @@ public class RequestController {
         User user = userDao.getByUsername(username);
         return user;
     }
-    
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.context = applicationContext;
+    }
+  
 }

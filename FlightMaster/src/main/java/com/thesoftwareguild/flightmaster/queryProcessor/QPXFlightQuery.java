@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.stereotype.Component;
 
 /**
  * Uses QPXFlightQuery to make flight requests.API KEY and Application Name can
@@ -69,7 +68,7 @@ public class QPXFlightQuery implements FlightQuery {
             Scanner sc = new Scanner(new FileReader("apikey.txt"));
             this.APPLICATION_NAME = sc.nextLine();
             this.API_KEY = sc.nextLine();
-            sc.close();
+            sc.close();          
         } catch (FileNotFoundException ex) {
             Logger.getLogger(QPXFlightQuery.class.getName()).log(Level.SEVERE, null, ex);
         }

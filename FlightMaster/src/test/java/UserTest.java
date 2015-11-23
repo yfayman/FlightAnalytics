@@ -11,13 +11,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 /**
  *
@@ -35,7 +33,6 @@ public class UserTest {
     
     @Before
     public void setUp() {   
-        
         
         testUser1 = new User();
         testUser1.setFirstName("Bob");

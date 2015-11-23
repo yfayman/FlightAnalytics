@@ -36,7 +36,7 @@ public class SimulatorV1 {
         mockFlightQuery = new MockFlightQuery();
         multiQueryRequestor = new RequestParameters();
         multiQueryRequestor.setNumberQueries(3);
-        multiQueryRequestor.setInterval(RequestParameters.MINUTE);
+        multiQueryRequestor.setInterval(1);
         multiQueryRequestor.setAdultPassengers(1);
         multiQueryRequestor.setMaxStops(1);
         multiQueryRequestor.setDepDate(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 7))); // departure date is one week from today
@@ -44,13 +44,13 @@ public class SimulatorV1 {
         multiQueryRequestor.setOrigin("NYC");
         multiQueryRequestor.setDestination("ORD");
         multiQueryRequestor.populateQueryParams(mockFlightQuery);
-        Request request1 = new Request(multiQueryRequestor);
-        pq.addToPQ(request1);
+       // Request request1 = new Request(multiQueryRequestor);
+       //pq.addToPQ(request1);
 
         mockFlightQuery2 = new MockFlightQuery();
         multiQueryRequestor2 = new RequestParameters();
         multiQueryRequestor2.setNumberQueries(10);
-        multiQueryRequestor2.setInterval(RequestParameters.MINUTE * 2);
+        multiQueryRequestor2.setInterval(2);
         multiQueryRequestor2.setAdultPassengers(1);
         multiQueryRequestor2.setMaxStops(1);
         multiQueryRequestor2.setDepDate(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 8))); // departure date 8 days from today
@@ -58,13 +58,13 @@ public class SimulatorV1 {
         multiQueryRequestor2.setOrigin("ORD");
         multiQueryRequestor2.setDestination("NYC");
         multiQueryRequestor2.populateQueryParams(mockFlightQuery2);
-        Request request2 = new Request( multiQueryRequestor2);
-        pq.addToPQ(request2);
+        //Request request2 = new Request( multiQueryRequestor2);
+        //pq.addToPQ(request2);
 
         mockFlightQuery3 = new MockFlightQuery();
         multiQueryRequestor3 = new RequestParameters();
         multiQueryRequestor3.setNumberQueries(10);
-        multiQueryRequestor3.setInterval(RequestParameters.MINUTE * 3);
+        multiQueryRequestor3.setInterval(3);
         multiQueryRequestor3.setAdultPassengers(1);
         multiQueryRequestor3.setMaxStops(1);
         multiQueryRequestor3.setDepDate(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 6))); // departure date is one week from today
@@ -72,8 +72,8 @@ public class SimulatorV1 {
         multiQueryRequestor3.setOrigin("LAX");
         multiQueryRequestor3.setDestination("NYC");
         multiQueryRequestor3.populateQueryParams(mockFlightQuery3);
-        Request request3 = new Request( multiQueryRequestor3);
-        pq.addToPQ(request3);
+        //Request request3 = new Request( multiQueryRequestor3);
+       // pq.addToPQ(request3);
 
     }
 

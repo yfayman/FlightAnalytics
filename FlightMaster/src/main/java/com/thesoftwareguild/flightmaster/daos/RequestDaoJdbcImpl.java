@@ -54,22 +54,22 @@ public class RequestDaoJdbcImpl implements RequestDao {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public RequestParameters add(RequestParameters requestData) {
-        jdbcTemplate.update(SQL_ADD_REQUEST, requestData.getUserId(),
-                requestData.getOrigin(),
-                requestData.getDestination(),
-                requestData.getDepDate(),
-                requestData.getRetDate(),
-                requestData.getAdultPassengers(),
-                requestData.getChildPassengers(),
-                requestData.getSeniorPassengers(),
-                requestData.getMaxStops(),
-                requestData.getInterval(),
-                requestData.getNumberQueries());
+    public RequestParameters add(RequestParameters requestParameters) {
+        jdbcTemplate.update(SQL_ADD_REQUEST, requestParameters.getUserId(),
+                requestParameters.getOrigin(),
+                requestParameters.getDestination(),
+                requestParameters.getDepDate(),
+                requestParameters.getRetDate(),
+                requestParameters.getAdultPassengers(),
+                requestParameters.getChildPassengers(),
+                requestParameters.getSeniorPassengers(),
+                requestParameters.getMaxStops(),
+                requestParameters.getInterval(),
+                requestParameters.getNumberQueries());
         Integer id = jdbcTemplate.queryForObject(SQL_GET_LAST_ID, Integer.class);
-        requestData.setRequestId(id);
+        requestParameters.setRequestId(id);
 
-        return requestData;
+        return requestParameters;
     }
 
     @Override

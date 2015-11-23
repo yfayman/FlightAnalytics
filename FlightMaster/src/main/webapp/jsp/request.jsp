@@ -91,8 +91,8 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="num-queries">Queries</label>
-                                <select id="max-stops" class="form-control">
+                                <label for="numberQueries">Queries</label>
+                                <select id="numberQueries" class="form-control">
 
                                     <option value="1">1</option>
                                     <option value="5">5</option>
@@ -108,10 +108,10 @@
                             <div class="col-md-4">
                                 <label for="interval">Query Interval</label>
                                 <select id="interval" class="form-control">
-                                    <option value="3">3 hours</option>
-                                    <option value="6">6 hours</option>
-                                    <option value="12">12 hours</option>
-                                    <option value="23">24 hours</option>
+                                    <option value="10800000">3 hours</option>
+                                    <option value="21600000">6 hours</option>
+                                    <option value="43200000">12 hours</option>
+                                    <option value="86400000">24 hours</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
@@ -140,7 +140,8 @@
         <script>
             $(function () {
                 $(".airport").autocomplete({
-                    source: airports
+                    source: airports,
+                    delay: 300
                 });
             });
         </script>
