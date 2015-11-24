@@ -108,6 +108,7 @@
                             <div class="col-md-4">
                                 <label for="interval">Query Interval</label>
                                 <select id="interval" class="form-control">
+                                    <option value="3600000">1 hour</option>
                                     <option value="10800000">3 hours</option>
                                     <option value="21600000">6 hours</option>
                                     <option value="43200000">12 hours</option>
