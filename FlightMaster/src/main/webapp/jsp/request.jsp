@@ -1,11 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Flight Analytics Home Page</title>
+        <title>Make a new request</title>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
@@ -131,7 +130,7 @@
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/register.js"></script>
         <script src="${pageContext.request.contextPath}/js/request.js"></script>
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<!--        <script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script>
             $(function () {

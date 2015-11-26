@@ -5,15 +5,16 @@
  */
 package com.thesoftwareguild.flightmaster.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author yan
  */
-public class AirportData {
+public class AirportData implements Serializable {
     
-    public List<String> iataCodes;
+    private List<String> iataCodes;
 
     public List<String> getIataCodes() {
         return iataCodes;

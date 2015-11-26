@@ -29,7 +29,7 @@
                    
                         <sec:authorize access="hasRole('ROLE_USER')">
                         <li><a href="${pageContext.request.contextPath}/request"  style="color:#212121">Make Request</a></li>
-                        <li><a href="${pageContext.request.contextPath}/pendingrequests"  style="color:#212121">View Pending Requests</a></li>
+                        <li><a href="${pageContext.request.contextPath}/request/currentrequests"  style="color:#212121">View Pending Requests</a></li>
                         </sec:authorize>
                 </ul>
                 <sec:authorize access="hasRole('ROLE_ANONYMOUS')">

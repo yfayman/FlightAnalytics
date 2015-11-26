@@ -9,9 +9,12 @@ import com.thesoftwareguild.flightmaster.daos.AirportDataDao;
 import com.thesoftwareguild.flightmaster.daos.RequestDao;
 import com.thesoftwareguild.flightmaster.daos.UserDao;
 import com.thesoftwareguild.flightmaster.models.AirportData;
+import com.thesoftwareguild.flightmaster.models.Flight;
 import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import com.thesoftwareguild.flightmaster.models.User;
 import com.thesoftwareguild.flightmaster.queryExecutor.Request;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 import javax.validation.Valid;
 import org.springframework.beans.BeansException;
@@ -21,6 +24,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -87,8 +91,21 @@ public class RequestController implements ApplicationContextAware {
       
     private User getLoggedInUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(username.equals("anonymousUser"))
+            return null;
         User user = userDao.getByUsername(username);
         return user;
+    }
+    
+    @RequestMapping(value="/currentrequests", method = RequestMethod.GET)
+    public String viewRequests(Model model){
+        User user = getLoggedInUser();
+//        List<RequestParameters> requestsByUserId = requestDao.getRequestsByUserId(user.getUserId());
+//        for (RequestParameters request : requestsByUserId) {
+//            masterList.addAll(requestDao.getDataByRequestId(request.getRequestId()));
+//        }
+       
+        return "viewrequests";
     }
 
     @Override

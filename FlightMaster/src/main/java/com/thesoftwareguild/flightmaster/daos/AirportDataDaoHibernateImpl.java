@@ -9,7 +9,7 @@ import com.thesoftwareguild.flightmaster.models.AirportData;
 import org.hibernate.SessionFactory;
 
 /**
- *
+ * Incomplete. Do not use this implementation
  * @author yan
  */
 public class AirportDataDaoHibernateImpl implements AirportDataDao {

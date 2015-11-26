@@ -6,18 +6,35 @@
 package com.thesoftwareguild.flightmaster.models;
 
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightLeg;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
+import javax.persistence.SecondaryTables;
+import javax.persistence.Table;
 
 /**
  * This is the data model which reflects what will be written in flights table
  * @author Yan
  */
-public class Flight {
+@Entity
+@Table(name = "requests")
+@SecondaryTables({@SecondaryTable(
+        name = "requestdata", 
+        pkJoinColumns = @PrimaryKeyJoinColumn(name = "request_id", referencedColumnName = "id")),
+    @SecondaryTable(
+            name="flightdata",
+            pkJoinColumns = @PrimaryKeyJoinColumn(name="requestdata_id", referencedColumnName = "id"))})
+public class Flight implements Serializable {
     
+    @Id
     private int requestId;
+    
     private String fightId;
     private String origin;
     private String destination;
