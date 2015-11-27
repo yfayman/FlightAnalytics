@@ -18,54 +18,52 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
         <script type="text/javascript"
-          src="https://www.google.com/jsapi?autoload={
-            'modules':[{
-              'name':'visualization',
-              'version':'1',
-              'packages':['corechart']
-            }]
-          }"></script>
+                src="https://www.google.com/jsapi?autoload={
+                'modules':[{
+                'name':'visualization',
+                'version':'1',
+                'packages':['corechart']
+                }]
+        }"></script>
 
 
     </head>
     <body class="light-primary-color">
         <c:import url="nav.jsp"></c:import>
             <div class="container " id="request-input-form-container">
-                <div class="col-md-offset-2">
 
-                    <div>
 
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-                            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-                            <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-                        </ul>
 
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">...</div>
-                            <div role="tabpanel" class="tab-pane" id="profile">...</div>
-                            <div role="tabpanel" class="tab-pane" id="messages">...</div>
-                            <div role="tabpanel" class="tab-pane" id="settings">...</div>
+            <c:if test="${not empty requests}" >
+                <div class="row">
+                    <div class="col-md-offset-2">
+                        <div class="btn-group col-md-8" role="group" aria-label="Requests">
+                            <c:forEach items="${requests}" var="request" >
+                                <button type="button" class="btn request-button" id="request-${request.requestId}">${request.origin} to ${request.destination}</button>
+                            </c:forEach>
                         </div>
-
                     </div>
-                    <div id="chart_div">
-                        
-                    </div>
-
-
                 </div>
+                <div class="row">
+                    <div class="col-md-offset-2">
+                        <div class="col-md-8" id="chart">
+                            
+                        </div>
+                    </div>
+                </div>
+            </c:if>
+            <c:if test="${empty requests}">
+                <h3>You have no requests</h3>
+            </c:if>
 
-            </div>
 
-            <!-- Placed at the end of the document so the pages load faster -->
+        </div>
 
-            <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
+        <!-- Placed at the end of the document so the pages load faster -->
+
+        <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-<!--        <script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
+        <!--        <script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
         <script src="${pageContext.request.contextPath}/js/d3.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/c3.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/chart.js"></script>

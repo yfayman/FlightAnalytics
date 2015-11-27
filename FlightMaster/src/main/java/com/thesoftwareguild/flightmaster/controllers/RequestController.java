@@ -99,12 +99,18 @@ public class RequestController implements ApplicationContextAware {
     
     @RequestMapping(value="/currentrequests", method = RequestMethod.GET)
     public String viewRequests(Model model){
+        List<RequestParameters> requests;
         User user = getLoggedInUser();
 //        List<RequestParameters> requestsByUserId = requestDao.getRequestsByUserId(user.getUserId());
 //        for (RequestParameters request : requestsByUserId) {
 //            masterList.addAll(requestDao.getDataByRequestId(request.getRequestId()));
 //        }
+        if(user != null)
+            requests = requestDao.getRequestsByUserId(user.getUserId());
+        else
+            requests = null;
        
+        model.addAttribute("requests", requests);
         return "viewrequests";
     }
 

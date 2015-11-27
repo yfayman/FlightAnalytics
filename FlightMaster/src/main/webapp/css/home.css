@@ -37,9 +37,23 @@ body{
     color:red;
     font-size: small;
 }
-.nav-tabs > li.active > a, 
-.nav-tabs > li.active > a:hover, 
-.nav-tabs > li.active > a:focus{
-    background-color: #0288D1;
-    color:#FFFFFF;
+
+.request-button{
+     background: #03A9F4;
+     color: #212121;
+     border: #795548 thin solid;
+}
+
+.request-button:hover{
+      background: #795548; 
+      color: #FFFFFF;
+}
+button.active, button.active:hover {
+    background: #0288D1;
+    color: #212121;
+}
+#chart{
+    border: #795548 thin solid;
+    height: 400px;
+    width: 80%;
 }

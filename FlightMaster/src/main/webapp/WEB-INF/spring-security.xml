@@ -30,6 +30,7 @@ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
         
         
         <intercept-url pattern="/admin/" access="ROLE_ADMIN" />
+        <intercept-url pattern="/request/**" access="ROLE_USER" />
         <csrf disabled="true" />
     </http>
    <authentication-manager>
