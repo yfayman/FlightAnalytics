@@ -25,6 +25,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -101,10 +102,6 @@ public class RequestController implements ApplicationContextAware {
     public String viewRequests(Model model){
         List<RequestParameters> requests;
         User user = getLoggedInUser();
-//        List<RequestParameters> requestsByUserId = requestDao.getRequestsByUserId(user.getUserId());
-//        for (RequestParameters request : requestsByUserId) {
-//            masterList.addAll(requestDao.getDataByRequestId(request.getRequestId()));
-//        }
         if(user != null)
             requests = requestDao.getRequestsByUserId(user.getUserId());
         else
@@ -112,6 +109,12 @@ public class RequestController implements ApplicationContextAware {
        
         model.addAttribute("requests", requests);
         return "viewrequests";
+    }
+    
+    @RequestMapping(value = "/currentrequest/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Flight> getRequestData(@PathVariable("id") int id){
+        return requestDao.getDataByRequestId(id);
     }
 
     @Override

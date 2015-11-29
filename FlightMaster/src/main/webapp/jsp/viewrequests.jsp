@@ -15,18 +15,6 @@
         <!-- SWC Icon -->
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/plane-icon.png">
 
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-
-        <script type="text/javascript"
-                src="https://www.google.com/jsapi?autoload={
-                'modules':[{
-                'name':'visualization',
-                'version':'1',
-                'packages':['corechart']
-                }]
-        }"></script>
-
-
     </head>
     <body class="light-primary-color">
         <c:import url="nav.jsp"></c:import>
@@ -37,7 +25,7 @@
             <c:if test="${not empty requests}" >
                 <div class="row">
                     <div class="col-md-offset-2">
-                        <div class="btn-group col-md-8" role="group" aria-label="Requests">
+                        <div class="btn-group col-md-8" role="group" aria-label="Requests" id="request-container">
                             <c:forEach items="${requests}" var="request" >
                                 <button type="button" class="btn request-button" id="request-${request.requestId}">${request.origin} to ${request.destination}</button>
                             </c:forEach>

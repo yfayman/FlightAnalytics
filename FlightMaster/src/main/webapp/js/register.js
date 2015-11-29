@@ -54,12 +54,9 @@ $(document).ready(function(){
                      case 'lastName': $('#reg-last-name-error').empty(); $('#reg-last-name-error').append('<p>' + error.error+ '</p>');
                          break;
                      case 'username':$('#reg-user-name-error').empty(); $('#reg-user-name-error').append('<p>' + error.error+ '</p>');
-                         break;
-                         
+                         break; 
                  } 
-              });
-              console.log(errors);
-              
+              });  
           }
           
       }); 
