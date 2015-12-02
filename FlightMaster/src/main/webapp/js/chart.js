@@ -96,20 +96,19 @@ function getRequestIdFromTag(tag) {
             columns: [
             ]
         },
+        
+        padding: {
+            left: 50,
+            right: 50
+        },
         axis: {
             x: {
                 type: 'timeseries',
                 tick: {
-                    format: '%Y-%m-%d %H:%M:%S'
-                },
-                label: {
-                    text: 'Time',
-                    position: 'outer-center'
-                },
-                padding: {
-                    left: 0,
-                    right: 0
+                    format: '%Y-%m-%d \n %H:%M:%S'
                 }
+              
+
 
             },
             y: {
