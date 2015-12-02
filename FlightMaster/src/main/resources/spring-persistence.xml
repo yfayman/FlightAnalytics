@@ -15,7 +15,7 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd"> 
 
     
-    <context:component-scan base-package="com.thesoftwareguild.flightmaster" />
+
         
     <!-- Bean definitions go here -->
     <!--    <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -66,7 +66,10 @@
         </property>
     </bean>-->
     <context:annotation-config />
-    <context:component-scan base-package="com.thesoftwareguild.flightmaster" ></context:component-scan>
+    <context:component-scan base-package="com.thesoftwareguild.flightmaster.configuration" />
+    <context:component-scan base-package="com.thesoftwareguild.flightmaster.daos" />
+    <context:component-scan base-package="com.thesoftwareguild.flightmaster.queryExecutor" />
+    
     
 </beans>
  
