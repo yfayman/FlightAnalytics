@@ -35,6 +35,7 @@ public class RequestDaoJdbcImpl implements RequestDao {
             + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_GET_REQUESTS_BY_USERID = "SELECT * FROM requests WHERE user_id = ?";
     private static final String SQL_GET_REQUEST_BY_REQUESTID = "SELECT * FROM requests WHERE id = ?";
+    private static final String SQL_GET_LIVE_REQUESTS = "SELECT * FROM requests WHERE queries_left > 0";
     private static final String SQL_DELETE_REQUEST_BY_REQUESTID = "DELETE FROM requests WHERE id = ?";
     private static final String SQL_DELETE_REQUESTDATA_BY_REQUESTID = "DELETE FROM requestdata WHERE request_id = ?";
     private static final String SQL_DECREMENT_QUERIESLEFT  = "UPDATE requests SET queries_left = queries_left - 1 WHERE id = ? AND queries_left > 0";
@@ -128,6 +129,11 @@ public class RequestDaoJdbcImpl implements RequestDao {
             // Decrement queries_left to keep it consistant with in-memory representation
             jdbcTemplate.update(SQL_DECREMENT_QUERIESLEFT, requestId);
         }
+    }
+
+    @Override
+    public List<RequestParameters> getLiveRequests() {
+        return jdbcTemplate.query(SQL_GET_LIVE_REQUESTS, new RequestMapper());
     }
 
     private final class RequestMapper implements RowMapper<RequestParameters> {

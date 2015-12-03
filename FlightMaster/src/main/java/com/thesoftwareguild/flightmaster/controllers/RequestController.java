@@ -32,48 +32,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 /**
  * Handles all traffic that involves query requests
+ *
  * @author yan
  */
 @RequestMapping(value = "/request")
 @Controller
 public class RequestController implements ApplicationContextAware {
-   
+
     private RequestDao requestDao;
     private UserDao userDao;
     private AirportDataDao airportDataDao;
-    
+
     //@Autowired
     private ApplicationContext context;
-    
 
     @Autowired
-    public RequestController(@Qualifier("requestDaoJdbc")RequestDao requestDao,
-            @Qualifier("userDaoJdbc")UserDao userDao,
-            @Qualifier("airportDataDaoJdbc")AirportDataDao airportDataDao) {
+    public RequestController(@Qualifier("requestDaoJdbc") RequestDao requestDao,
+            @Qualifier("userDaoJdbc") UserDao userDao,
+            @Qualifier("airportDataDaoJdbc") AirportDataDao airportDataDao) {
         this.requestDao = requestDao;
         this.userDao = userDao;
         this.airportDataDao = airportDataDao;
     }
-    
+
     /*
-        Returns the request page when user clicks on the "Make a Request link"
-    */
+     Returns the request page when user clicks on the "Make a Request link"
+     */
     @RequestMapping(value = "")
-    public String requestIndex(){
+    public String requestIndex() {
         return "request";
     }
-    
+
     /*
-        Adds request to database
-    */
+     Adds request to database
+     */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void addRequest(@Valid @RequestBody RequestParameters req){
-        
+    public void addRequest(@Valid @RequestBody RequestParameters req) {
+
         User user = getLoggedInUser();
-        if(user != null){
+        if (user != null) {
             req.setUserId(user.getUserId());
             RequestParameters requestWithId = requestDao.add(req);
             Request request = context.getBean(Request.class);
@@ -81,40 +80,42 @@ public class RequestController implements ApplicationContextAware {
             PriorityQueue<Request> pq = context.getBean("getPQ", PriorityQueue.class);
             pq.add(request);
         }
-        
+
     }
-    
+
     // Sends all IATA codes to the client 
     @RequestMapping(value = "/airportData", method = RequestMethod.GET)
     @ResponseBody
-    public AirportData getAirportData(){
+    public AirportData getAirportData() {
         return airportDataDao.getAllAirports();
     }
-      
+
     private User getLoggedInUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        if(username.equals("anonymousUser"))
+        if (username.equals("anonymousUser")) {
             return null;
+        }
         User user = userDao.getByUsername(username);
         return user;
     }
-    
-    @RequestMapping(value="/currentrequests", method = RequestMethod.GET)
-    public String viewRequests(Model model){
+
+    @RequestMapping(value = "/currentrequests", method = RequestMethod.GET)
+    public String viewRequests(Model model) {
         List<RequestParameters> requests;
         User user = getLoggedInUser();
-        if(user != null)
+        if (user != null) {
             requests = requestDao.getRequestsByUserId(user.getUserId());
-        else
+        } else {
             requests = null;
-       
+        }
+
         model.addAttribute("requests", requests);
         return "viewrequests";
     }
-    
+
     @RequestMapping(value = "/currentrequest/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Flight> getRequestData(@PathVariable("id") int id){
+    public List<Flight> getRequestData(@PathVariable("id") int id) {
         return requestDao.getDataByRequestId(id);
     }
 
@@ -122,10 +123,17 @@ public class RequestController implements ApplicationContextAware {
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
     }
-    
+
     @PostConstruct
-    public void loadLiveRequets(){
-        System.out.println("test");
+    public void loadLiveRequets() {
+        List<RequestParameters> liveRequests = requestDao.getLiveRequests();
+        PriorityQueue<Request> pq = context.getBean("getPQ", PriorityQueue.class);
+        for (RequestParameters liveRequest : liveRequests) {
+            Request request = context.getBean(Request.class);
+            request.setRequestParameters(liveRequest);
+            pq.add(request);
+        }
+
     }
-  
+
 }

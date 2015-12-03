@@ -57,4 +57,9 @@ public class RequestDaoHibernateImpl implements RequestDao{
       public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
+    @Override
+    public List<RequestParameters> getLiveRequests() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

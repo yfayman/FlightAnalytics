@@ -200,4 +200,12 @@ public class RequestTest {
         Assert.assertEquals(2, result.size());
         
     }
+    @Test
+    public void liveRequests(){
+        requestDao.add(request);
+        requestDao.add(request2);
+        
+        List<RequestParameters> liveRequests = requestDao.getLiveRequests();
+        Assert.assertEquals(2, liveRequests.size());
+    }
 }

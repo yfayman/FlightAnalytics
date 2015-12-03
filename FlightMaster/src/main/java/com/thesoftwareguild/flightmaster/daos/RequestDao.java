@@ -27,6 +27,8 @@ public interface RequestDao {
     public List<RequestParameters> getRequestsByUserId(int userId);
     
     public List<Flight> getDataByRequestId(int requestId);
+    
+    public List<RequestParameters> getLiveRequests();
      
     
 }
