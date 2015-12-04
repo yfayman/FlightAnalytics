@@ -12,6 +12,8 @@ import com.thesoftwareguild.flightmaster.models.AirportData;
 import com.thesoftwareguild.flightmaster.models.Flight;
 import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import com.thesoftwareguild.flightmaster.models.User;
+import com.thesoftwareguild.flightmaster.queryExecutor.Executor;
+import com.thesoftwareguild.flightmaster.queryExecutor.ExecutorPQ;
 import com.thesoftwareguild.flightmaster.queryExecutor.Request;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,8 +79,8 @@ public class RequestController implements ApplicationContextAware {
             RequestParameters requestWithId = requestDao.add(req);
             Request request = context.getBean(Request.class);
             request.setRequestParameters(requestWithId);
-            PriorityQueue<Request> pq = context.getBean("getPQ", PriorityQueue.class);
-            pq.add(request);
+            Executor executor = context.getBean(ExecutorPQ.class);
+            executor.addToExecutor(request);
         }
 
     }
@@ -126,13 +128,8 @@ public class RequestController implements ApplicationContextAware {
 
     @PostConstruct
     public void loadLiveRequets() {
-        List<RequestParameters> liveRequests = requestDao.getLiveRequests();
-        PriorityQueue<Request> pq = context.getBean("getPQ", PriorityQueue.class);
-        for (RequestParameters liveRequest : liveRequests) {
-            Request request = context.getBean(Request.class);
-            request.setRequestParameters(liveRequest);
-            pq.add(request);
-        }
+        System.out.println("Loading live requests");
+       
 
     }
 

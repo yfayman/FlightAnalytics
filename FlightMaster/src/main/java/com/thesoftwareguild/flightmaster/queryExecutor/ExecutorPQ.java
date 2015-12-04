@@ -5,11 +5,16 @@
  */
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
+import com.thesoftwareguild.flightmaster.daos.RequestDao;
+import com.thesoftwareguild.flightmaster.models.RequestParameters;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.annotation.PostConstruct;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,8 +25,10 @@ import org.springframework.stereotype.Component;
  * @author Yan
  */
 @Component
-public class ExecutorPQ {
+public class ExecutorPQ implements Executor {
 
+    
+    private ApplicationContext context;
     
     final private ExecutorService queryExecutor = Executors.newSingleThreadExecutor();
     
@@ -101,7 +108,8 @@ public class ExecutorPQ {
      *
      * @param request
      */
-    public void addToPQ(Request request) {
+    @Override
+    public void addToExecutor(Request request) {
      
             pq.add(request);
       
@@ -112,8 +120,23 @@ public class ExecutorPQ {
      * program is initialized.
      */
     @PostConstruct
+    @Override
     public void run() {
+        System.out.println("Starting PQ thread");
         queryExecutor.execute(pqThread);
+        
+        RequestDao requestDao = context.getBean("requestDaoJdbc", RequestDao.class);
+         List<RequestParameters> liveRequests = requestDao.getLiveRequests();
+        for (RequestParameters liveRequest : liveRequests) {
+            Request request = context.getBean(Request.class);
+            request.setRequestParameters(liveRequest);
+      //      addToExecutor(request);
+        }
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.context = applicationContext;
     }
     
     

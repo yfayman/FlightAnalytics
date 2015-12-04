@@ -9,6 +9,7 @@ import com.thesoftwareguild.flightmaster.queryProcessor.MockFlightQuery;
 import com.thesoftwareguild.flightmaster.queryProcessor.QPXFlightQuery;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
  *
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 public class QueryConfig {
     
     @Bean
+    @Profile("test")
     MockFlightQuery mockFlightQuery(){
         return new MockFlightQuery();
     }
