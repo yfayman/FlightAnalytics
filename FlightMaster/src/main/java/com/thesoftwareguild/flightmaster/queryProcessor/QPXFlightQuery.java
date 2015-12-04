@@ -40,7 +40,7 @@ import java.util.logging.Logger;
  */
 public class QPXFlightQuery implements FlightQuery {
 
-    private final int MAX_FLIGHTS_RETURNED = 10;
+    private final int MAX_FLIGHTS_RETURNED = 30;
     private String APPLICATION_NAME;
     private String API_KEY;
     private HttpTransport httpTransport;

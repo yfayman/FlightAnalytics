@@ -5,10 +5,13 @@
  */
 package com.thesoftwareguild.flightmaster.configuration;
 
+import com.thesoftwareguild.flightmaster.daos.AirportDataDao;
 import com.thesoftwareguild.flightmaster.daos.AirportDataDaoHibernateImpl;
 import com.thesoftwareguild.flightmaster.daos.AirportDataDaoJdbcImpl;
+import com.thesoftwareguild.flightmaster.daos.RequestDao;
 import com.thesoftwareguild.flightmaster.daos.RequestDaoHibernateImpl;
 import com.thesoftwareguild.flightmaster.daos.RequestDaoJdbcImpl;
+import com.thesoftwareguild.flightmaster.daos.UserDao;
 import com.thesoftwareguild.flightmaster.daos.UserDaoHibernateImpl;
 import com.thesoftwareguild.flightmaster.daos.UserDaoJdbcImpl;
 import org.hibernate.SessionFactory;
@@ -24,8 +27,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  *
  * @author yan
  */
-@Configuration
+
 @EnableTransactionManagement
+@Configuration
 public class DaoConfig {
 
     @Autowired
@@ -62,42 +66,42 @@ public class DaoConfig {
     }
 
     @Bean
-    public RequestDaoJdbcImpl requestDaoJdbc() {
+    public RequestDao requestDaoJdbc() {
         RequestDaoJdbcImpl dao = new RequestDaoJdbcImpl();
         dao.setJdbcTemplate(jdbcTemplate);
         return dao;
     }
 
     @Bean
-    public UserDaoJdbcImpl userDaoJdbc() {
+    public UserDao userDaoJdbc() {
         UserDaoJdbcImpl dao = new UserDaoJdbcImpl();
         dao.setJdbcTemplate(jdbcTemplate);
         return dao;
     }
 
     @Bean
-    public UserDaoHibernateImpl userDaoHibernate() {
+    public UserDao userDaoHibernate() {
         UserDaoHibernateImpl dao = new UserDaoHibernateImpl();
         dao.setSessionFactory(sessionFactory);
         return dao;
     }
 
     @Bean
-    public RequestDaoHibernateImpl requestDaoHibernate() {
+    public RequestDao requestDaoHibernate() {
         RequestDaoHibernateImpl dao = new RequestDaoHibernateImpl();
         dao.setSessionFactory(sessionFactory);
         return dao;
     }
 
     @Bean
-    public AirportDataDaoJdbcImpl airportDataDaoJdbc() {
+    public AirportDataDao airportDataDaoJdbc() {
         AirportDataDaoJdbcImpl dao = new AirportDataDaoJdbcImpl();
         dao.setJdbcTemplate(jdbcTemplate);
         return dao;
     }
 
     @Bean
-    public AirportDataDaoHibernateImpl airportDataDaoHibernate() {
+    public AirportDataDao airportDataDaoHibernate() {
         AirportDataDaoHibernateImpl dao = new AirportDataDaoHibernateImpl();
         dao.setSessionFactory(sessionFactory);
         return dao;

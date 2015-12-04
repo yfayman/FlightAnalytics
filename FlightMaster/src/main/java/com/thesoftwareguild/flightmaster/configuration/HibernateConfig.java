@@ -19,7 +19,7 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 @Configuration
 public class HibernateConfig {
 
-    @Autowired
+
     @Bean(name = "sessionFactory")
     public SessionFactory getSessionFactory(DataSource dataSource) {
 
