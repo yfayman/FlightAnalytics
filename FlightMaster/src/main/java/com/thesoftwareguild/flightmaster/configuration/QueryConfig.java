@@ -25,6 +25,7 @@ public class QueryConfig {
     }
     
     @Bean
+    @Profile("prod")
     QPXFlightQuery qpxFlightQuery(){
         return new QPXFlightQuery();
     }

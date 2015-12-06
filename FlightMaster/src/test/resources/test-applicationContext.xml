@@ -29,15 +29,15 @@
         <property name="dataSource" ref="datasource" />
     </bean>
     
-    <bean id="requestDao" class="com.thesoftwareguild.flightmaster.daos.RequestDaoJdbcImpl">
+    <bean name="requestDaoJdbc" id="requestDao" class="com.thesoftwareguild.flightmaster.daos.RequestDaoJdbcImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     
-    <bean id="userDao" class="com.thesoftwareguild.flightmaster.daos.UserDaoJdbcImpl">
+    <bean name ="userDaoJdbc" id="userDao" class="com.thesoftwareguild.flightmaster.daos.UserDaoJdbcImpl" >
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     
-    <bean id="airportDataDao" class="com.thesoftwareguild.flightmaster.daos.AirportDataDaoJdbcImpl" >
+    <bean name ="airportDataDaoJdbc" id="airportDataDao" class="com.thesoftwareguild.flightmaster.daos.AirportDataDaoJdbcImpl" >
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     
@@ -46,7 +46,6 @@
     </bean>
     
     <bean id="mockFlightQuery" class="com.thesoftwareguild.flightmaster.queryProcessor.MockFlightQuery" />
-    <bean id="qpxFlightQuery" class="com.thesoftwareguild.flightmaster.queryProcessor.QPXFlightQuery" scope="prototype" />
     <bean id="request" class="com.thesoftwareguild.flightmaster.queryExecutor.Request">
         <property name="query"  ref="mockFlightQuery" />
     </bean>
@@ -73,5 +72,8 @@
             </props>
         </property>
     </bean>
-     
+    <beans profile="qpx">
+        <bean id="qpxFlightQuery" class="com.thesoftwareguild.flightmaster.queryProcessor.QPXFlightQuery" />
+    </beans>
 </beans>
+

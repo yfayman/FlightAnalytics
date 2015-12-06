@@ -77,7 +77,7 @@ public class FlightQueryTest {
     
     
     // This test ensures that the QPX Flight Query is loaded with no errors
-    @Test
+    //@Test
     public void qpxFlightQueryLoad(){
         FlightQuery fq = ctx.getBean("qpxFlightQuery", FlightQuery.class);
        

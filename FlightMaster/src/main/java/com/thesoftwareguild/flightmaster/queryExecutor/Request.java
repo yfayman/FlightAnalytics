@@ -27,7 +27,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Request {
 
-    @Qualifier("qpxFlightQuery")
     @Autowired
     private FlightQuery query;
     

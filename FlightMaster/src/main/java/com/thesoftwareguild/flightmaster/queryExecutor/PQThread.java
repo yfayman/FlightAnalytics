@@ -31,14 +31,10 @@ public class PQThread implements Runnable{
     
     @Autowired
     private  PriorityQueue<Request> pq;
-    final private static long FIVE_SECONDS = 5000; // five seconds in ms
+    final private static long ONE_SECOND = 1000; // one second in ms
 
     @Override
     public void run() {
-        // Load all the Requests in Database
-        
-        
-        
         while (true) {
                 try {
                     if (pq.peek() != null && pq.peek().getExecutionTime() < System.currentTimeMillis()) {
@@ -56,7 +52,7 @@ public class PQThread implements Runnable{
                         }
                     }
                     
-                    Thread.sleep(FIVE_SECONDS);
+                    Thread.sleep(ONE_SECOND);
                     
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);

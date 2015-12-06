@@ -18,6 +18,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -66,6 +67,7 @@ public class DaoConfig {
     }
 
     @Bean
+    @Profile("jdbc")
     public RequestDao requestDaoJdbc() {
         RequestDaoJdbcImpl dao = new RequestDaoJdbcImpl();
         dao.setJdbcTemplate(jdbcTemplate);
@@ -73,6 +75,7 @@ public class DaoConfig {
     }
 
     @Bean
+    @Profile("jdbc")
     public UserDao userDaoJdbc() {
         UserDaoJdbcImpl dao = new UserDaoJdbcImpl();
         dao.setJdbcTemplate(jdbcTemplate);
@@ -80,6 +83,7 @@ public class DaoConfig {
     }
 
     @Bean
+    @Profile("hibernate")
     public UserDao userDaoHibernate() {
         UserDaoHibernateImpl dao = new UserDaoHibernateImpl();
         dao.setSessionFactory(sessionFactory);
@@ -87,6 +91,7 @@ public class DaoConfig {
     }
 
     @Bean
+    @Profile("hibernate")
     public RequestDao requestDaoHibernate() {
         RequestDaoHibernateImpl dao = new RequestDaoHibernateImpl();
         dao.setSessionFactory(sessionFactory);
@@ -94,6 +99,7 @@ public class DaoConfig {
     }
 
     @Bean
+    @Profile("jdbc")
     public AirportDataDao airportDataDaoJdbc() {
         AirportDataDaoJdbcImpl dao = new AirportDataDaoJdbcImpl();
         dao.setJdbcTemplate(jdbcTemplate);
@@ -101,6 +107,7 @@ public class DaoConfig {
     }
 
     @Bean
+    @Profile("hibernate")
     public AirportDataDao airportDataDaoHibernate() {
         AirportDataDaoHibernateImpl dao = new AirportDataDaoHibernateImpl();
         dao.setSessionFactory(sessionFactory);

@@ -5,9 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.queryExecutor;
 
-import javax.annotation.PostConstruct;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
 
 /**
  *
