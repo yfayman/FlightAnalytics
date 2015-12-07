@@ -79,6 +79,7 @@ public class RequestController implements ApplicationContextAware {
             RequestParameters requestWithId = requestDao.add(req);
             Request request = context.getBean(Request.class);
             request.setRequestParameters(requestWithId);
+            request.setExecutionTime(System.currentTimeMillis());
             Executor executor = context.getBean(ExecutorPQ.class);
             executor.addToExecutor(request);
         }

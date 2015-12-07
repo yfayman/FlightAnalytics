@@ -57,7 +57,7 @@ public class RequestTest {
         request.setAdultPassengers(1);
         request.setDepDate(new Date(115,11,25));
         request.setDestination("LGA");
-        request.setInterval(120);
+        request.setInterval(1000*60*60*2);
         request.setMaxStops(1);
         request.setNumberQueries(20);
         request.setOrigin("ORD");
@@ -87,8 +87,6 @@ public class RequestTest {
         jdbcTemplate.execute("DELETE FROM users WHERE id > 0");
     }
 
-//    private static final String SQL_ADD_REQUEST = "INSERT INTO requests (user_id, origin, destination, depart_date, return_date, adult_passengers, child_passengers, senior_passengers, max_stops, interval , queries_left) "
-//            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     @Test
     public void addTest1() {
               
@@ -96,7 +94,7 @@ public class RequestTest {
         Assert.assertEquals(1, ret.getAdultPassengers());
         Assert.assertEquals(0, ret.getChildPassengers());
         Assert.assertEquals(1, ret.getMaxStops());
-        Assert.assertEquals(120, ret.getInterval());
+        Assert.assertEquals(1000*60*60*2, ret.getInterval());
         Assert.assertEquals(new Date(115,11,25), ret.getDepDate());
         Assert.assertEquals(new Date(115,11,30), ret.getRetDate());
         Assert.assertEquals("ORD", ret.getOrigin());
@@ -120,7 +118,7 @@ public class RequestTest {
         Assert.assertEquals(1, result.getAdultPassengers());
         Assert.assertEquals(0, result.getChildPassengers());
         Assert.assertEquals(1, result.getMaxStops());
-        Assert.assertEquals(120, result.getInterval());
+        Assert.assertEquals(1000*60*60*2, result.getInterval());
         Assert.assertEquals(new Date(115,11,25), result.getDepDate());
         Assert.assertEquals(new Date(115,11,30), result.getRetDate());
         Assert.assertEquals("ORD", result.getOrigin());
@@ -168,6 +166,9 @@ public class RequestTest {
             
             // Test to see if queries left was decremented
             Assert.assertEquals(19, requestDao.getRequestByRequestId(id).getNumberQueries());
+            // Test to see if next_query is within 1 minute(6000ms) of where you would expect
+            RequestParameters requestByRequestId = requestDao.getRequestByRequestId(id);
+            Assert.assertTrue(Math.abs(requestByRequestId.getNextQueryTime()-(System.currentTimeMillis()+request.getInterval()))<6000);
             
         } catch (IOException ex) {
             Logger.getLogger(RequestTest.class.getName()).log(Level.SEVERE, null, ex);

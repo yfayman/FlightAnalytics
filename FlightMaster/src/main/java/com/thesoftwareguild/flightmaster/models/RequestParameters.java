@@ -14,15 +14,9 @@ import java.util.Date;
  * @author Yan
  */
 public class RequestParameters {
-   
-    // Time in database is in minutes
-    public static final long SECOND = 1000;
-    public static final long MINUTE = SECOND* 60;
-    public static final long HOUR = MINUTE * 60;
-    public static final long DAY = HOUR * 24;
-    public static final long WEEK = DAY * 7;
-    
+       
     private long interval; // interval of queries in milliseconds
+    private long nextQueryTime;
     private int numberQueries;
     private int requestId;
     private int userId;
@@ -154,7 +148,15 @@ public class RequestParameters {
         this.interval = interval;
     }
 
+    public long getNextQueryTime() {
+        return nextQueryTime;
+    }
 
+    public void setNextQueryTime(long nextQueryTime) {
+        this.nextQueryTime = nextQueryTime;
+    }
+
+    
 
     
     /**

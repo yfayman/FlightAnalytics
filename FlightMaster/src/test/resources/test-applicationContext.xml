@@ -46,6 +46,7 @@
     </bean>
     
     <bean id="mockFlightQuery" class="com.thesoftwareguild.flightmaster.queryProcessor.MockFlightQuery" />
+    <bean id="qpxFlightQuery" name="qpxFlightQuery" class="com.thesoftwareguild.flightmaster.queryProcessor.QPXFlightQuery" />
     <bean id="request" class="com.thesoftwareguild.flightmaster.queryExecutor.Request">
         <property name="query"  ref="mockFlightQuery" />
     </bean>
@@ -72,8 +73,5 @@
             </props>
         </property>
     </bean>
-    <beans profile="qpx">
-        <bean id="qpxFlightQuery" class="com.thesoftwareguild.flightmaster.queryProcessor.QPXFlightQuery" />
-    </beans>
 </beans>
 

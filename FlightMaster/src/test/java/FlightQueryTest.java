@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.env.Environment;
 
 /**
  *
@@ -77,7 +78,7 @@ public class FlightQueryTest {
     
     
     // This test ensures that the QPX Flight Query is loaded with no errors
-    //@Test
+    @Test
     public void qpxFlightQueryLoad(){
         FlightQuery fq = ctx.getBean("qpxFlightQuery", FlightQuery.class);
        

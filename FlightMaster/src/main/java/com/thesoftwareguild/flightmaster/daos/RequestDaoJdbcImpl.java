@@ -48,6 +48,10 @@ public class RequestDaoJdbcImpl implements RequestDao {
     private static final String SQL_GET_FLIGHTDATA_BY_REQUEST_ID = "SELECT requests.id, requests.origin, requests.destination, requestdata.datetime_of_query, flightdata.price, flightdata.carrier FROM requests "
             + "INNER JOIN requestdata ON requests.id = requestdata.request_id "
             + "INNER JOIN flightdata ON requestdata.id = flightdata.requestdata_id WHERE requests.id = ?";
+    
+    
+    private static final String SQL_GET_INTERVAL = "SELECT query_interval FROM requests WHERE id=?";
+    private static final String SQL_UPDATE_NEXT_EXECUTION = "UPDATE requests SET next_query = ? WHERE id = ?";
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -128,6 +132,9 @@ public class RequestDaoJdbcImpl implements RequestDao {
             });
             // Decrement queries_left to keep it consistant with in-memory representation
             jdbcTemplate.update(SQL_DECREMENT_QUERIESLEFT, requestId);
+            // Get interval and set next execution time in database
+            long interval = jdbcTemplate.queryForObject(SQL_GET_INTERVAL, Long.class, requestId); 
+            jdbcTemplate.update(SQL_UPDATE_NEXT_EXECUTION, (System.currentTimeMillis() + interval), requestId);
         }
     }
 
@@ -151,8 +158,9 @@ public class RequestDaoJdbcImpl implements RequestDao {
             ret.setChildPassengers(rs.getInt("child_passengers"));
             ret.setSeniorPassengers(rs.getInt("senior_passengers"));
             ret.setMaxStops(rs.getInt("max_stops"));
-            ret.setInterval(rs.getInt("query_interval"));
+            ret.setInterval(rs.getLong("query_interval"));
             ret.setNumberQueries(rs.getInt("queries_left"));
+            ret.setNextQueryTime(rs.getLong("next_query"));
 
             return ret;
 

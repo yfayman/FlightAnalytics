@@ -130,6 +130,7 @@ public class ExecutorPQ implements Executor {
         for (RequestParameters liveRequest : liveRequests) {
             Request request = context.getBean(Request.class);
             request.setRequestParameters(liveRequest);
+            request.setExecutionTime(liveRequest.getNextQueryTime());
             addToExecutor(request);
         }
     }
