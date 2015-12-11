@@ -9,7 +9,7 @@
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Custom styles for this template -->
-        <link href="${pageContext.request.contextPath}/css/home.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 
         <!-- SWC Icon -->
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/plane-icon.png">
@@ -19,13 +19,13 @@
 
 
     </head>
-    <body class="light-primary-color">
+    <body>
         <c:import url="nav.jsp"></c:import>
 
             <div class="container " id="request-input-form-container">
                 <div class="col-md-offset-2">
 
-                    <div class ="col-md-8 default-primary-color" id="request-input-form" style="background-color:#03A9F4">
+                    <div class ="col-md-8 default-primary-color" id="request-input-form">
                         <div class ="row ">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -65,7 +65,7 @@
                                     <label for="adult-passengers">Adults</label>
                                     <select id="adult-passengers" class="form-control">
                                         <option value="0">0</option>
-                                        <option value="1">1</option>
+                                        <option selected="selected" value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                         <option value="4">4</option>

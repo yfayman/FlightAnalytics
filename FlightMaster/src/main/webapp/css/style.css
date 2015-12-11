@@ -18,19 +18,17 @@ and open the template in the editor.
 
 body{
     //background-image: url("../img/Simple-Clouds.svg");
-    margin: 5%;
+    
 }
 #topNavBar{
     background-color: black;
 }
 
 #request-input-form{
-    background-color: #BDBDBD;
-    padding: 5%;
-
+    background-color: white;
 }
-#request-input-form-container,#aboutContainer{
-    margin-top: 15%;
+#request-input-form-container, #aboutContainer{
+    margin-top: 70px;
 
 }
 .error{

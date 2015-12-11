@@ -13,7 +13,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <nav class="navbar navbar-inverse navbar-fixed-top" id="topNavBar">
-    <div class="dark-primary-color">
+    
         <div class="container">
             <div class="navbar-header ">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -22,14 +22,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="${pageContext.request.contextPath}" style="color:#212121">FlightAnalytics</a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}">FlightAnalytics</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav" >
                    
                         <sec:authorize access="hasRole('ROLE_USER')">
-                        <li><a href="${pageContext.request.contextPath}/request"  style="color:#212121">Make Request</a></li>
-                        <li><a href="${pageContext.request.contextPath}/request/currentrequests"  style="color:#212121">View Pending Requests</a></li>
+                        <li><a href="${pageContext.request.contextPath}/request" >Make Request</a></li>
+                        <li><a href="${pageContext.request.contextPath}/request/currentrequests" >View Pending Requests</a></li>
                         </sec:authorize>
                 </ul>
                 <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
@@ -40,8 +40,8 @@
                         <div class="form-group">
                             <input type="password" name="password" placeholder="Password" class="form-control">
                         </div>
-                        <button type="submit" class="btn accent-color text-primary-color">Sign in</button>
-                        <button data-toggle="modal" data-target="#myModal" type="button" class="btn accent-color text-primary-color">Register</button>
+                        <button type="submit" class="btn btn-success">Sign in</button>
+                        <button data-toggle="modal" data-target="#myModal" type="button" class="btn btn-success">Register</button>
                     </form>
                 </sec:authorize>
 
@@ -56,7 +56,7 @@
 
             </div>
         </div>
-    </div>
+    
 </nav>
 <!-- Registration modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

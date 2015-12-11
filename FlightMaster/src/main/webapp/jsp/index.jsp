@@ -10,20 +10,20 @@
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Custom styles for this template -->
-        <link href="${pageContext.request.contextPath}/css/home.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 
         <!-- SWC Icon -->
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/plane-icon.png">
 
     </head>
-    <body class="light-primary-color">
+    <body>
         <c:import url="nav.jsp"></c:import>
-        <div class="container" id="aboutContainer" style="padding: 5%" >
+        <div class="container" id="aboutContainer">
             <div class="col-md-offset-1">
-                <div class="col-md-10 default-primary-color" style="text-align: center; font-size: 130%" >
-                    <h2 class="secondary-text-color" >Welcome to Flight Analytics</h2>
-                    <hr class="divider-color">
-                    <p class="primary-text-color">Have you ever sat on a plane wondering whether you paid more
+                <div class="col-md-10" style="text-align: center; font-size: 130%; line" >
+                    <h2>Welcome to Flight Analytics</h2>
+                    <hr>
+                    <p >Have you ever sat on a plane wondering whether you paid more
                         than the person next to you? The dirty secret of the airline industry is that prices can
                         vary dramatically. Airlines use complex algorithms to maximize revenue per flight. 
                         <strong>When is the best time to buy? </strong> That is the question that Flight Analytics
