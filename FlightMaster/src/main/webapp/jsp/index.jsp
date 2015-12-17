@@ -18,24 +18,26 @@
     </head>
     <body>
         <c:import url="nav.jsp"></c:import>
-        <div class="container" id="aboutContainer">
-            <div class="col-md-offset-1">
-                <div class="col-md-10" style="text-align: center; font-size: 130%; line" >
-                    <h2>Welcome to Flight Analytics</h2>
-                    <hr>
-                    <p >Have you ever sat on a plane wondering whether you paid more
-                        than the person next to you? The dirty secret of the airline industry is that prices can
-                        vary dramatically. Airlines use complex algorithms to maximize revenue per flight. 
-                        <strong>When is the best time to buy? </strong> That is the question that Flight Analytics
-                        will answer. All you have to do is tell Flight Analytics what flights you want to track. It
-                        will then check the price of the route at specified intervals. No more checking prices daily!
-                        Flight Analytics will handle it for you so you can focus on more important things.
-                        
-                    </p>
+            <div class="container" id="aboutContainer">
+                <div class="row">
+                    <div class="col-md-offset-1">
+                        <div class="col-md-10" style="text-align: center; font-size: 130%; line" >
+                            <h2>Welcome to Flight Analytics</h2>
+                            <hr>
+                            <p >Have you ever sat on a plane wondering whether you paid more
+                                than the person next to you? The dirty secret of the airline industry is that prices can
+                                vary dramatically. Airlines use complex algorithms to maximize revenue per flight. 
+                                <strong>When is the best time to buy? </strong> That is the question that Flight Analytics
+                                will answer. All you have to do is tell Flight Analytics what flights you want to track. It
+                                will then check the price of the route at specified intervals. No more checking prices daily!
+                                Flight Analytics will handle it for you so you can focus on more important things.
+
+                            </p>
+                        </div>
+                    </div>
                 </div>
+
             </div>
-            
-        </div>
 
 
             <!-- Placed at the end of the document so the pages load faster -->

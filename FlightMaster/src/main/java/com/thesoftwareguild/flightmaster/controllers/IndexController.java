@@ -1,7 +1,9 @@
 package com.thesoftwareguild.flightmaster.controllers;
 
+import java.security.Principal;
 import java.util.Map;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -22,13 +24,11 @@ public class IndexController {
     public String afterLogIn(){
 
         return "index";
+    }  
+    
+    @RequestMapping(value="loginfail", method = RequestMethod.GET)
+    public String loadaIndex(Model model) {
+        model.addAttribute("loginFail", new Object());
+        return "index";
     }
-    
-//    @RequestMapping(value = "j_spring_security_logout")
-//    public String afterLogOut(){
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        authentication.setAuthenticated(false);
-//        return "index";
-//    }
-    
 }

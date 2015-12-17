@@ -34,3 +34,11 @@ FlightMaster.xml
 apikey.txt*
 api.js
 QPXTest/
+
+#Logs
+*.log
+*.out
+log4j.properties
+
+#Trash files
+*~

@@ -25,7 +25,7 @@ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
     <http auto-config="true" use-expressions="false">
         <form-login login-processing-url="/j_spring_security_check"
                     login-page="/" username-parameter="username" password-parameter="password"
-                    authentication-failure-url="/login?login_error=1" />
+                    authentication-failure-url="/loginfail" />
         <logout invalidate-session="true" logout-success-url="/" logout-url="/logout" />
         
         

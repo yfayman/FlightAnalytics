@@ -48,7 +48,7 @@ public class DaoConfig {
         dmds.setDriverClassName("com.mysql.jdbc.Driver");
         dmds.setUrl("jdbc:mysql://localhost:3306/flights");
         dmds.setUsername("root");
-        dmds.setPassword("");
+        dmds.setPassword("");      
         return dmds;
     }
 

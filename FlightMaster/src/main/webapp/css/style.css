@@ -27,7 +27,8 @@ body{
 #request-input-form{
     background-color: white;
 }
-#request-input-form-container, #aboutContainer{
+#request-input-form-container, 
+#aboutContainer, #request-view{
     margin-top: 70px;
 
 }
@@ -53,6 +54,22 @@ button.active, button.active:hover {
 #chart{
    // border: #795548 thin solid;
    padding-top: 20px;
-    height: 400px;
-    width: 80%;
+   min-height: 400px;
+   min-width: 400px;
+}
+p{
+    line-height: 130%;
+}
+.data-header{
+    width: 40%;
+    margin: 0 auto;
+    text-align: center;
+    padding-bottom: 5px;
+    border-bottom: 2px solid black;
+}
+@media screen and (max-width: 950px) {
+    #request-container{
+        margin-left: 7%;
+    }
+    
 }

@@ -12,6 +12,8 @@ import java.util.PriorityQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -27,7 +29,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExecutorPQ implements Executor {
 
-    
+    private static Logger logger = LoggerFactory.getLogger(ExecutorPQ.class);
     private ApplicationContext context;
     
     final private ExecutorService queryExecutor = Executors.newSingleThreadExecutor();
@@ -122,7 +124,6 @@ public class ExecutorPQ implements Executor {
     @PostConstruct
     @Override
     public void run() {
-        System.out.println("Starting PQ thread");
         queryExecutor.execute(pqThread);
         
         RequestDao requestDao = context.getBean("requestDaoJdbc", RequestDao.class);
@@ -133,6 +134,7 @@ public class ExecutorPQ implements Executor {
             request.setExecutionTime(liveRequest.getNextQueryTime());
             addToExecutor(request);
         }
+        logger.info("PQ Thread started and live requests loaded");
     }
 
     @Override

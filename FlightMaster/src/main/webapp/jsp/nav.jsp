@@ -11,29 +11,35 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<!DOCTYPE html>
+
 <nav class="navbar navbar-inverse navbar-fixed-top" id="topNavBar">
-    
-        <div class="container">
-            <div class="navbar-header ">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="${pageContext.request.contextPath}">FlightAnalytics</a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav" >
-                   
-                        <sec:authorize access="hasRole('ROLE_USER')">
-                        <li><a href="${pageContext.request.contextPath}/request" >Make Request</a></li>
-                        <li><a href="${pageContext.request.contextPath}/request/currentrequests" >View Pending Requests</a></li>
-                        </sec:authorize>
-                </ul>
-                <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
-                    <form class="navbar-form navbar-right" action="j_spring_security_check" method="POST">
+
+    <div class="container">
+        <div class="navbar-header ">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}">FlightAnalytics</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" >
+
+                <sec:authorize access="hasRole('ROLE_USER')">
+                    <li><a href="${pageContext.request.contextPath}/request" >Make Request</a></li>
+                    <li><a href="${pageContext.request.contextPath}/request/currentrequests" >View Pending Requests</a></li>
+                    </sec:authorize>
+            </ul>
+            <sec:authorize access="!hasRole('ROLE_USER')">
+                <div class="navbar-right" style="margin-top:15px;">
+                    <c:if test="${not empty loginFail}">
+                        <p style="color:red;">Invalid username or password</p>
+                    </c:if>
+                </div>
+                <div class="navbar-right">
+                    <form class="navbar-form" action="j_spring_security_check" method="POST">
                         <div class="form-group">
                             <input type="text" name="username" placeholder="Username" class="form-control" >
                         </div>
@@ -43,20 +49,23 @@
                         <button type="submit" class="btn btn-success">Sign in</button>
                         <button data-toggle="modal" data-target="#myModal" type="button" class="btn btn-success">Register</button>
                     </form>
-                </sec:authorize>
+                </div>
+                
+                
+            </sec:authorize>
 
-                <sec:authorize access="hasRole('ROLE_USER')">
-                    <div class="navbar-form navbar-right">
+            <sec:authorize access="hasRole('ROLE_USER')">
+                <div class="navbar-form navbar-right">
 
 
-                        <div class="form-group"> <a href="${pageContext.request.contextPath}/logout"><button type="button" class="btn btn-danger">Logout</button></a></div>
+                    <div class="form-group"> <a href="${pageContext.request.contextPath}/logout"><button type="button" class="btn btn-danger">Logout</button></a></div>
 
-                    </div>
-                </sec:authorize>
+                </div>
+            </sec:authorize>
 
-            </div>
         </div>
-    
+    </div>
+
 </nav>
 <!-- Registration modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
