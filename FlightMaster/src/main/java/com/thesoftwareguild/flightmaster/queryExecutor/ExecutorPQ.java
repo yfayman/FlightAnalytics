@@ -11,7 +11,10 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -135,6 +138,16 @@ public class ExecutorPQ implements Executor {
             addToExecutor(request);
         }
         logger.info("PQ Thread started and live requests loaded");
+    }
+    
+    @PreDestroy
+    public void shutdown(){
+        try {
+            if(!queryExecutor.awaitTermination(5, TimeUnit.SECONDS))
+                queryExecutor.shutdownNow();
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

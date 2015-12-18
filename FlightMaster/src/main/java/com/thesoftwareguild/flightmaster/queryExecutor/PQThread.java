@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,8 @@ public class PQThread implements Runnable{
     @Autowired
     private RequestDao requestDao;
     
+    private boolean shutdown;
+    
     public PQThread(){
     }
     
@@ -35,7 +39,7 @@ public class PQThread implements Runnable{
 
     @Override
     public void run() {
-        while (true) {
+        while (!shutdown) {
                 try {
                     if (pq.peek() != null && pq.peek().getExecutionTime() < System.currentTimeMillis()) {
                         try {
@@ -58,6 +62,16 @@ public class PQThread implements Runnable{
                     Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+    }
+    
+    @PostConstruct
+    public void init(){
+        this.shutdown = false;
+    }
+    
+    @PreDestroy
+    public void shutdown(){
+        this.shutdown = true;
     }
 
     public PriorityQueue<Request> getPq() {
