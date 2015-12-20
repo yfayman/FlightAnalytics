@@ -27,7 +27,7 @@ public class RequestDaoHibernateImpl implements RequestDao{
     }
 
     @Override
-    public void addFlights(int requestId, List<Flight> flights) {
+    public List<Flight> addFlights(int requestId, List<Flight> flights) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -18,7 +18,7 @@ public interface RequestDao {
     
     public RequestParameters add(RequestParameters requestData);
     
-    public void addFlights(int requestId, List<Flight> flights);
+    public List<Flight> addFlights(int requestId, List<Flight> flights);
     
     public void delete(int requestId);
     

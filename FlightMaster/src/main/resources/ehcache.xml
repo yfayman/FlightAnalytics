@@ -4,7 +4,6 @@
 	
 	
 	<cache name="airportCache" 
-		maxBytesLocalHeap="50m" >
-	</cache>
-
+		maxBytesLocalHeap="50m" />
+        <cache name="requestsDataCache" timeToLiveSeconds="6000" maxEntriesLocalHeap="1000" />
 </ehcache>

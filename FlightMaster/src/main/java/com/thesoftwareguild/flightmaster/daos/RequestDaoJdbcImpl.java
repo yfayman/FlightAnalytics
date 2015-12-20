@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -105,13 +106,14 @@ public class RequestDaoJdbcImpl implements RequestDao {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
+    @Cacheable("requestsDataCache")
     public List<Flight> getDataByRequestId(int requestId) {
         return jdbcTemplate.query(SQL_GET_FLIGHTDATA_BY_REQUEST_ID, new FlightMapper(), requestId);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addFlights(int requestId, List<Flight> flights) {
+    public List<Flight> addFlights(int requestId, List<Flight> flights) {
         if (flights != null && flights.size() > 0) {
             Date timeOfQuery = flights.get(0).getQueryTime();
             jdbcTemplate.update(SQL_ADD_REQUESTDATA_POINT, requestId, timeOfQuery);
@@ -134,8 +136,9 @@ public class RequestDaoJdbcImpl implements RequestDao {
             jdbcTemplate.update(SQL_DECREMENT_QUERIESLEFT, requestId);
             // Get interval and set next execution time in database
             long interval = jdbcTemplate.queryForObject(SQL_GET_INTERVAL, Long.class, requestId); 
-            jdbcTemplate.update(SQL_UPDATE_NEXT_EXECUTION, (System.currentTimeMillis() + interval), requestId);
+            jdbcTemplate.update(SQL_UPDATE_NEXT_EXECUTION, (System.currentTimeMillis() + interval), requestId);        
         }
+        return flights;
     }
 
     @Override
