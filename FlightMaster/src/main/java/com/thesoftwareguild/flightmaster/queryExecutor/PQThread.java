@@ -35,33 +35,25 @@ public class PQThread implements Runnable{
     
     @Autowired
     private  PriorityQueue<Request> pq;
-    final private static long ONE_SECOND = 1000; // one second in ms
 
     @Override
     public void run() {
-        while (!shutdown) {
+        while (!shutdown) {      
+            if (pq.peek() != null && pq.peek().getExecutionTime() < System.currentTimeMillis()) {
                 try {
-                    if (pq.peek() != null && pq.peek().getExecutionTime() < System.currentTimeMillis()) {
-                        try {
-                            Request request = pq.poll();
-                            List<Flight> result = request.execute();
-                            requestDao.addFlights(request.getRequestId(), result);
-                            if(request.hasRequest())
-                                pq.add(request);
-                            else 
-                                System.out.println("Requests depleted");
-                                                         
-                        } catch (IOException ex) {
-                            Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                    
-                    Thread.sleep(ONE_SECOND);
-                    
-                } catch (InterruptedException ex) {
+                    Request request = pq.poll();
+                    List<Flight> result = request.execute();
+                    requestDao.addFlights(request.getRequestId(), result);
+                    if(request.hasRequest())
+                        pq.add(request);
+                    else 
+                        System.out.println("Requests depleted");
+
+                } catch (IOException ex) {
                     Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        }
     }
     
     @PostConstruct

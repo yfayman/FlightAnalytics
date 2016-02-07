@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
@@ -35,7 +36,7 @@ public class ExecutorPQ implements Executor {
     private static Logger logger = LoggerFactory.getLogger(ExecutorPQ.class);
     private ApplicationContext context;
     
-    final private ExecutorService queryExecutor = Executors.newSingleThreadExecutor();
+    final private ScheduledExecutorService queryExecutor = Executors.newScheduledThreadPool(1);
     
     @Autowired
     private PriorityQueue<Request> pq;// = new PriorityQueue(10, Request.flightQuerySoonest);
@@ -127,7 +128,7 @@ public class ExecutorPQ implements Executor {
     @PostConstruct
     @Override
     public void run() {
-        queryExecutor.execute(pqThread);
+        queryExecutor.schedule(pqThread, 1, TimeUnit.SECONDS);
         
         RequestDao requestDao = context.getBean("requestDaoJdbc", RequestDao.class);
          List<RequestParameters> liveRequests = requestDao.getLiveRequests();

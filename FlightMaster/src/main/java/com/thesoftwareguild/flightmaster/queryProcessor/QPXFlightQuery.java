@@ -289,8 +289,4 @@ public class QPXFlightQuery implements FlightQuery {
         }
 
     }
-//    departSlice.setOrigin(origin);
-//            departSlice.setDestination(destination);
-//            departSlice.setDate(df.format(departDate));
-//            departSlice.setMaxStops(maxStops);
 }

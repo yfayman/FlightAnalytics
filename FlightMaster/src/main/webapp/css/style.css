@@ -16,10 +16,6 @@ and open the template in the editor.
 .secondary-text-color { color: #727272; }
 .divider-color         { border-color: #B6B6B6; }
 
-body{
-    //background-image: url("../img/Simple-Clouds.svg");
-    
-}
 #topNavBar{
     background-color: black;
 }
@@ -52,7 +48,6 @@ button.active, button.active:hover {
     color: #212121;
 }
 #chart{
-   // border: #795548 thin solid;
    padding-top: 20px;
    min-height: 400px;
    min-width: 400px;

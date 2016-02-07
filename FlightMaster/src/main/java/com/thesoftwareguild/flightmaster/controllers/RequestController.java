@@ -15,10 +15,7 @@ import com.thesoftwareguild.flightmaster.models.User;
 import com.thesoftwareguild.flightmaster.queryExecutor.Executor;
 import com.thesoftwareguild.flightmaster.queryExecutor.ExecutorPQ;
 import com.thesoftwareguild.flightmaster.queryExecutor.Request;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
-import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,12 +123,4 @@ public class RequestController implements ApplicationContextAware {
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
     }
-
-    @PostConstruct
-    public void loadLiveRequets() {
-        System.out.println("Loading live requests");
-       
-
-    }
-
 }
