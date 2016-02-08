@@ -9,15 +9,12 @@ import com.thesoftwareguild.flightmaster.daos.RequestDao;
 import com.thesoftwareguild.flightmaster.models.RequestParameters;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -33,7 +30,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExecutorPQ implements Executor {
 
-    private static Logger logger = LoggerFactory.getLogger(ExecutorPQ.class);
+    private static Logger logger = Logger.getLogger(ExecutorPQ.class);
     private ApplicationContext context;
     
     final private ScheduledExecutorService queryExecutor = Executors.newScheduledThreadPool(1);
@@ -60,54 +57,6 @@ public class ExecutorPQ implements Executor {
         this.pqThread = pqThread;
     }
     
-    
-    
-    /*
-        Eager singleton implementation of the priority queue. I used this approach
-        to remove risk of executing queries twice
-    */
-     
-    //private static ExecutorPQ instance = new ExecutorPQ();
-
-//    private final Runnable pqThread = new Runnable() {
-//
-//        /*
-//            Makes a request and then checks to see if there are more requests to make.
-//            If there are, the request object will be added back to the priority queue. The execute 
-//            method changes the executionTime variable in the request is changed to point to the
-//            time of the next request if one exists
-//        */
-//        @Override
-//        public void run() {
-//            while (true) {
-//                try {
-//                    if (pq.peek() != null && pq.peek().getExecutionTime() < System.currentTimeMillis()) {
-//                        try {
-//                            Request request = pq.poll();
-//                            List<Flight> result = request.execute();
-//                            if(request.hasRequest())
-//                                pq.add(request);
-//                            else 
-//                                System.out.println("Requests depleted");
-//                            // add code here to deal with storing the result in the database
-//                           
-//                        } catch (IOException ex) {
-//                            Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//                    }
-//                    
-//                    Thread.sleep(FIVE_SECONDS);
-//                    
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        }
-
- //   };
-
-    
-
     /**
      * Adds a request to the PQ. If the request requires multiple queries,
      * multiple items will be added to the queue
@@ -116,9 +65,7 @@ public class ExecutorPQ implements Executor {
      */
     @Override
     public void addToExecutor(Request request) {
-     
-            pq.add(request);
-      
+        pq.add(request);
     }
 
     /**
@@ -147,7 +94,7 @@ public class ExecutorPQ implements Executor {
             if(!queryExecutor.awaitTermination(5, TimeUnit.SECONDS))
                 queryExecutor.shutdownNow();
         } catch (InterruptedException ex) {
-            java.util.logging.Logger.getLogger(ExecutorPQ.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("Error during shutdown: " + ex);
         }
     }
 
@@ -155,7 +102,4 @@ public class ExecutorPQ implements Executor {
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
     }
-    
-    
-
 }

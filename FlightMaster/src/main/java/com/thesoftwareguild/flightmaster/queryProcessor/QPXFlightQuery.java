@@ -19,6 +19,8 @@ import com.google.api.services.qpxExpress.model.TripOption;
 import com.google.api.services.qpxExpress.model.TripOptionsRequest;
 import com.google.api.services.qpxExpress.model.TripsSearchRequest;
 import com.google.api.services.qpxExpress.model.TripsSearchResponse;
+import com.thesoftwareguild.flightmaster.controllers.RequestController;
+import com.thesoftwareguild.flightmaster.controllers.UserController;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -28,8 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  * Uses QPXFlightQuery to make flight requests.API KEY and Application Name can
@@ -39,6 +40,8 @@ import java.util.logging.Logger;
  * @author Yan
  */
 public class QPXFlightQuery implements FlightQuery {
+    
+    private final static Logger logger = Logger.getLogger(QPXFlightQuery.class);
 
     private final int MAX_FLIGHTS_RETURNED = 30;
     private String APPLICATION_NAME;
@@ -70,7 +73,7 @@ public class QPXFlightQuery implements FlightQuery {
             this.API_KEY = sc.nextLine();
             sc.close();          
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(QPXFlightQuery.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error(ex);
         }
     }
 
@@ -155,7 +158,7 @@ public class QPXFlightQuery implements FlightQuery {
             }
 
         } catch (GeneralSecurityException ex) {
-            Logger.getLogger(QPXFlightQuery.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error(ex);
         }
 
         // Reset all parameters
@@ -285,7 +288,7 @@ public class QPXFlightQuery implements FlightQuery {
             List<Flight> execute = q.execute();
             System.out.println("test");
         } catch (IOException ex) {
-            Logger.getLogger(QPXFlightQuery.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error(ex);
         }
 
     }

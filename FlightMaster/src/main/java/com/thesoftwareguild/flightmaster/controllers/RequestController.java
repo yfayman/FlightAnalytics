@@ -17,6 +17,7 @@ import com.thesoftwareguild.flightmaster.queryExecutor.ExecutorPQ;
 import com.thesoftwareguild.flightmaster.queryExecutor.Request;
 import java.util.List;
 import javax.validation.Valid;
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,6 +40,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/request")
 @Controller
 public class RequestController implements ApplicationContextAware {
+    
+    final static Logger logger = Logger.getLogger(RequestController.class);
 
     private RequestDao requestDao;
     private UserDao userDao;

@@ -5,6 +5,7 @@
  */
 package com.thesoftwareguild.flightmaster.queryProcessor;
 
+import com.thesoftwareguild.flightmaster.controllers.RequestController;
 import com.thesoftwareguild.flightmaster.models.Flight;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -13,17 +14,14 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.springframework.stereotype.Component;
+import org.apache.log4j.Logger;
 
-/** 
- * A mock FlightQuery for testing(Because QPX is expensive). This generates
- * random data which will be stored to a test database
- * @author Yan
- */
 
 
 public class MockFlightQuery implements FlightQuery {
 
+    final static Logger logger = Logger.getLogger(MockFlightQuery.class);
+    
     private int requestId;
     private int adults;
     private int children;

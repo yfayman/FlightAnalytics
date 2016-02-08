@@ -8,6 +8,7 @@ package com.thesoftwareguild.flightmaster.controllers;
 import com.thesoftwareguild.flightmaster.daos.UserDao;
 import com.thesoftwareguild.flightmaster.models.User;
 import javax.validation.Valid;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/user")
 public class UserController {
 
+    private final static Logger logger = Logger.getLogger(UserController.class);
   
     private PasswordEncoder encoder;
     private UserDao userDao;

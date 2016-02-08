@@ -87,7 +87,7 @@
     </context-param>
     <context-param>
 	    <param-name>spring.profiles.active</param-name>
-	    <param-value>prod, jdbc</param-value>
+	    <param-value>test, jdbc</param-value>
 	</context-param>
     <listener>
         <listener-class>
