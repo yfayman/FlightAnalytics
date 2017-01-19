@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.Assert;
 
 /**
  * Uses QPXFlightQuery to make flight requests.API KEY and Application Name can
@@ -45,8 +47,13 @@ public class QPXFlightQuery implements FlightQuery {
     private final static Logger logger = Logger.getLogger(QPXFlightQuery.class);
 
     private final int MAX_FLIGHTS_RETURNED = 30;
+    
+    @Value("${qpx.app.name}")
     private String APPLICATION_NAME;
+    @Value("${qpx.app.key}")
     private String API_KEY;
+    
+    
     private HttpTransport httpTransport;
     private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -63,19 +70,13 @@ public class QPXFlightQuery implements FlightQuery {
     private String destination;
     private Date departDate;
     private Date returnDate;
-
-    /**
-     * This is to hide the apikey from source control
-     */
-    public QPXFlightQuery() {
-        try {
-            Scanner sc = new Scanner(new FileReader("apikey.txt"));
-            this.APPLICATION_NAME = sc.nextLine();
-            this.API_KEY = sc.nextLine();
-            sc.close();          
-        } catch (FileNotFoundException ex) {
-            logger.error(ex);
-        }
+    
+    public QPXFlightQuery() {     
+    }
+    
+    public void postConstruct(){
+    	Assert.notNull(API_KEY, "API_KEY must not be null");
+    	Assert.notNull(APPLICATION_NAME, "APPLICATION_NAME must not be null");
     }
 
     /**
