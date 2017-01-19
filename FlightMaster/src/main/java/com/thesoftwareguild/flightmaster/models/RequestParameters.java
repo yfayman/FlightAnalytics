@@ -7,10 +7,11 @@ package com.thesoftwareguild.flightmaster.models;
 
 import com.thesoftwareguild.flightmaster.queryProcessor.FlightQuery;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Abstract class that must be implemented by all requestors. Has fields for all
- * the basic information required for a flight query.
+ *  Has fields for all the basic information required for a flight query.
  * @author Yan
  */
 public class RequestParameters {
@@ -165,16 +166,20 @@ public class RequestParameters {
      * @param query 
      */
     public void populateQueryParams(FlightQuery query) {
-        query.setAdultPassengers(this.adultPassengers);
-        query.setChildPassengers(this.childPassengers);
-        query.setDepartDate(this.depDate);
-        query.setDestination(this.destination);
-        query.setInfantInSeatCount(this.infantPassengers);
-        query.setMaxStops(this.maxStops);
-        query.setOrigin(this.origin);
-        query.setReturnDate(this.retDate);
-        query.setSeniorPassengers(this.seniorPassengers);
-        query.setRequestId(this.requestId);
+    	Map<String, Object> data = new HashMap<>();
+    	data.put("adultPassengers", this.adultPassengers);
+    	data.put("childPassengers", this.childPassengers);
+    	data.put("depDate", this.depDate);
+    	data.put("destination", this.destination);
+    	data.put("infantPassengers", this.infantPassengers);
+    	data.put("maxStops", this.maxStops);
+    	data.put("origin", this.origin);
+    	data.put("retDate", this.retDate);
+    	data.put("seniorPassengers", this.seniorPassengers);
+    	data.put("requestId", this.requestId);
+
+
+        query.populateData(data);
     }
     
 }

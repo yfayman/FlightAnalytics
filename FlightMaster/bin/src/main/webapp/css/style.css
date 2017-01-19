@@ -1,0 +1,70 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 9, 2015, 11:09:55 AM
+    Author     : Yan Fayman
+*/
+.dark-primary-color   { background: #0288D1; }
+.default-primary-color { background: #03A9F4; }
+.light-primary-color   { background: #B3E5FC; }
+.text-primary-color { color: #FFFFFF; }
+.accent-color          { background: #795548; }
+.primary-text-color  { color: #212121; }
+.secondary-text-color { color: #727272; }
+.divider-color         { border-color: #B6B6B6; }
+
+#topNavBar{
+    background-color: black;
+}
+
+#request-input-form{
+    background-color: white;
+}
+#request-input-form-container, 
+#aboutContainer, #request-view{
+    margin-top: 70px;
+
+}
+.error{
+    color:red;
+    font-size: small;
+}
+
+.request-button{
+     background: #03A9F4;
+     color: #212121;
+     border: #795548 thin solid;
+}
+
+.request-button:hover{
+      background: #795548; 
+      color: #FFFFFF;
+}
+button.active, button.active:hover {
+    background: #0288D1;
+    color: #212121;
+}
+#chart{
+   padding-top: 20px;
+   min-height: 400px;
+   min-width: 400px;
+}
+p{
+    line-height: 130%;
+}
+.data-header{
+    width: 40%;
+    margin: 0 auto;
+    text-align: center;
+    padding-bottom: 5px;
+    border-bottom: 2px solid black;
+}
+@media screen and (max-width: 950px) {
+    #request-container{
+        margin-left: 7%;
+    }
+    
+}

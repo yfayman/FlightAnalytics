@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import org.apache.log4j.Logger;
 
@@ -176,102 +177,102 @@ public class QPXFlightQuery implements FlightQuery {
         return retList;
     }
 
-    @Override
+
     public int getAdultPassengers() {
         return adultPassengers;
     }
 
-    @Override
+ 
     public void setAdultPassengers(int adultPassengers) {
         this.adultPassengers = adultPassengers;
     }
 
-    @Override
+
     public int getChildPassengers() {
         return childPassengers;
     }
 
-    @Override
+
     public void setChildPassengers(int childPassengers) {
         this.childPassengers = childPassengers;
     }
 
-    @Override
+
     public int getSeniorPassengers() {
         return seniorPassengers;
     }
 
-    @Override
+
     public void setSeniorPassengers(int seniorPassengers) {
         this.seniorPassengers = seniorPassengers;
     }
 
-    @Override
+
     public int getInfantInSeatCount() {
         return infantInSeatCount;
     }
 
-    @Override
+
     public void setInfantInSeatCount(int infantInSeatCount) {
         this.infantInSeatCount = infantInSeatCount;
     }
 
-    @Override
+
     public int getMaxStops() {
         return maxStops;
     }
 
-    @Override
+
     public void setMaxStops(int maxStops) {
         this.maxStops = maxStops;
     }
 
-    @Override
+
     public String getOrigin() {
         return origin;
     }
 
-    @Override
+
     public void setOrigin(String origin) {
         this.origin = origin;
     }
 
-    @Override
+
     public String getDestination() {
         return destination;
     }
 
-    @Override
+  
     public void setDestination(String destination) {
         this.destination = destination;
     }
 
-    @Override
+
     public Date getDepartDate() {
         return departDate;
     }
 
-    @Override
+
     public void setDepartDate(Date departDate) {
         this.departDate = departDate;
     }
 
-    @Override
+
     public Date getReturnDate() {
         return returnDate;
     }
 
-    @Override
+
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
 
-    @Override
+
     public int getRequestId() {
         return requestId;
     }
 
-    @Override
+
     public void setRequestId(int requestId) {
         this.requestId = requestId;
     }
@@ -292,4 +293,19 @@ public class QPXFlightQuery implements FlightQuery {
         }
 
     }
+
+	@Override
+	public void populateData(Map<String, Object> data) {
+		 this.setAdultPassengers(this.adultPassengers);
+	        this.setChildPassengers((int) data.get("childPassengers"));
+	        this.setDepartDate((Date) data.get("depDate"));
+	        this.setDestination((String) data.get("destination"));
+	        this.setInfantInSeatCount((int) data.get("infantPassengers"));
+	        this.setMaxStops((int) data.get("maxStops"));
+	        this.setOrigin((String) data.get("origin"));
+	        this.setReturnDate((Date) data.get("retDate"));
+	        this.setSeniorPassengers((int) data.get("seniorPassengers"));
+	        this.setRequestId((int) data.get(requestId));
+		
+	}
 }

@@ -14,6 +14,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 
@@ -73,104 +75,12 @@ public class MockFlightQuery implements FlightQuery {
         return retList;
     }
 
-    @Override
-    public int getAdultPassengers() {
-        return adults;
-    }
+	@Override
+	public void populateData(Map<String, Object> data) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    @Override
-    public void setAdultPassengers(int adultPassengers) {
-        this.adults = adults;
-    }
 
-    @Override
-    public int getChildPassengers() {
-        return children;
-    }
-
-    @Override
-    public void setChildPassengers(int childPassengers) {
-        this.children = childPassengers;
-    }
-
-    @Override
-    public int getSeniorPassengers() {
-        return seniors;
-    }
-
-    @Override
-    public void setSeniorPassengers(int seniorPassengers) {
-        this.seniors = seniorPassengers;
-    }
-
-    @Override
-    public int getInfantInSeatCount() {
-        return infants;
-    }
-
-    @Override
-    public void setInfantInSeatCount(int infantInSeatCount) {
-        this.infants = infantInSeatCount;
-    }
-
-    @Override
-    public int getMaxStops() {
-        return maxStops;
-    }
-
-    @Override
-    public void setMaxStops(int maxStops) {
-        this.maxStops = maxStops;
-    }
-
-    @Override
-    public String getOrigin() {
-        return origin;
-    }
-
-    @Override
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
-    @Override
-    public String getDestination() {
-        return dest;
-    }
-
-    @Override
-    public void setDestination(String destination) {
-        this.dest = destination;
-    }
-
-    @Override
-    public Date getDepartDate() {
-        return depart;
-    }
-
-    @Override
-    public void setDepartDate(Date departDate) {
-        this.depart = departDate;
-    }
-
-    @Override
-    public Date getReturnDate() {
-        return returnDate;
-    }
-
-    @Override
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    @Override
-    public void setRequestId(int requestId) {
-        this.requestId = requestId;
-    }
-
-    @Override
-    public int getRequestId() {
-        return requestId;
-    }
 
 }
